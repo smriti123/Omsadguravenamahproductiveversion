@@ -1,0 +1,20 @@
+# ─── SECRETS — never commit (contain live DB + admin passwords) ───
+api/config.php
+api/config.local.php
+
+# ─── Devotees' uploaded photos (live on the server; large; private) ───
+uploads/
+
+# ─── Local tooling / editor / agent ───
+.claude/
+.agents/
+node_modules/
+
+# ─── Temp / logs / scratch ───
+.server-out.txt
+.server-err.txt
+tmp-excerpts-combined.json
+
+# ─── OS junk ───
+Thumbs.db
+.DS_Store

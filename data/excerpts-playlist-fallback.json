@@ -1,0 +1,364 @@
+{
+    "playlistIds":  [
+                        "PLPZZ4rJCboBUaa3CHa8jdPV2tN9OhNCcG",
+                        "PLPZZ4rJCboBUi-popVtRoaYO7Po3qdExj",
+                        "PLb5MHxZzEKKANmEgMD05VYesPM2Mcwmus"
+                    ],
+    "playlistTitle":  "सत्संग-अंश",
+    "fetchedAt":  "2026-07-08T11:55:24",
+    "sourcePlaylists":  [
+                            {
+                                "playlistId":  "PLPZZ4rJCboBUaa3CHa8jdPV2tN9OhNCcG",
+                                "title":  "परम पूज्य स्वामीजी के ज्ञान बिंदु",
+                                "count":  8
+                            },
+                            {
+                                "playlistId":  "PLPZZ4rJCboBUi-popVtRoaYO7Po3qdExj",
+                                "title":  "परम पूज्य स्वामी जी के  अनमोल  वचन । - Small talks- Param Pujya Swamiji Subodhananda Saraswatiji Maharaj",
+                                "count":  15
+                            },
+                            {
+                                "playlistId":  "PLb5MHxZzEKKANmEgMD05VYesPM2Mcwmus",
+                                "title":  "General",
+                                "count":  5
+                            }
+                        ],
+    "videos":  [
+                   {
+                       "id":  "--9fhCtxoN0",
+                       "title":  "विद्या ददाति विनयं - by Param Pujya Swami Subodhanand Saraswati ji",
+                       "thumbnail":  "https://i2.ytimg.com/vi/--9fhCtxoN0/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLb5MHxZzEKKANmEgMD05VYesPM2Mcwmus",
+                       "sourcePlaylistTitle":  "General",
+                       "duration":  {
+                                        "seconds":  15,
+                                        "display":  "0:15",
+                                        "label":  "1 min"
+                                    }
+                   },
+                   {
+                       "id":  "67cOsVvmhIY",
+                       "title":  "ध्यान अभ्यास की सफलता का रहस्य - परम पूज्य स्वामीजी",
+                       "thumbnail":  "https://i3.ytimg.com/vi/67cOsVvmhIY/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLPZZ4rJCboBUaa3CHa8jdPV2tN9OhNCcG",
+                       "sourcePlaylistTitle":  "परम पूज्य स्वामीजी के ज्ञान बिंदु",
+                       "duration":  {
+                                        "seconds":  144,
+                                        "display":  "2:24",
+                                        "label":  "2 min"
+                                    }
+                   },
+                   {
+                       "id":  "yWOWRAPlMFo",
+                       "title":  "प्रौढ़वाद क्या होता है? -  By Param Pujya Swamiji Subodhananda Saraswatiji",
+                       "thumbnail":  "https://i2.ytimg.com/vi/yWOWRAPlMFo/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLPZZ4rJCboBUi-popVtRoaYO7Po3qdExj",
+                       "sourcePlaylistTitle":  "परम पूज्य स्वामी जी के  अनमोल  वचन । - Small talks- Param Pujya Swamiji Subodhananda Saraswatiji Maharaj",
+                       "duration":  {
+                                        "seconds":  173,
+                                        "display":  "2:53",
+                                        "label":  "3 min"
+                                    }
+                   },
+                   {
+                       "id":  "BMXlJVhMeuc",
+                       "title":  "परिक्रमा के पीछे क्या भाव निहित है?",
+                       "thumbnail":  "https://i3.ytimg.com/vi/BMXlJVhMeuc/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLPZZ4rJCboBUaa3CHa8jdPV2tN9OhNCcG",
+                       "sourcePlaylistTitle":  "परम पूज्य स्वामीजी के ज्ञान बिंदु",
+                       "duration":  {
+                                        "seconds":  180,
+                                        "display":  "3:00",
+                                        "label":  "3 min"
+                                    }
+                   },
+                   {
+                       "id":  "Cvp0KfyJeyI",
+                       "title":  "ॐ नमो भगवते वासुदेवाय\u0027 मंत्र का अर्थ क्या है?  Param Pujya Swamiji Subodhananda Saraswatiji",
+                       "thumbnail":  "https://i4.ytimg.com/vi/Cvp0KfyJeyI/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLb5MHxZzEKKANmEgMD05VYesPM2Mcwmus",
+                       "sourcePlaylistTitle":  "General",
+                       "duration":  {
+                                        "seconds":  191,
+                                        "display":  "3:11",
+                                        "label":  "3 min"
+                                    }
+                   },
+                   {
+                       "id":  "QZxDzRhRXW4",
+                       "title":  "वेदांत को उत्तर मीमांसा और कर्म को पूर्व मीमांसा क्यों कहते हैं?",
+                       "thumbnail":  "https://i2.ytimg.com/vi/QZxDzRhRXW4/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLPZZ4rJCboBUi-popVtRoaYO7Po3qdExj",
+                       "sourcePlaylistTitle":  "परम पूज्य स्वामी जी के  अनमोल  वचन । - Small talks- Param Pujya Swamiji Subodhananda Saraswatiji Maharaj",
+                       "duration":  {
+                                        "seconds":  217,
+                                        "display":  "3:37",
+                                        "label":  "4 min"
+                                    }
+                   },
+                   {
+                       "id":  "CThjnmM02J8",
+                       "title":  "तत्व के बारे में मत का होना क्यों आवश्यक है? - By Param Pujya Swamiji Subodhananda Saraswatiji",
+                       "thumbnail":  "https://i4.ytimg.com/vi/CThjnmM02J8/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLPZZ4rJCboBUaa3CHa8jdPV2tN9OhNCcG",
+                       "sourcePlaylistTitle":  "परम पूज्य स्वामीजी के ज्ञान बिंदु",
+                       "duration":  {
+                                        "seconds":  223,
+                                        "display":  "3:43",
+                                        "label":  "4 min"
+                                    }
+                   },
+                   {
+                       "id":  "n9413YgJa8c",
+                       "title":  "परम पुरुषार्थ क्या है? -  By Param Pujya Swamiji Subodhananda Saraswatiji",
+                       "thumbnail":  "https://i3.ytimg.com/vi/n9413YgJa8c/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLPZZ4rJCboBUaa3CHa8jdPV2tN9OhNCcG",
+                       "sourcePlaylistTitle":  "परम पूज्य स्वामीजी के ज्ञान बिंदु",
+                       "duration":  {
+                                        "seconds":  276,
+                                        "display":  "4:36",
+                                        "label":  "5 min"
+                                    }
+                   },
+                   {
+                       "id":  "7S5YIM7__fs",
+                       "title":  "अभिमान एवं शरणागति में भेद -   By Param Pujya Swamiji",
+                       "thumbnail":  "https://i4.ytimg.com/vi/7S5YIM7__fs/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLPZZ4rJCboBUaa3CHa8jdPV2tN9OhNCcG",
+                       "sourcePlaylistTitle":  "परम पूज्य स्वामीजी के ज्ञान बिंदु",
+                       "duration":  {
+                                        "seconds":  400,
+                                        "display":  "6:40",
+                                        "label":  "7 min"
+                                    }
+                   },
+                   {
+                       "id":  "V-D0t2TDHFc",
+                       "title":  "ज्ञानी का प्रेम कैसा होता है? - By Param Poojya Swamiji Subodhanand Saraswatiji",
+                       "thumbnail":  "https://i3.ytimg.com/vi/V-D0t2TDHFc/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLb5MHxZzEKKANmEgMD05VYesPM2Mcwmus",
+                       "sourcePlaylistTitle":  "General",
+                       "duration":  {
+                                        "seconds":  409,
+                                        "display":  "6:49",
+                                        "label":  "7 min"
+                                    }
+                   },
+                   {
+                       "id":  "YBRdUherXwY",
+                       "title":  "महापुरुष का अनुवर्तन कैसे करें -  By Param Pujya Swamiji Subodhananda Saraswatiji",
+                       "thumbnail":  "https://i2.ytimg.com/vi/YBRdUherXwY/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLPZZ4rJCboBUi-popVtRoaYO7Po3qdExj",
+                       "sourcePlaylistTitle":  "परम पूज्य स्वामी जी के  अनमोल  वचन । - Small talks- Param Pujya Swamiji Subodhananda Saraswatiji Maharaj",
+                       "duration":  {
+                                        "seconds":  599,
+                                        "display":  "9:59",
+                                        "label":  "10 min"
+                                    }
+                   },
+                   {
+                       "id":  "Rt-8WiWfJj8",
+                       "title":  "गुरु की सेवा कैसे होती है? - By Param Pujya Swamiji Subodhananda Saraswatiji",
+                       "thumbnail":  "https://i3.ytimg.com/vi/Rt-8WiWfJj8/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLPZZ4rJCboBUi-popVtRoaYO7Po3qdExj",
+                       "sourcePlaylistTitle":  "परम पूज्य स्वामी जी के  अनमोल  वचन । - Small talks- Param Pujya Swamiji Subodhananda Saraswatiji Maharaj",
+                       "duration":  {
+                                        "seconds":  619,
+                                        "display":  "10:19",
+                                        "label":  "10 min"
+                                    }
+                   },
+                   {
+                       "id":  "VSixisuFNnI",
+                       "title":  "श्रेष्ठ का अनुवर्तन करने से सुधार कैसे होता है और क्यों नहीं होता है?",
+                       "thumbnail":  "https://i3.ytimg.com/vi/VSixisuFNnI/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLPZZ4rJCboBUi-popVtRoaYO7Po3qdExj",
+                       "sourcePlaylistTitle":  "परम पूज्य स्वामी जी के  अनमोल  वचन । - Small talks- Param Pujya Swamiji Subodhananda Saraswatiji Maharaj",
+                       "duration":  {
+                                        "seconds":  635,
+                                        "display":  "10:35",
+                                        "label":  "11 min"
+                                    }
+                   },
+                   {
+                       "id":  "Y89LVnRuDhI",
+                       "title":  "भक्त  प्रभु  की  व्यापकता को कैसे  जानता है- - By Param Poojya Swamiji Subodhanand Saraswatij",
+                       "thumbnail":  "https://i2.ytimg.com/vi/Y89LVnRuDhI/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLb5MHxZzEKKANmEgMD05VYesPM2Mcwmus",
+                       "sourcePlaylistTitle":  "General",
+                       "duration":  {
+                                        "seconds":  834,
+                                        "display":  "13:54",
+                                        "label":  "14 min"
+                                    }
+                   },
+                   {
+                       "id":  "98D6XXtvknk",
+                       "title":  "गुरुजनों एवं बड़ों को अभिवादन करने का लाभ।",
+                       "thumbnail":  "https://i2.ytimg.com/vi/98D6XXtvknk/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLPZZ4rJCboBUaa3CHa8jdPV2tN9OhNCcG",
+                       "sourcePlaylistTitle":  "परम पूज्य स्वामीजी के ज्ञान बिंदु",
+                       "duration":  {
+                                        "seconds":  881,
+                                        "display":  "14:41",
+                                        "label":  "15 min"
+                                    }
+                   },
+                   {
+                       "id":  "2i1qkjedAjU",
+                       "title":  "भगवद गीता ईश्वर स्मृति है या व्यास स्मृति?",
+                       "thumbnail":  "https://i3.ytimg.com/vi/2i1qkjedAjU/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLPZZ4rJCboBUi-popVtRoaYO7Po3qdExj",
+                       "sourcePlaylistTitle":  "परम पूज्य स्वामी जी के  अनमोल  वचन । - Small talks- Param Pujya Swamiji Subodhananda Saraswatiji Maharaj",
+                       "duration":  {
+                                        "seconds":  1035,
+                                        "display":  "17:15",
+                                        "label":  "17 min"
+                                    }
+                   },
+                   {
+                       "id":  "IFXrsnfgjQc",
+                       "title":  "ज्ञान (प्रमा)  क्या मनन एवं निद्धियासन सापेक्ष है?",
+                       "thumbnail":  "https://i2.ytimg.com/vi/IFXrsnfgjQc/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLPZZ4rJCboBUaa3CHa8jdPV2tN9OhNCcG",
+                       "sourcePlaylistTitle":  "परम पूज्य स्वामीजी के ज्ञान बिंदु",
+                       "duration":  {
+                                        "seconds":  1089,
+                                        "display":  "18:09",
+                                        "label":  "18 min"
+                                    }
+                   },
+                   {
+                       "id":  "5Jexu2iggEs",
+                       "title":  "क्या समष्टिपरिस्थितियां व्यक्ति के कर्मफलपर प्रभाव डालती हैं?समष्टि का नीतिकार कैसे नियुक्त होता है?",
+                       "thumbnail":  "https://i2.ytimg.com/vi/5Jexu2iggEs/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLPZZ4rJCboBUi-popVtRoaYO7Po3qdExj",
+                       "sourcePlaylistTitle":  "परम पूज्य स्वामी जी के  अनमोल  वचन । - Small talks- Param Pujya Swamiji Subodhananda Saraswatiji Maharaj",
+                       "duration":  {
+                                        "seconds":  1526,
+                                        "display":  "25:26",
+                                        "label":  "25 min"
+                                    }
+                   },
+                   {
+                       "id":  "SzCOvXR71dM",
+                       "title":  "क्या जीव से जीव में भिन्नता है?",
+                       "thumbnail":  "https://i4.ytimg.com/vi/SzCOvXR71dM/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLPZZ4rJCboBUi-popVtRoaYO7Po3qdExj",
+                       "sourcePlaylistTitle":  "परम पूज्य स्वामी जी के  अनमोल  वचन । - Small talks- Param Pujya Swamiji Subodhananda Saraswatiji Maharaj",
+                       "duration":  {
+                                        "seconds":  1635,
+                                        "display":  "27:15",
+                                        "label":  "27 min"
+                                    }
+                   },
+                   {
+                       "id":  "n0HNenQ3vFI",
+                       "title":  "कर्मयोग क्यों करना चाहिए? कर्मयोग के १० हेतु।",
+                       "thumbnail":  "https://i3.ytimg.com/vi/n0HNenQ3vFI/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLPZZ4rJCboBUi-popVtRoaYO7Po3qdExj",
+                       "sourcePlaylistTitle":  "परम पूज्य स्वामी जी के  अनमोल  वचन । - Small talks- Param Pujya Swamiji Subodhananda Saraswatiji Maharaj",
+                       "duration":  {
+                                        "seconds":  2765,
+                                        "display":  "46:05",
+                                        "label":  "46 min"
+                                    }
+                   },
+                   {
+                       "id":  "M0ziWkKD9tc",
+                       "title":  "अधिदेव एवं अध्यात्म में ब्रह्म की उपासना कैसे करें -  By Param Pujya Swamiji",
+                       "thumbnail":  "https://i2.ytimg.com/vi/M0ziWkKD9tc/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLPZZ4rJCboBUaa3CHa8jdPV2tN9OhNCcG",
+                       "sourcePlaylistTitle":  "परम पूज्य स्वामीजी के ज्ञान बिंदु",
+                       "duration":  {
+                                        "seconds":  2930,
+                                        "display":  "48:50",
+                                        "label":  "49 min"
+                                    }
+                   },
+                   {
+                       "id":  "AowrSbo89ug",
+                       "title":  "जीव क्या होता है? - भाग -१/२",
+                       "thumbnail":  "https://i2.ytimg.com/vi/AowrSbo89ug/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLPZZ4rJCboBUi-popVtRoaYO7Po3qdExj",
+                       "sourcePlaylistTitle":  "परम पूज्य स्वामी जी के  अनमोल  वचन । - Small talks- Param Pujya Swamiji Subodhananda Saraswatiji Maharaj",
+                       "duration":  {
+                                        "seconds":  2992,
+                                        "display":  "49:52",
+                                        "label":  "50 min"
+                                    }
+                   },
+                   {
+                       "id":  "oN5r9_ugW6M",
+                       "title":  "अधिभूत रूप में प्रभु की उपासना कैसे करें? - By Param Pujya Swamiji",
+                       "thumbnail":  "https://i4.ytimg.com/vi/oN5r9_ugW6M/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLPZZ4rJCboBUi-popVtRoaYO7Po3qdExj",
+                       "sourcePlaylistTitle":  "परम पूज्य स्वामी जी के  अनमोल  वचन । - Small talks- Param Pujya Swamiji Subodhananda Saraswatiji Maharaj",
+                       "duration":  {
+                                        "seconds":  3069,
+                                        "display":  "51:09",
+                                        "label":  "51 min"
+                                    }
+                   },
+                   {
+                       "id":  "xwS0CHMyINQ",
+                       "title":  "आध्यात्मिक, आधिभौतिक और आधिदैविक की स्थूल और सूक्ष्म शरीर की  इंद्रियों के संदर्भ में विवेचना",
+                       "thumbnail":  "https://i1.ytimg.com/vi/xwS0CHMyINQ/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLb5MHxZzEKKANmEgMD05VYesPM2Mcwmus",
+                       "sourcePlaylistTitle":  "General",
+                       "duration":  {
+                                        "seconds":  3095,
+                                        "display":  "51:35",
+                                        "label":  "52 min"
+                                    }
+                   },
+                   {
+                       "id":  "xCq4-u_4wk0",
+                       "title":  "ब्रह्म विद्या में उपासना का महत्व - By Param Pujya Swamiji Subodhananda Saraswatiji Maharaj",
+                       "thumbnail":  "https://i1.ytimg.com/vi/xCq4-u_4wk0/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLPZZ4rJCboBUi-popVtRoaYO7Po3qdExj",
+                       "sourcePlaylistTitle":  "परम पूज्य स्वामी जी के  अनमोल  वचन । - Small talks- Param Pujya Swamiji Subodhananda Saraswatiji Maharaj",
+                       "duration":  {
+                                        "seconds":  3660,
+                                        "display":  "1:01:00",
+                                        "label":  "61 min"
+                                    }
+                   },
+                   {
+                       "id":  "QqjKEJNW7mY",
+                       "title":  "जीव क्या होता है?  भाग -२ /२",
+                       "thumbnail":  "https://i2.ytimg.com/vi/QqjKEJNW7mY/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLPZZ4rJCboBUi-popVtRoaYO7Po3qdExj",
+                       "sourcePlaylistTitle":  "परम पूज्य स्वामी जी के  अनमोल  वचन । - Small talks- Param Pujya Swamiji Subodhananda Saraswatiji Maharaj",
+                       "duration":  {
+                                        "seconds":  3779,
+                                        "display":  "1:02:59",
+                                        "label":  "63 min"
+                                    }
+                   },
+                   {
+                       "id":  "00JK4s-WvPA",
+                       "title":  "कर्म सिद्धांत से ईश्वर कैसे सिद्ध होते हैं।",
+                       "thumbnail":  "https://i1.ytimg.com/vi/00JK4s-WvPA/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLPZZ4rJCboBUi-popVtRoaYO7Po3qdExj",
+                       "sourcePlaylistTitle":  "परम पूज्य स्वामी जी के  अनमोल  वचन । - Small talks- Param Pujya Swamiji Subodhananda Saraswatiji Maharaj",
+                       "duration":  {
+                                        "seconds":  4034,
+                                        "display":  "1:07:14",
+                                        "label":  "67 min"
+                                    }
+                   },
+                   {
+                       "id":  "TyOk9KkdfXE",
+                       "title":  "वेदांत दर्शन में ईश्वर रहस्य- By Param Pujya Swamiji",
+                       "thumbnail":  "https://i1.ytimg.com/vi/TyOk9KkdfXE/hqdefault.jpg",
+                       "sourcePlaylistId":  "PLPZZ4rJCboBUi-popVtRoaYO7Po3qdExj",
+                       "sourcePlaylistTitle":  "परम पूज्य स्वामी जी के  अनमोल  वचन । - Small talks- Param Pujya Swamiji Subodhananda Saraswatiji Maharaj",
+                       "duration":  {
+                                        "seconds":  4363,
+                                        "display":  "1:12:43",
+                                        "label":  "73 min"
+                                    }
+                   }
+               ]
+}

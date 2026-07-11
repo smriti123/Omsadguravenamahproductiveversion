@@ -1,0 +1,4247 @@
+/*
+  Section banner refinements.
+  Keeps generated bundle CSS untouched; loaded after the main stylesheet.
+*/
+
+:root {
+  --spiritual-accent: #8a4a1a;
+  --spiritual-gold: #d8b06a;
+  --spiritual-heading-serif: "Cormorant Garamond", "EB Garamond", Georgia, serif;
+  --spiritual-devanagari: "Tiro Devanagari Sanskrit", "Noto Serif Devanagari", serif;
+}
+
+.font-display,
+.home-new,
+h1,
+h2,
+h3,
+.home-new__brand,
+.home-new__card strong {
+  font-family: var(--spiritual-heading-serif);
+}
+
+.font-devanagari,
+.home-new__welcome-shloka,
+.home-new__shloka-item,
+.namami-line,
+.entry-main-line,
+.entry-emotional-line,
+.entry-pranam-line,
+.devotional-line-main,
+.devotional-line-charan,
+.devotional-line-emotional,
+.devotional-line-pranam {
+  font-family: var(--spiritual-devanagari);
+}
+
+.text-primary,
+.text-foreground,
+.home-new__brand,
+.home-new__card strong,
+.swamiji-name,
+#talks h2,
+#bhajans h2 {
+  color: var(--spiritual-accent) !important;
+}
+
+.home-new__shloka-marquee,
+.home-new__shloka-track,
+.home-new__shloka-item {
+  color: var(--spiritual-accent) !important;
+}
+
+.home-new__charan-orbit text,
+.home-new__section-charan-orbit text {
+  fill: var(--spiritual-accent) !important;
+  opacity: 0.78;
+}
+
+.text-gold,
+.home-new__brand-om,
+.home-new__card-icon,
+.devotional-line-divider .divider-symbol,
+.home-new__shloka-symbol {
+  color: var(--spiritual-gold) !important;
+}
+
+#talks,
+#bhajans {
+  position: relative;
+  overflow: hidden;
+}
+
+#talks > div,
+#bhajans > div {
+  position: relative;
+  z-index: 1;
+}
+
+#talks::before,
+#bhajans::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 1.25rem;
+  left: 50%;
+  width: min(400px, 78vw);
+  height: min(400px, 78vw);
+  pointer-events: none;
+  opacity: 0.05;
+  transform: translateX(-50%);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cg fill='none' stroke='%238a4a1a' stroke-width='2'%3E%3Ccircle cx='200' cy='200' r='70'/%3E%3Ccircle cx='200' cy='200' r='118'/%3E%3Ccircle cx='200' cy='200' r='164'/%3E%3Cpath d='M200 36c24 42 24 86 0 132-24-46-24-90 0-132Z'/%3E%3Cpath d='M200 364c-24-42-24-86 0-132 24 46 24 90 0 132Z'/%3E%3Cpath d='M36 200c42-24 86-24 132 0-46 24-90 24-132 0Z'/%3E%3Cpath d='M364 200c-42 24-86 24-132 0 46-24 90-24 132 0Z'/%3E%3Cpath d='M84 84c47 13 78 44 93 93-49-15-80-46-93-93Z'/%3E%3Cpath d='M316 316c-47-13-78-44-93-93 49 15 80 46 93 93Z'/%3E%3Cpath d='M316 84c-13 47-44 78-93 93 15-49 46-80 93-93Z'/%3E%3Cpath d='M84 316c13-47 44-78 93-93-15 49-46 80-93 93Z'/%3E%3C/g%3E%3C/svg%3E");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#talks .text-center.mb-12,
+#bhajans .text-center.mb-12 {
+  position: relative;
+  isolation: isolate;
+  margin-bottom: 3rem !important;
+  padding: 1.25rem 1rem 1.6rem;
+}
+
+#talks .text-center.mb-12::after,
+#bhajans .text-center.mb-12::after {
+  content: "✦";
+  display: grid;
+  grid-template-columns: minmax(2.5rem, 1fr) auto minmax(2.5rem, 1fr);
+  align-items: center;
+  gap: 0.85rem;
+  width: min(21rem, 82vw);
+  margin: 1.05rem auto 0;
+  color: var(--spiritual-gold);
+  font-size: 1.05rem;
+  line-height: 1;
+  text-align: center;
+}
+
+#talks .text-center.mb-12::before,
+#bhajans .text-center.mb-12::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  bottom: 0.58rem;
+  width: min(21rem, 82vw);
+  height: 6px;
+  transform: translateX(-50%);
+  border-block: 1px solid color-mix(in srgb, var(--spiritual-gold) 68%, transparent);
+}
+
+#talks h2,
+#bhajans h2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.38rem;
+  margin-bottom: 0.6rem !important;
+  font-family: var(--spiritual-heading-serif) !important;
+  font-size: clamp(1.08rem, 2.4vw, 1.42rem) !important;
+  font-variant-caps: small-caps;
+  font-weight: 700 !important;
+  letter-spacing: 0.18em;
+  line-height: 1.18 !important;
+  text-transform: uppercase;
+}
+
+#talks h2::before,
+#bhajans h2::before {
+  display: block;
+  color: var(--spiritual-accent);
+  font-family: var(--spiritual-devanagari);
+  font-size: clamp(2.4rem, 6.2vw, 4.35rem);
+  font-style: italic;
+  font-variant-caps: normal;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.05;
+  text-transform: none;
+  text-wrap: balance;
+}
+
+#talks h2::before {
+  content: "✦ सत्सङ्ग-प्रवचनम् ✦";
+}
+
+#bhajans h2::before {
+  content: "✦ भजन-कीर्तनम् ✦";
+}
+
+#talks .divider-ornament,
+#bhajans .divider-ornament {
+  display: none !important;
+}
+
+#talks .text-center.mb-12 > p,
+#bhajans .text-center.mb-12 > p {
+  color: color-mix(in srgb, var(--spiritual-accent) 72%, #5c2f18) !important;
+  font-family: "Lora", Georgia, serif;
+  font-size: 0.95rem;
+}
+
+@supports not (color: color-mix(in srgb, #000 50%, transparent)) {
+  #talks .text-center.mb-12::before,
+  #bhajans .text-center.mb-12::before {
+    border-block-color: rgba(216, 176, 106, 0.68);
+  }
+
+  #talks .text-center.mb-12 > p,
+  #bhajans .text-center.mb-12 > p {
+    color: #74401b !important;
+  }
+}
+
+@media (max-width: 640px) {
+  #talks h2,
+  #bhajans h2 {
+    letter-spacing: 0.12em;
+  }
+
+  #talks h2::before,
+  #bhajans h2::before {
+    font-size: clamp(2rem, 10vw, 3.05rem);
+  }
+}
+
+/*
+  Charitra-Jhalak gallery refinements.
+  Keeps the existing accordion behavior, but makes the list read less like a settings menu
+  and more like a quiet darshan/mantra gallery.
+*/
+
+#photo-gallery2 {
+  color: var(--spiritual-accent);
+}
+
+#photo-gallery2 h2 {
+  color: var(--spiritual-accent) !important;
+  font-family: var(--spiritual-heading-serif) !important;
+  letter-spacing: 0.035em;
+}
+
+#photo-gallery2 > .mx-auto > .mx-auto.max-w-6xl {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding-inline: 0 !important;
+  position: relative;
+}
+
+#photo-gallery2 > .mx-auto > .mx-auto.max-w-6xl::before,
+#photo-gallery2 > .mx-auto > .mx-auto.max-w-6xl::after {
+  content: "";
+  display: block;
+  width: min(18rem, 72vw);
+  height: 1px;
+  margin-inline: auto;
+  background: linear-gradient(90deg, transparent, var(--spiritual-gold), transparent);
+  opacity: 0.72;
+}
+
+#photo-gallery2 > .mx-auto > .mx-auto.max-w-6xl::before {
+  margin-bottom: 1rem;
+}
+
+#photo-gallery2 > .mx-auto > .mx-auto.max-w-6xl::after {
+  margin-top: 1rem;
+}
+
+#photo-gallery2 > .mx-auto > .mx-auto.max-w-6xl > .space-y-1 {
+  padding-bottom: 0.85rem;
+}
+
+#photo-gallery2 > .mx-auto > .mx-auto.max-w-6xl > .space-y-1 > p:first-child {
+  display: none !important;
+}
+
+#photo-gallery2 > .mx-auto > .mx-auto.max-w-6xl > .space-y-1 > p:first-child::after {
+  content: none !important;
+}
+
+#photo-gallery2 > .mx-auto > .mx-auto.max-w-6xl > .space-y-1 > p:nth-child(2) {
+  color: color-mix(in srgb, var(--spiritual-accent) 72%, #5c2f18) !important;
+}
+
+#photo-gallery2 article {
+  position: relative;
+  isolation: isolate;
+  background: color-mix(in srgb, #fff7e8 92%, white) !important;
+  border-color: color-mix(in srgb, var(--spiritual-gold) 52%, transparent) !important;
+}
+
+#photo-gallery2 article::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  right: 1.25rem;
+  width: 9rem;
+  height: 9rem;
+  opacity: 0;
+  transform: translateY(-50%);
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cg fill='none' stroke='%238a4a1a' stroke-width='1.8'%3E%3Ccircle cx='90' cy='90' r='42'/%3E%3Cpath d='M90 20c16 24 16 48 0 72-16-24-16-48 0-72Z'/%3E%3Cpath d='M90 160c-16-24-16-48 0-72 16 24 16 48 0 72Z'/%3E%3Cpath d='M20 90c24-16 48-16 72 0-24 16-48 16-72 0Z'/%3E%3Cpath d='M160 90c-24 16-48 16-72 0 24-16 48-16 72 0Z'/%3E%3Cpath d='M44 44c27 5 46 24 52 52-28-6-47-25-52-52Z'/%3E%3Cpath d='M136 136c-27-5-46-24-52-52 28 6 47 25 52 52Z'/%3E%3Cpath d='M136 44c-5 27-24 46-52 52 6-28 25-47 52-52Z'/%3E%3Cpath d='M44 136c5-27 24-46 52-52-6 28-25 47-52 52Z'/%3E%3C/g%3E%3C/svg%3E");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#photo-gallery2 article:nth-child(3n + 1)::before {
+  opacity: 0.05;
+}
+
+#photo-gallery2 article h3 > button {
+  background: transparent !important;
+  color: var(--spiritual-accent) !important;
+  min-height: auto !important;
+  overflow: hidden;
+  position: relative;
+}
+
+#photo-gallery2 article:nth-child(odd) h3 > button {
+  padding-block: 1.15rem !important;
+}
+
+#photo-gallery2 article:nth-child(even) h3 > button {
+  padding-block: 0.95rem !important;
+}
+
+#photo-gallery2 article h3 > button > span:first-child {
+  color: var(--spiritual-gold) !important;
+  border-color: color-mix(in srgb, var(--spiritual-gold) 58%, transparent) !important;
+  background: rgba(255, 246, 232, 0.78) !important;
+}
+
+#photo-gallery2 article h3 > button > span:nth-child(2) {
+  color: var(--spiritual-accent) !important;
+  font-family: var(--spiritual-heading-serif) !important;
+  font-size: clamp(1.05rem, 2.4vw, 1.28rem);
+  letter-spacing: 0.01em;
+}
+
+#photo-gallery2 article h3 > button > span:last-child {
+  background: transparent !important;
+  color: var(--spiritual-gold) !important;
+  font-family: var(--spiritual-devanagari);
+  height: 2rem !important;
+  width: 2rem !important;
+}
+
+#photo-gallery2 article h3 > button > span:last-child svg {
+  display: none !important;
+}
+
+#photo-gallery2 article h3 > button > span:last-child::before {
+  content: "✦";
+  font-size: 1rem;
+  line-height: 1;
+}
+
+#photo-gallery2 article[style] h3 > button > span:last-child::before {
+  content: "✦";
+}
+
+@media (max-width: 640px) {
+  #photo-gallery2 > .mx-auto > .mx-auto.max-w-6xl > .space-y-1 > p:first-child {
+    letter-spacing: 0.06em;
+  }
+
+  #photo-gallery2 article::before {
+    right: -1.5rem;
+    width: 7.5rem;
+    height: 7.5rem;
+  }
+
+  #photo-gallery2 article h3 > button {
+    gap: 0.8rem !important;
+    padding-inline: 1rem !important;
+  }
+}
+
+/*
+  Satsangs and Bhajans: manuscript verse, gentler tabs, stronger listening cards,
+  and less repetitive bhajan cards.
+*/
+
+#talks .mb-8.text-center > div.relative {
+  background:
+    linear-gradient(135deg, rgba(255, 248, 232, 0.96), rgba(250, 235, 202, 0.9)) !important;
+  border: 0 !important;
+  border-radius: 1.15rem !important;
+  box-shadow:
+    inset 0 1px 0 rgba(216, 176, 106, 0.72),
+    inset 0 -1px 0 rgba(216, 176, 106, 0.72),
+    0 12px 26px rgba(92, 47, 24, 0.075) !important;
+  overflow: hidden;
+}
+
+#talks .mb-8.text-center > div.relative::before {
+  content: "\0950";
+  position: absolute;
+  inset: 50% auto auto 50%;
+  z-index: 0;
+  color: var(--spiritual-accent);
+  font-family: var(--spiritual-devanagari);
+  font-size: clamp(5rem, 16vw, 8.5rem);
+  line-height: 1;
+  opacity: 0.045;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+#talks .mb-8.text-center > div.relative > svg {
+  display: none !important;
+}
+
+#talks .mb-8.text-center > div.relative > p {
+  color: #3f1c0c !important;
+  font-family: var(--spiritual-devanagari) !important;
+  font-size: clamp(0.95rem, 2.1vw, 1.1rem) !important;
+  font-weight: 500 !important;
+  position: relative;
+  z-index: 1;
+}
+
+#talks .mb-7 {
+  margin-bottom: 1.85rem !important;
+}
+
+#talks .mb-7 button {
+  border-radius: 999px !important;
+  border-color: rgba(216, 176, 106, 0.48) !important;
+  background: rgba(255, 248, 232, 0.82) !important;
+  color: color-mix(in srgb, var(--spiritual-accent) 78%, #5c2f18) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  font-family: "Lora", Georgia, serif !important;
+  padding-inline: 1rem !important;
+}
+
+#talks .mb-7 button[class*="bg-primary"] {
+  background: linear-gradient(135deg, #f7e1ad, #d8b06a 52%, #bd8437) !important;
+  border-color: rgba(183, 121, 42, 0.42) !important;
+  color: #5c2f18 !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    0 8px 18px rgba(138, 74, 26, 0.16) !important;
+}
+
+#talks .mb-7 button span {
+  display: inline-block;
+  margin-left: 0.22rem !important;
+  vertical-align: super;
+  font-size: 0.62em !important;
+  line-height: 1;
+  opacity: 0.82 !important;
+}
+
+#talks a.talk-card-with-actions {
+  align-items: center !important;
+  background:
+    linear-gradient(135deg, rgba(255, 248, 232, 0.95), rgba(250, 236, 207, 0.82)) !important;
+  border-color: rgba(216, 176, 106, 0.45) !important;
+  border-radius: 1.15rem !important;
+  grid-template-columns: minmax(7.4rem, 9.5rem) minmax(0, 1fr) auto !important;
+  grid-template-areas:
+    "lead copy category"
+    "lead actions actions" !important;
+  box-shadow: 0 8px 20px rgba(92, 47, 24, 0.06);
+  min-height: 8.5rem;
+  padding: 1rem 1.1rem !important;
+  position: relative;
+}
+
+#talks a.talk-card-with-actions:hover {
+  border-color: rgba(216, 176, 106, 0.75) !important;
+  box-shadow: 0 14px 28px rgba(92, 47, 24, 0.1) !important;
+}
+
+#talks a.talk-card-with-actions > div:first-child:not(.flex-1) {
+  width: 48px !important;
+  height: 48px !important;
+  border: 1px solid rgba(216, 176, 106, 0.82);
+  background:
+    radial-gradient(circle at 35% 30%, #fff8e8, #e7be73 64%, #bd8437) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 8px 16px rgba(138, 74, 26, 0.16);
+}
+
+#talks a.talk-card-with-actions > div:first-child svg {
+  color: #5c2f18 !important;
+  fill: rgba(92, 47, 24, 0.14);
+}
+
+#talks a.talk-card-with-actions > .talk-preview {
+  grid-area: lead;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  min-height: 6.4rem;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(216, 176, 106, 0.62);
+  border-radius: 0.75rem;
+  background: #f7ead2;
+  box-shadow: 0 10px 22px rgba(92, 47, 24, 0.12);
+}
+
+#talks .talk-preview img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#talks .talk-preview-play {
+  position: absolute;
+  right: 0.55rem;
+  bottom: 0.55rem;
+  display: grid;
+  width: 2.2rem;
+  height: 2.2rem;
+  place-items: center;
+  border: 1px solid rgba(255, 243, 217, 0.76);
+  border-radius: 999px;
+  background: rgba(125, 68, 18, 0.9);
+  color: #fff8e8;
+  font-size: 0.92rem;
+  box-shadow: 0 8px 14px rgba(38, 18, 6, 0.22);
+}
+
+#talks a.talk-card-with-actions h3 {
+  color: var(--spiritual-accent) !important;
+  font-family: var(--spiritual-heading-serif) !important;
+  font-size: clamp(1.04rem, 2.4vw, 1.24rem) !important;
+  letter-spacing: 0.01em;
+}
+
+#talks a.talk-card-with-actions p {
+  color: rgba(92, 47, 24, 0.62) !important;
+  font-size: 0.96rem !important;
+}
+
+#talks .category-glyph-badge {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.45rem;
+  height: 2.1rem;
+  padding: 0 0.45rem !important;
+  border: 1px solid rgba(216, 176, 106, 0.58);
+  border-radius: 999px !important;
+  background: rgba(255, 246, 232, 0.72) !important;
+  color: var(--spiritual-accent) !important;
+  font-family: var(--spiritual-devanagari) !important;
+  font-size: 0.95rem !important;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+#talks .talk-action-row {
+  align-self: end;
+  justify-content: flex-start !important;
+}
+
+#talks .talk-play-action {
+  width: auto !important;
+  min-width: 6.75rem;
+  height: 2.8rem !important;
+  padding: 0 1.15rem;
+  border-color: rgba(143, 78, 20, 0.42) !important;
+  background: linear-gradient(180deg, #c47d24, #915023) !important;
+  color: #fff8e8 !important;
+  font-family: var(--spiritual-devanagari, "Noto Serif Devanagari", serif);
+  font-size: 1.05rem !important;
+  font-weight: 800;
+  gap: 0.35rem;
+  box-shadow: 0 8px 18px rgba(92, 47, 24, 0.18);
+}
+
+#talks .talk-play-action:hover,
+#talks .talk-play-action:focus-visible {
+  background: linear-gradient(180deg, #d28b2e, #9b5a28) !important;
+  color: #fffaf0 !important;
+}
+
+#bhajans .grid a.group {
+  background:
+    linear-gradient(135deg, rgba(255, 248, 232, 0.96), rgba(250, 238, 216, 0.84)) !important;
+  border-color: rgba(216, 176, 106, 0.34) !important;
+  border-radius: 1.05rem !important;
+  min-height: 5.65rem;
+  overflow: hidden;
+  position: relative;
+}
+
+#bhajans .grid a.group:nth-child(4n) {
+  border-left: 1px solid rgba(216, 176, 106, 0.34) !important;
+}
+
+#bhajans .grid a.group::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  border-radius: 1.05rem 0 0 1.05rem;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#bhajans .grid a.group[data-bhajan-devotion]::after {
+  opacity: 1;
+}
+
+#bhajans .grid a.group[data-bhajan-devotion="ram"]::after {
+  background: #C5792A;
+}
+
+#bhajans .grid a.group[data-bhajan-devotion="krishna"]::after {
+  background: #3F518C;
+}
+
+#bhajans .grid a.group[data-bhajan-devotion="shiv"]::after {
+  background: #667982;
+}
+
+#bhajans .grid a.group > svg:first-child {
+  display: none !important;
+}
+
+#bhajans .grid a.group::before {
+  content: "\0950";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 2.15rem;
+  width: 2.15rem;
+  height: 2.15rem;
+  border: 1px solid rgba(216, 176, 106, 0.72);
+  border-radius: 999px;
+  background: rgba(255, 246, 232, 0.82);
+  color: var(--spiritual-gold);
+  font-family: var(--spiritual-devanagari);
+  font-size: 1.35rem;
+  line-height: 1;
+  text-shadow: 0 1px 0 rgba(92, 47, 24, 0.12);
+}
+
+#bhajans .grid a.group::before {
+  content: none !important;
+  display: none !important;
+}
+
+#bhajans .grid a.group span span:first-child {
+  color: var(--spiritual-accent) !important;
+  font-family: var(--spiritual-heading-serif) !important;
+  font-size: 0.98rem;
+  letter-spacing: 0.01em;
+}
+
+#bhajans .grid a.group span span:nth-child(2) {
+  color: var(--spiritual-accent) !important;
+  font-family: var(--spiritual-devanagari) !important;
+  font-size: 0.86rem !important;
+  font-style: italic;
+  font-weight: 400;
+  opacity: 0.86;
+}
+
+#bhajans .grid a.group > svg:last-child {
+  color: var(--spiritual-gold) !important;
+}
+
+.excerpts-section {
+  padding: 4.5rem 1rem;
+  background:
+    linear-gradient(180deg, rgba(255, 248, 232, 0.96), rgba(242, 220, 184, 0.72));
+}
+
+.excerpts-inner {
+  width: min(66rem, 100%);
+  margin: 0 auto;
+}
+
+.excerpts-heading {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.excerpts-heading p {
+  margin: 0 0 0.25rem;
+  color: rgba(92, 47, 24, 0.68);
+  font-family: var(--spiritual-devanagari, "Noto Serif Devanagari", serif);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.excerpts-heading h2 {
+  margin: 0;
+  color: #6b3414;
+  font-family: var(--spiritual-heading-serif, serif);
+  font-size: clamp(2rem, 5vw, 3.1rem);
+  font-weight: 800;
+}
+
+.excerpts-heading span {
+  display: block;
+  margin-top: 0.35rem;
+  color: rgba(92, 47, 24, 0.72);
+  font-size: 1rem;
+}
+
+nav a[data-excerpts-nav-link="true"] {
+  margin-left: 0.7rem !important;
+  padding-left: 0.9rem !important;
+  border-left: 1px solid rgba(189, 139, 66, 0.34) !important;
+}
+
+.excerpts-player-wrap {
+  margin-bottom: 1.25rem;
+}
+
+.excerpts-player {
+  overflow: hidden;
+  border: 1px solid rgba(189, 139, 66, 0.36);
+  border-radius: 0.85rem;
+  background: #050403;
+  box-shadow: 0 12px 32px rgba(92, 47, 24, 0.16);
+  aspect-ratio: 16 / 9;
+}
+
+.excerpts-player > div,
+.excerpts-player iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.excerpts-now-playing {
+  margin: 0.65rem 0 0;
+  color: #5c2f18;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.excerpts-youtube-open {
+  display: inline-flex;
+  min-height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.65rem;
+  padding: 0 1rem;
+  border: 1px solid rgba(189, 139, 66, 0.34);
+  border-radius: 999px;
+  background: rgba(255, 250, 239, 0.9);
+  color: #6b3414;
+  font-family: var(--spiritual-devanagari, "Noto Serif Devanagari", serif);
+  font-size: 0.98rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.excerpts-filter-wrap {
+  margin: 0.85rem 0 0.7rem;
+  text-align: center;
+}
+
+.excerpts-filter-wrap p {
+  margin: 0 0 0.55rem;
+  color: rgba(92, 47, 24, 0.72);
+  font-family: var(--spiritual-devanagari, "Noto Serif Devanagari", serif);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.excerpts-duration-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.excerpts-duration-tab {
+  min-height: 2.45rem;
+  padding: 0 0.9rem;
+  border: 1px solid rgba(189, 139, 66, 0.4);
+  border-radius: 999px;
+  background: rgba(255, 250, 239, 0.9);
+  color: #6b3414;
+  cursor: pointer;
+  font-family: var(--spiritual-devanagari, "Noto Serif Devanagari", serif);
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.excerpts-duration-tab.is-active,
+.excerpts-duration-tab[aria-selected="true"] {
+  border-color: rgba(145, 80, 35, 0.72);
+  background: linear-gradient(180deg, #c47d24, #915023);
+  color: #fff8e8;
+  box-shadow: 0 8px 18px rgba(145, 80, 35, 0.16);
+}
+
+.excerpts-status {
+  margin: 0.8rem auto 1rem;
+  color: rgba(92, 47, 24, 0.72);
+  font-size: 1rem;
+  text-align: center;
+}
+
+.excerpts-status strong,
+.excerpts-status span {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.excerpts-status button,
+.excerpt-play,
+.excerpt-save,
+.excerpt-youtube-link {
+  min-height: 2.85rem;
+  border: 1px solid rgba(189, 139, 66, 0.38);
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: var(--spiritual-devanagari, "Noto Serif Devanagari", serif);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.excerpts-status button,
+.excerpt-play {
+  background: linear-gradient(180deg, #c47d24, #915023);
+  color: #fff8e8;
+  padding: 0 1.25rem;
+}
+
+.excerpt-save {
+  min-height: 1.85rem;
+  padding: 0 0.7rem;
+  background: rgba(255, 250, 239, 0.94);
+  color: #6b3414;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.excerpt-youtube-link {
+  display: inline-flex;
+  min-height: 1.85rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.7rem;
+  background: rgba(255, 250, 239, 0.94);
+  color: #6b3414;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.excerpt-save[aria-pressed="true"] {
+  border-color: rgba(183, 106, 32, 0.62);
+  background: #f1d8a5;
+}
+
+.excerpts-list,
+.excerpts-saved-list {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.excerpts-saved {
+  margin: 1rem 0 1.35rem;
+  padding: 1rem;
+  border: 1px solid rgba(189, 139, 66, 0.26);
+  border-radius: 0.85rem;
+  background: rgba(255, 250, 239, 0.64);
+}
+
+.excerpts-subhead {
+  margin-bottom: 0.8rem;
+}
+
+.excerpts-subhead h3,
+.excerpts-subhead p {
+  margin: 0;
+}
+
+.excerpts-subhead h3 {
+  color: #6b3414;
+  font-family: var(--spiritual-heading-serif, serif);
+  font-size: 1.35rem;
+}
+
+.excerpts-subhead p {
+  margin-top: 0.2rem;
+  color: rgba(92, 47, 24, 0.68);
+  font-size: 0.95rem;
+}
+
+.excerpt-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid rgba(216, 176, 106, 0.42);
+  border-radius: 0.7rem;
+  background: rgba(255, 250, 239, 0.92);
+  box-shadow: 0 4px 12px rgba(92, 47, 24, 0.05);
+}
+
+.excerpt-card.is-playing {
+  border-color: rgba(145, 80, 35, 0.72);
+  box-shadow: 0 0 0 2px rgba(196, 125, 36, 0.16);
+  background: #fdf0d8;
+}
+
+/* Tap-to-play main row: play icon + title + duration */
+.excerpt-main {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.excerpt-play-icon {
+  display: grid;
+  flex: 0 0 auto;
+  width: 1.85rem;
+  height: 1.85rem;
+  padding-left: 0.12rem;
+  place-items: center;
+  border: 1px solid rgba(189, 139, 66, 0.5);
+  border-radius: 999px;
+  background: rgba(255, 246, 232, 0.9);
+  color: #915023;
+  font-size: 0.78rem;
+}
+
+.excerpt-card.is-playing .excerpt-play-icon {
+  border-color: rgba(145, 80, 35, 0.7);
+  background: linear-gradient(180deg, #c47d24, #915023);
+  color: #fff8e8;
+}
+
+.excerpt-title {
+  display: -webkit-box;
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  color: #5c2f18;
+  font-family: var(--spiritual-heading-serif, serif);
+  font-size: 1.12rem;
+  font-weight: 700;
+  line-height: 1.34;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.excerpt-duration {
+  flex: 0 0 auto;
+  padding: 0.14rem 0.5rem;
+  border: 1px solid rgba(189, 139, 66, 0.4);
+  border-radius: 999px;
+  background: #f5dfb6;
+  color: #5c2f18;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+/* Small secondary actions, aligned under the title (past the play icon) */
+.excerpt-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding-left: 2.45rem;
+}
+
+.excerpt-playlist-note {
+  margin: 0.1rem 0 0;
+  padding-left: 2.45rem;
+  color: rgba(92, 47, 24, 0.72);
+  font-size: 0.9rem;
+}
+
+/* "Show all / Show fewer" toggle that keeps the default list short. */
+.excerpts-show-more {
+  justify-self: center;
+  min-height: 2.4rem;
+  margin-top: 0.4rem;
+  padding: 0 1.4rem;
+  border: 1px solid rgba(189, 139, 66, 0.5);
+  border-radius: 999px;
+  background: rgba(255, 250, 239, 0.94);
+  color: #6b3414;
+  cursor: pointer;
+  font-family: var(--spiritual-devanagari, "Noto Serif Devanagari", serif);
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.excerpts-show-more:hover,
+.excerpts-show-more:focus-visible {
+  border-color: rgba(145, 80, 35, 0.72);
+  background: #f5e6c9;
+}
+
+.excerpts-empty {
+  margin: 0;
+  padding: 1rem;
+  border: 1px dashed rgba(189, 139, 66, 0.42);
+  border-radius: 0.85rem;
+  background: rgba(255, 250, 239, 0.7);
+  color: rgba(92, 47, 24, 0.72);
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .excerpts-section {
+    padding: 3.2rem 0.85rem;
+  }
+
+  .excerpt-title {
+    font-size: 1.06rem;
+  }
+
+  .excerpts-duration-tabs {
+    justify-content: flex-start;
+  }
+
+  .excerpts-duration-tab {
+    flex: 1 1 calc(50% - 0.5rem);
+  }
+}
+
+@media (max-width: 640px) {
+  #talks a.talk-card-with-actions {
+    gap: 0.85rem !important;
+    grid-template-columns: 1fr !important;
+    grid-template-areas:
+      "lead"
+      "copy"
+      "actions" !important;
+    padding: 0.9rem !important;
+  }
+
+  #talks a.talk-card-with-actions > div:first-child:not(.flex-1) {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  #talks a.talk-card-with-actions > .talk-preview {
+    min-height: 11rem;
+  }
+
+  #talks .category-glyph-badge {
+    min-width: 2.1rem;
+    height: 1.9rem;
+    font-size: 0.82rem !important;
+  }
+}
+
+/*
+  Mobile polish for Satsangs page: slightly more compact header area,
+  clearer tabs/description, and no right-side category badge on cards.
+*/
+
+#talks h2::before {
+  content: none !important;
+  display: none !important;
+}
+
+#talks .mb-8.text-center {
+  margin-bottom: 1.65rem !important;
+}
+
+#talks .mb-8.text-center h2 {
+  gap: 0.2rem !important;
+  margin-bottom: 0.45rem !important;
+}
+
+#talks .mb-8.text-center h2 > span > span:first-child {
+  color: transparent !important;
+  font-size: 0 !important;
+  line-height: 1 !important;
+  margin-bottom: 0.1rem;
+}
+
+#talks .mb-8.text-center h2 > span > span:first-child::before {
+  content: "सत्संग";
+  color: color-mix(in srgb, var(--spiritual-accent) 76%, #5c2f18);
+  display: inline-block;
+  font-family: var(--spiritual-devanagari);
+  font-size: 0.92rem;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+}
+
+#talks .mb-8.text-center h2 > span > span:nth-child(2) {
+  padding-block: 0.35rem !important;
+}
+
+#talks .mb-8.text-center > div.relative {
+  margin-bottom: 0.45rem !important;
+  padding-block: 0.85rem !important;
+}
+
+#talks .mb-8.text-center > p {
+  color: rgba(92, 47, 24, 0.78) !important;
+  font-weight: 500;
+}
+
+#talks .mb-7.overflow-x-auto {
+  margin-left: -1rem;
+  margin-right: -1rem;
+  padding-inline: 1rem;
+  scrollbar-color: rgba(216, 176, 106, 0.72) transparent;
+  scrollbar-width: thin;
+}
+
+#talks .mb-7.overflow-x-auto::-webkit-scrollbar {
+  height: 4px;
+}
+
+#talks .mb-7.overflow-x-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#talks .mb-7.overflow-x-auto::-webkit-scrollbar-thumb {
+  background: rgba(216, 176, 106, 0.72);
+  border-radius: 999px;
+}
+
+#talks .satsang-category-scroll {
+  padding-left: 0.25rem !important;
+  padding-right: 1.25rem !important;
+}
+
+#satsang-tab-scroll-hint {
+  display: none;
+}
+
+#talks .satsang-category-scroll-shell {
+  position: relative;
+}
+
+#talks .satsang-category-scroll-shell::before,
+#talks .satsang-category-scroll-shell::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  display: none;
+  width: 2.15rem;
+  pointer-events: none;
+}
+
+#talks .satsang-category-scroll-shell::before {
+  left: 0;
+  background: linear-gradient(90deg, #efd6ad 18%, rgba(239, 214, 173, 0));
+}
+
+#talks .satsang-category-scroll-shell::after {
+  right: 0;
+  background: linear-gradient(270deg, #efd6ad 18%, rgba(239, 214, 173, 0));
+}
+
+#satsang-device-privacy {
+  align-items: center;
+  color: rgba(92, 47, 24, 0.66);
+  display: flex;
+  gap: 0.65rem;
+  justify-content: center;
+  margin: 1.35rem auto 0;
+  max-width: min(26rem, 88vw);
+  text-align: center;
+}
+
+#satsang-device-privacy span {
+  background: linear-gradient(90deg, transparent, rgba(216, 176, 106, 0.68));
+  flex: 1 1 3rem;
+  height: 1px;
+}
+
+#satsang-device-privacy span:last-child {
+  background: linear-gradient(90deg, rgba(216, 176, 106, 0.68), transparent);
+}
+
+#satsang-device-privacy p {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  white-space: normal;
+}
+
+#talks .category-glyph-badge {
+  display: none !important;
+}
+
+@media (max-width: 640px) {
+  #talks {
+    padding-top: 4.25rem !important;
+    padding-bottom: 4.5rem !important;
+  }
+
+  #talks .mb-8.text-center {
+    margin-bottom: 1.35rem !important;
+  }
+
+  #talks .mb-8.text-center h2 > span {
+    gap: 0.1rem !important;
+  }
+
+  #talks .mb-8.text-center h2 > span > span:nth-child(2) {
+    font-size: 1.95rem !important;
+    line-height: 1.36 !important;
+    padding-block: 0.2rem !important;
+  }
+
+  #talks .mb-8.text-center > div.relative {
+    border-radius: 1rem !important;
+    padding: 0.75rem 1.05rem !important;
+  }
+
+  #talks .mb-8.text-center > div.relative > p {
+    font-size: 0.9rem !important;
+    line-height: 1.75 !important;
+  }
+
+  #talks .mb-8.text-center > p {
+    max-width: 20rem !important;
+  }
+
+  #talks .mb-7.overflow-x-auto {
+    margin-bottom: 1.25rem !important;
+    padding-top: 0.15rem !important;
+  }
+
+  #talks .mb-7 button {
+    padding: 0.48rem 0.85rem !important;
+  }
+
+  #talks .satsang-category-scroll {
+    min-width: max-content !important;
+    padding-bottom: 0.45rem !important;
+  }
+
+  #satsang-tab-scroll-hint {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    margin: -0.1rem auto 0.55rem;
+    padding: 0.18rem 0.72rem;
+    border: 1px solid rgba(189, 139, 66, 0.3);
+    border-radius: 999px;
+    background: rgba(255, 248, 232, 0.62);
+    color: rgba(92, 47, 24, 0.68);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+
+  #talks .satsang-category-scroll-shell::before,
+  #talks .satsang-category-scroll-shell::after {
+    display: block;
+  }
+
+  #talks a.talk-card-with-actions {
+    max-width: 100%;
+  }
+}
+
+/*
+  Charan-Vandan carousel polish: keep the existing cream frame,
+  add only a soft image border, and make navigation arrows quieter.
+*/
+
+#charan-vandan .relative.overflow-hidden.rounded-\[1\.35rem\] {
+  border-color: rgba(216, 176, 106, 0.42) !important;
+}
+
+#charan-vandan figure img,
+#charan-vandan .relative.overflow-hidden.rounded-\[1\.35rem\] img {
+  border: 0 !important;
+  box-shadow: 0 5px 14px rgba(92, 47, 24, 0.055);
+}
+
+#charan-vandan button[aria-label="Show next Charan-Vandan photo"],
+#charan-vandan button[aria-label="Show previous Charan-Vandan photo"] {
+  width: 3rem !important;
+  height: 3rem !important;
+  border-width: 1px !important;
+  border-color: rgba(216, 176, 106, 0.56) !important;
+  background: rgba(255, 248, 232, 0.82) !important;
+  color: rgba(138, 74, 26, 0.82) !important;
+  box-shadow: 0 6px 16px rgba(92, 47, 24, 0.13) !important;
+}
+
+#charan-vandan button[aria-label="Show next Charan-Vandan photo"]:hover,
+#charan-vandan button[aria-label="Show previous Charan-Vandan photo"]:hover {
+  background: rgba(255, 241, 216, 0.92) !important;
+  color: var(--spiritual-accent) !important;
+}
+
+#charan-vandan button[aria-label="Show next Charan-Vandan photo"] svg,
+#charan-vandan button[aria-label="Show previous Charan-Vandan photo"] svg {
+  width: 1.65rem !important;
+  height: 1.65rem !important;
+  stroke-width: 2.15 !important;
+}
+
+@media (min-width: 640px) {
+  #charan-vandan button[aria-label="Show next Charan-Vandan photo"],
+  #charan-vandan button[aria-label="Show previous Charan-Vandan photo"] {
+    width: 3.65rem !important;
+    height: 3.65rem !important;
+  }
+
+  #charan-vandan button[aria-label="Show next Charan-Vandan photo"] svg,
+  #charan-vandan button[aria-label="Show previous Charan-Vandan photo"] svg {
+    width: 1.95rem !important;
+    height: 1.95rem !important;
+  }
+}
+
+@media (max-width: 640px) {
+  #charan-vandan figure img,
+  #charan-vandan .relative.overflow-hidden.rounded-\[1\.35rem\] img {
+    box-shadow: 0 4px 12px rgba(92, 47, 24, 0.07);
+  }
+
+  #charan-vandan button[aria-label="Show next Charan-Vandan photo"],
+  #charan-vandan button[aria-label="Show previous Charan-Vandan photo"] {
+    width: 2.65rem !important;
+    height: 2.65rem !important;
+  }
+
+  #charan-vandan button[aria-label="Show next Charan-Vandan photo"] {
+    right: 0.6rem !important;
+  }
+
+  #charan-vandan button[aria-label="Show previous Charan-Vandan photo"] {
+    left: 0.6rem !important;
+  }
+}
+
+.charitra-inserted-photo {
+  display: block;
+  width: 100%;
+  break-inside: avoid;
+  cursor: zoom-in;
+  overflow: hidden;
+  border: 1px solid rgba(216, 176, 106, 0.38);
+  border-radius: 0.75rem;
+  background: rgba(255, 248, 232, 0.72);
+  padding: 0;
+  text-align: left;
+  box-shadow: 0 8px 18px rgba(92, 47, 24, 0.055);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.charitra-inserted-photo:hover {
+  transform: translateY(-0.15rem);
+  border-color: rgba(216, 176, 106, 0.62);
+  box-shadow: 0 12px 24px rgba(92, 47, 24, 0.08);
+}
+
+.charitra-inserted-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.charitra-inserted-photo p {
+  margin: 0;
+  border-top: 1px solid rgba(216, 176, 106, 0.28);
+  padding: 0.7rem 0.85rem;
+  color: var(--spiritual-accent);
+  font-family: var(--spiritual-devanagari);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.charitra-viewer-caption {
+  margin: 0.85rem auto 0;
+  max-width: min(92vw, 42rem);
+  border: 1px solid rgba(216, 176, 106, 0.42);
+  border-radius: 0.7rem;
+  background: rgba(255, 248, 232, 0.94);
+  padding: 0.65rem 1rem;
+  color: #8a4f16;
+  font-family: var(--spiritual-devanagari);
+  font-size: clamp(1.05rem, 2.8vw, 1.45rem);
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: center;
+}
+
+/* Charan-Vandan carousel: make the controls quieter and more devotional. */
+#charan-vandan .charan-carousel-counter {
+  background: rgba(255, 248, 232, 0.76) !important;
+  border: 1px solid rgba(216, 176, 106, 0.48) !important;
+  border-radius: 999px !important;
+  color: #b7792a !important;
+  box-shadow: none !important;
+  padding: 0.16rem 0.54rem !important;
+  font-family: var(--spiritual-devanagari, "Tiro Devanagari Sanskrit", serif) !important;
+  font-size: 0.72rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.1em !important;
+  line-height: 1.25 !important;
+  text-shadow: none !important;
+}
+
+#charan-vandan span.absolute.right-4.top-4.rounded-full {
+  background: rgba(255, 248, 232, 0.76) !important;
+  border: 1px solid rgba(216, 176, 106, 0.48) !important;
+  color: #b7792a !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+#charan-vandan figcaption {
+  border-top-color: transparent !important;
+  padding-top: 0.92rem !important;
+}
+
+#charan-vandan figcaption::before {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 1px;
+  margin: 0 auto 0.62rem;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(216, 176, 106, 0.85),
+    transparent
+  );
+}
+
+#charan-vandan figcaption p {
+  font-style: italic !important;
+}
+
+#charan-vandan [aria-label="Charan-Vandan photo position"] button {
+  position: relative;
+  width: 1.1rem !important;
+  height: 1.1rem !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: rgba(183, 106, 32, 0.58) !important;
+  font-size: 0 !important;
+  box-shadow: none !important;
+}
+
+#charan-vandan [aria-label="Charan-Vandan photo position"] button::before {
+  content: "✦";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 0.72rem;
+  line-height: 1;
+}
+
+#charan-vandan [aria-label="Charan-Vandan photo position"] button[aria-current="true"],
+#charan-vandan [aria-label="Charan-Vandan photo position"] button.bg-\[\#B76A20\],
+#charan-vandan [aria-label="Charan-Vandan photo position"] button.charan-carousel-dot-active {
+  color: #b76a20 !important;
+}
+
+#charan-vandan [aria-label="Charan-Vandan photo position"] button[aria-current="true"]::before,
+#charan-vandan [aria-label="Charan-Vandan photo position"] button.bg-\[\#B76A20\]::before,
+#charan-vandan [aria-label="Charan-Vandan photo position"] button.charan-carousel-dot-active::before {
+  text-shadow: 0 0 0.45px currentColor;
+}
+
+/*
+  Ashtottarshatanamavali: soften the list so it reads like stotra recitation,
+  not a spreadsheet.
+*/
+@counter-style stuti-devanagari {
+  system: numeric;
+  symbols: "०" "१" "२" "३" "४" "५" "६" "७" "८" "९";
+  suffix: ". ";
+}
+
+#stuti .max-w-5xl > div:first-child .grid.grid-cols-1.gap-1 {
+  counter-reset: stuti-name;
+}
+
+#stuti .max-w-5xl > div:first-child .grid.grid-cols-1.gap-1 > div {
+  counter-increment: stuti-name;
+  position: relative;
+}
+
+#stuti .max-w-5xl > div:first-child .grid.grid-cols-1.gap-1 > div > span:first-child {
+  color: transparent !important;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.08em;
+  position: relative;
+}
+
+#stuti .max-w-5xl > div:first-child .grid.grid-cols-1.gap-1 > div > span:first-child::before {
+  content: counter(stuti-name, stuti-devanagari) ".";
+  color: #a8895a;
+  font-family: var(--spiritual-devanagari, "Tiro Devanagari Sanskrit", serif);
+  font-size: 0.78rem;
+  font-weight: 600;
+  left: 0;
+  letter-spacing: 0.02em;
+  position: absolute;
+  top: 0;
+}
+
+#stuti .max-w-5xl > div:first-child .grid.grid-cols-1.gap-1 > div:nth-child(9n)::after {
+  content: "✦";
+  display: block;
+  margin: 0.56rem auto 0.24rem;
+  width: 100%;
+  color: rgba(216, 176, 106, 0.78);
+  font-size: 0.72rem;
+  line-height: 1;
+  text-align: center;
+}
+
+#stuti .max-w-5xl > div:first-child .grid.grid-cols-1.gap-1 > div:nth-child(27n)::after {
+  color: rgba(183, 106, 32, 0.72);
+  font-size: 0.82rem;
+}
+
+/*
+  Virah-Smaran tribute card: keep scanned letters in the warm devotional palette.
+*/
+#shraddanjali .max-w-2xl.mx-auto.rounded-2xl .absolute.bottom-3.right-3 {
+  border-color: rgba(216, 176, 106, 0.52) !important;
+  background: rgba(255, 248, 232, 0.96) !important;
+  color: #8a4a1a !important;
+  box-shadow: 0 8px 18px rgba(92, 47, 24, 0.12) !important;
+}
+
+#shraddanjali .max-w-2xl.mx-auto.rounded-2xl .absolute.bottom-3.right-3 svg {
+  display: none !important;
+}
+
+#shraddanjali .max-w-2xl.mx-auto.rounded-2xl .absolute.bottom-3.right-3::before {
+  content: "⛶";
+  color: rgba(216, 176, 106, 0.96);
+  font-size: 0.92rem;
+  line-height: 1;
+}
+
+#shraddanjali .max-w-2xl.mx-auto.rounded-2xl > .flex.items-center.gap-3 > .w-9.h-9.rounded-full {
+  border: 1px solid rgba(216, 176, 106, 0.58) !important;
+  background: radial-gradient(circle at 35% 28%, #fff8e8 0%, #f6dfb7 48%, #d8b06a 100%) !important;
+  color: transparent !important;
+  font-size: 0 !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 250, 236, 0.65),
+    0 5px 12px rgba(92, 47, 24, 0.12);
+  position: relative;
+}
+
+#shraddanjali .max-w-2xl.mx-auto.rounded-2xl > .flex.items-center.gap-3 > .w-9.h-9.rounded-full::before {
+  content: "ब";
+  color: #8a4a1a;
+  font-family: var(--spiritual-devanagari, "Tiro Devanagari Sanskrit", serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1;
+}
+#talks {
+  background: #f2dfbb !important;
+}
+
+#talks .mb-8.text-center {
+  position: relative;
+  margin-bottom: 2.1rem !important;
+  padding-top: 0.65rem;
+  isolation: isolate;
+}
+
+#talks .mb-8.text-center::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0.15rem;
+  z-index: -1;
+  width: min(16rem, 72vw);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border: 1px solid rgba(150, 94, 42, 0.13);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, transparent 0 42%, rgba(150, 94, 42, 0.08) 42.5% 43%, transparent 43.5%),
+    repeating-conic-gradient(from 8deg, rgba(150, 94, 42, 0.1) 0deg 1.3deg, transparent 1.3deg 12deg);
+  opacity: 0.72;
+}
+
+#talks h2 {
+  margin-bottom: 0.35rem !important;
+}
+
+#talks h2 > span {
+  gap: 0 !important;
+}
+
+#talks h2 > span > span:first-child {
+  display: none !important;
+}
+
+#talks h2 > span > span:nth-child(2) {
+  display: inline-flex !important;
+  min-height: auto !important;
+  gap: 0.28rem !important;
+  padding: 0.1rem 0.3rem 0.35rem !important;
+  background: none !important;
+  color: #8a4a1a !important;
+  -webkit-text-fill-color: #8a4a1a;
+  font-family: var(--spiritual-devanagari, "Tiro Devanagari Sanskrit", serif) !important;
+  font-size: clamp(1.55rem, 4.6vw, 2.45rem) !important;
+  font-style: normal !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+  text-shadow: 0 1px 0 rgba(255, 250, 238, 0.72);
+}
+
+#talks h2 > span > span:nth-child(2) > span[aria-hidden="true"] {
+  color: #9d5c24 !important;
+  font-size: 0.78rem !important;
+  opacity: 0.82;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 {
+  max-width: min(38rem, calc(100vw - 2rem)) !important;
+  margin-top: 0.08rem !important;
+  margin-bottom: 0.85rem !important;
+  overflow: visible !important;
+  border: 0 !important;
+  border-left: 3px solid #a63d32 !important;
+  border-right: 3px solid #a63d32 !important;
+  border-radius: 0 !important;
+  background: rgba(255, 252, 244, 0.96) !important;
+  padding: 1.05rem 1.55rem !important;
+  box-shadow: 0 8px 18px rgba(111, 65, 28, 0.08) !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2::before,
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2::after {
+  content: "";
+  position: absolute;
+  left: 1.55rem;
+  right: 1.55rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(180, 123, 52, 0.42), transparent);
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2::before {
+  top: 0.72rem;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2::after {
+  bottom: 0.72rem;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > svg {
+  display: none !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 p {
+  color: #2f1c12 !important;
+  font-family: var(--spiritual-devanagari, "Tiro Devanagari Sanskrit", serif) !important;
+  font-size: clamp(0.95rem, 2.6vw, 1.22rem) !important;
+  font-weight: 700 !important;
+  line-height: 1.78 !important;
+  text-align: center !important;
+}
+
+#talks .mb-8.text-center > p {
+  max-width: 34rem !important;
+  color: rgba(121, 72, 31, 0.72) !important;
+  font-family: var(--font-body, Georgia, serif) !important;
+  font-size: 0.74rem !important;
+  font-style: italic !important;
+  line-height: 1.5 !important;
+}
+
+#talks .mb-8.text-center .divider-ornament {
+  display: none !important;
+}
+
+@media (max-width: 640px) {
+  #talks .mb-8.text-center > div.relative.mx-auto.mb-2 {
+    padding: 0.9rem 0.95rem !important;
+  }
+}
+
+/*
+  Satsang banner v2: large cream shloka panel with corner ornaments.
+*/
+#talks {
+  background: #ecd8b7 !important;
+}
+
+#talks .mb-8.text-center {
+  margin-bottom: 2.7rem !important;
+  padding-top: 0.25rem !important;
+}
+
+#talks .mb-8.text-center::before {
+  display: none !important;
+}
+
+#talks h2 {
+  margin-bottom: 1.35rem !important;
+}
+
+#talks h2 > span > span:nth-child(2) {
+  gap: 1rem !important;
+  color: #9a5f18 !important;
+  -webkit-text-fill-color: #9a5f18;
+  font-size: clamp(2.05rem, 5vw, 3.1rem) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  text-shadow: none !important;
+}
+
+#talks h2 > span > span:nth-child(2) > span[aria-hidden="true"] {
+  color: #b77826 !important;
+  font-size: 1rem !important;
+  opacity: 1 !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 {
+  max-width: min(47rem, calc(100vw - 2rem)) !important;
+  margin-top: 0 !important;
+  margin-bottom: 2rem !important;
+  border: 0 !important;
+  border-radius: 1.35rem !important;
+  background: rgba(255, 250, 239, 0.9) !important;
+  padding: 4.45rem 2.1rem 3.7rem !important;
+  box-shadow: 0 18px 38px rgba(111, 65, 28, 0.08) !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2::before,
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2::after {
+  left: 50% !important;
+  right: auto !important;
+  width: 9.2rem !important;
+  height: 1px !important;
+  transform: translateX(-50%) !important;
+  background: linear-gradient(90deg, transparent, rgba(176, 122, 44, 0.34), transparent) !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2::before {
+  top: 3.25rem !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2::after {
+  bottom: 3.35rem !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 {
+  position: relative !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > p::before,
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > p::after {
+  content: "☙";
+  position: absolute;
+  left: 50%;
+  color: #a86d1d;
+  font-family: Georgia, serif;
+  font-size: 1.1rem;
+  line-height: 1;
+  transform: translateX(-50%);
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > p::before {
+  top: 2.78rem;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > p::after {
+  bottom: 2.9rem;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > span,
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 .satsang-corner {
+  display: none !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 p {
+  max-width: 36rem !important;
+  margin-inline: auto !important;
+  color: #332111 !important;
+  font-size: clamp(1.28rem, 3.1vw, 1.72rem) !important;
+  font-weight: 500 !important;
+  line-height: 2.05 !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 p {
+  position: relative;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 p span,
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 p br {
+  display: initial;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 {
+  background-image:
+    linear-gradient(#a86d1d, #a86d1d),
+    linear-gradient(#a86d1d, #a86d1d),
+    linear-gradient(#a86d1d, #a86d1d),
+    linear-gradient(#a86d1d, #a86d1d);
+  background-repeat: no-repeat;
+  background-size: 0.7rem 0.7rem;
+  background-position:
+    1.12rem 1.1rem,
+    calc(100% - 1.12rem) 1.1rem,
+    1.12rem calc(100% - 1.1rem),
+    calc(100% - 1.12rem) calc(100% - 1.1rem);
+  background-blend-mode: color-burn;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > p {
+  white-space: pre-line !important;
+}
+
+#talks .mb-8.text-center > p {
+  max-width: 38rem !important;
+  color: rgba(121, 72, 31, 0.78) !important;
+  font-size: clamp(0.86rem, 2vw, 1rem) !important;
+}
+
+@media (max-width: 640px) {
+  #talks h2 > span > span:nth-child(2) {
+    font-size: 2rem !important;
+  }
+
+  #talks .mb-8.text-center > div.relative.mx-auto.mb-2 {
+    border-radius: 1rem !important;
+    padding: 3.8rem 1rem 3.25rem !important;
+  }
+
+  #talks .mb-8.text-center > div.relative.mx-auto.mb-2 p {
+    font-size: 1.05rem !important;
+    line-height: 1.9 !important;
+  }
+}
+
+/*
+  Satsang banner compact pass.
+*/
+#talks .mb-8.text-center {
+  margin-bottom: 1.65rem !important;
+  padding-top: 0 !important;
+}
+
+#talks h2 {
+  margin-bottom: 0.7rem !important;
+}
+
+#talks h2 > span > span:nth-child(2) {
+  font-size: clamp(1.65rem, 3.8vw, 2.45rem) !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 {
+  max-width: min(34rem, calc(100vw - 2.25rem)) !important;
+  margin-bottom: 1.1rem !important;
+  border-radius: 1rem !important;
+  padding: 2.8rem 1.5rem 2.35rem !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2::before {
+  top: 1.9rem !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2::after {
+  bottom: 1.95rem !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > p::before {
+  top: 1.42rem !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > p::after {
+  bottom: 1.5rem !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 p {
+  max-width: 30rem !important;
+  font-size: clamp(1.02rem, 2.35vw, 1.34rem) !important;
+  line-height: 1.72 !important;
+}
+
+#talks .mb-8.text-center > p {
+  font-size: 0.82rem !important;
+  margin-bottom: 0 !important;
+}
+
+#talks .mb-7.overflow-x-auto {
+  margin-bottom: 1.55rem !important;
+}
+
+@media (max-width: 640px) {
+  #talks .mb-8.text-center > div.relative.mx-auto.mb-2 {
+    max-width: calc(100vw - 1.4rem) !important;
+    padding: 2.5rem 0.9rem 2.15rem !important;
+  }
+
+  #talks .mb-8.text-center > div.relative.mx-auto.mb-2 p {
+    font-size: 0.98rem !important;
+    line-height: 1.72 !important;
+  }
+}
+
+/*
+  Charitra Jhalak: Vedant Vedya quote banner.
+*/
+.vedant-vedya-banner {
+  break-inside: avoid;
+  width: min(100%, 42rem);
+  margin: 0 auto 1.45rem;
+  padding: 1.35rem 1.25rem 1.2rem;
+  border: 1px solid rgba(189, 139, 66, 0.28);
+  border-left: 4px solid #bd8b42;
+  border-right: 4px solid #bd8b42;
+  border-radius: 0.9rem;
+  background:
+    linear-gradient(135deg, rgba(255, 253, 247, 0.96), rgba(250, 236, 212, 0.9));
+  box-shadow: 0 12px 24px rgba(104, 66, 41, 0.1);
+  color: #5c2f18;
+  text-align: center;
+}
+
+.vedant-vedya-banner__quote {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.1rem, 2.5vw, 1.45rem);
+  font-style: italic;
+  line-height: 1.55;
+}
+
+.vedant-vedya-banner__source {
+  margin: 0.35rem 0 0;
+  color: rgba(92, 47, 24, 0.76);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.95rem;
+  font-style: italic;
+}
+
+.vedant-vedya-banner__gap {
+  width: 8rem;
+  height: 1px;
+  margin: 1.25rem auto 1.05rem;
+  background: linear-gradient(90deg, transparent, rgba(189, 139, 66, 0.48), transparent);
+}
+
+.vedant-vedya-banner__reply {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/*
+  Satsang compact continue listening and in-app player.
+*/
+#talks a.group > div.flex-1 > p {
+  display: inline-flex !important;
+  width: fit-content !important;
+  max-width: 100% !important;
+  align-items: center !important;
+  margin-top: 0.28rem !important;
+  padding: 0.22rem 0.58rem !important;
+  border: 1px solid rgba(189, 139, 66, 0.34) !important;
+  border-radius: 999px !important;
+  color: #7b3f12 !important;
+  font-size: 0.78rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.02em !important;
+  line-height: 1.25 !important;
+  background: linear-gradient(135deg, rgba(255, 247, 229, 0.96), rgba(246, 225, 186, 0.72)) !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45), 0 4px 10px rgba(104, 66, 41, 0.07) !important;
+}
+
+#talks a[data-custom-ramayana-playlist],
+#talks a[data-custom-bhagwatam-playlist] {
+  min-height: 5.15rem !important;
+  margin-top: 1rem !important;
+  margin-bottom: 0 !important;
+  transform: none !important;
+}
+
+@media (max-width: 640px) {
+  #talks a.group > div.flex-1 > p {
+    font-size: 0.74rem !important;
+    white-space: normal !important;
+  }
+}
+
+#recently-listened {
+  max-width: min(34rem, calc(100vw - 2rem)) !important;
+  margin: 0 auto 1.05rem !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.continue-listening-card {
+  display: grid;
+  width: 100%;
+  gap: 0.2rem;
+  padding: 0.78rem 1rem;
+  border: 1px solid rgba(189, 139, 66, 0.32);
+  border-radius: 0.85rem;
+  background: rgba(255, 250, 239, 0.88);
+  box-shadow: 0 8px 18px rgba(104, 66, 41, 0.08);
+  color: #5c2f18;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.continue-listening-card:hover,
+.continue-listening-card:focus-visible {
+  border-color: rgba(189, 139, 66, 0.58);
+  box-shadow: 0 12px 22px rgba(104, 66, 41, 0.12);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.continue-listening-main {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.94rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.continue-listening-detail {
+  overflow: hidden;
+  color: rgba(92, 47, 24, 0.72);
+  font-size: 0.78rem;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.satsang-progress-note {
+  margin: 0.7rem 0 0;
+  color: rgba(92, 47, 24, 0.68);
+  font-size: 0.76rem;
+  font-style: italic;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.satsang-progress-note--compact {
+  margin-top: 0.38rem;
+  font-size: 0.7rem;
+}
+
+#satsang-player-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(42, 22, 9, 0.62);
+  backdrop-filter: blur(6px);
+}
+
+.satsang-player-panel {
+  width: min(58rem, 100%);
+  max-height: min(92vh, 44rem);
+  overflow: auto;
+  padding: 1rem;
+  border: 1px solid rgba(216, 176, 106, 0.42);
+  border-radius: 1rem;
+  background: #fff8ea;
+  box-shadow: 0 24px 60px rgba(38, 18, 6, 0.34);
+}
+
+.satsang-player-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.satsang-player-kicker {
+  margin: 0 0 0.15rem;
+  color: rgba(92, 47, 24, 0.62);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.satsang-player-top h3 {
+  margin: 0;
+  color: #5c2f18;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1rem, 2.5vw, 1.28rem);
+  line-height: 1.28;
+}
+
+.satsang-player-close {
+  display: grid;
+  flex: 0 0 auto;
+  width: 2.2rem;
+  height: 2.2rem;
+  place-items: center;
+  border: 1px solid rgba(189, 139, 66, 0.28);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: #5c2f18;
+  cursor: pointer;
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+#satsang-youtube-player {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background: #1d120b;
+}
+
+.satsang-devotional-context {
+  display: grid;
+  grid-template-columns: minmax(8rem, 13rem) minmax(0, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid rgba(189, 139, 66, 0.28);
+  border-radius: 0.85rem;
+  background: linear-gradient(135deg, #fff4df, #f8e3bd);
+}
+
+.satsang-devotional-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid rgba(145, 80, 25, 0.22);
+  border-radius: 0.7rem;
+  background: #f4dfb9;
+  box-shadow: 0 10px 22px rgba(92, 47, 24, 0.12);
+}
+
+.satsang-devotional-copy {
+  min-width: 0;
+}
+
+.satsang-devotional-kicker {
+  margin: 0 0 0.25rem;
+  color: rgba(92, 47, 24, 0.64);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.satsang-devotional-copy h4 {
+  margin: 0;
+  color: #5c2f18;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.1rem, 2.8vw, 1.45rem);
+  line-height: 1.25;
+}
+
+.satsang-devotional-note {
+  margin: 0.45rem 0 0;
+  color: rgba(92, 47, 24, 0.76);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.satsang-devotional-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.85rem;
+}
+
+.satsang-devotional-status {
+  display: inline-flex;
+  min-height: 2.65rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.42rem;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid rgba(145, 91, 35, 0.3);
+  border-radius: 999px;
+  background: rgba(255, 250, 239, 0.88);
+  color: #744516;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.satsang-devotional-status:hover,
+.satsang-devotional-status:focus-visible {
+  border-color: rgba(145, 91, 35, 0.58);
+  outline: none;
+  background: #fff8e8;
+}
+
+.satsang-devotional-status.is-active,
+.satsang-devotional-status.has-note {
+  border-color: #b67525;
+  background: #ebcf98;
+  color: #4e260b;
+}
+
+.satsang-player-controls {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 0.9rem;
+}
+
+.satsang-player-controls button,
+.satsang-toggle-list,
+.satsang-talk-list-item {
+  min-height: 2.75rem;
+  border: 1px solid rgba(189, 139, 66, 0.34);
+  border-radius: 999px;
+  background: rgba(255, 250, 239, 0.92);
+  color: #5c2f18;
+  cursor: pointer;
+  font-family: var(--spiritual-devanagari, "Noto Serif Devanagari", serif);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.satsang-player-controls button:hover,
+.satsang-toggle-list:hover,
+.satsang-talk-list-item:hover,
+.satsang-player-controls button:focus-visible,
+.satsang-toggle-list:focus-visible,
+.satsang-talk-list-item:focus-visible {
+  border-color: rgba(189, 139, 66, 0.64);
+  outline: none;
+  background: #fff4dd;
+}
+
+.satsang-player-controls button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.satsang-current-talk {
+  min-width: 5.8rem;
+  color: rgba(92, 47, 24, 0.76);
+  font-family: var(--spiritual-devanagari, "Noto Serif Devanagari", serif);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.satsang-toggle-list {
+  display: block;
+  width: min(16rem, 100%);
+  margin: 0.78rem auto 0;
+  background: rgba(250, 236, 212, 0.8);
+}
+
+.satsang-player-controls .satsang-toggle-list {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  margin: 0;
+  padding: 0 1.05rem;
+}
+
+.satsang-talk-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7.4rem, 1fr));
+  gap: 0.55rem;
+  max-height: 14rem;
+  overflow: auto;
+  margin-top: 0.75rem;
+  padding: 0.65rem;
+  border: 1px solid rgba(189, 139, 66, 0.22);
+  border-radius: 0.85rem;
+  background: rgba(255, 252, 246, 0.8);
+}
+
+.satsang-talk-list[hidden] {
+  display: none !important;
+}
+
+.satsang-talk-list-item[aria-current="true"] {
+  border-color: rgba(154, 95, 24, 0.72);
+  background: #f1d8a8;
+}
+
+.satsang-talk-list-loading {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: rgba(92, 47, 24, 0.7);
+  font-family: var(--spiritual-devanagari, "Noto Serif Devanagari", serif);
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.satsang-youtube-open {
+  display: block;
+  width: fit-content;
+  margin: 0.75rem auto 0;
+  color: #8a541f;
+  font-size: 0.78rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  #recently-listened {
+    max-width: calc(100vw - 1.25rem) !important;
+  }
+
+  .continue-listening-card {
+    padding: 0.68rem 0.82rem;
+  }
+
+  .continue-listening-main {
+    font-size: 0.88rem;
+  }
+
+  .continue-listening-detail {
+    font-size: 0.72rem;
+  }
+
+  #satsang-player-dialog {
+    padding: 0.55rem;
+  }
+
+  .satsang-player-panel {
+    padding: 0.75rem;
+    border-radius: 0.8rem;
+  }
+
+  .satsang-player-controls {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .satsang-devotional-context {
+    grid-template-columns: 1fr;
+    padding: 0.85rem;
+  }
+
+  .satsang-devotional-image {
+    max-height: 15rem;
+  }
+
+  .satsang-devotional-status {
+    flex: 1 1 8rem;
+    min-height: 2.9rem;
+  }
+
+  .satsang-current-talk {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    min-width: 0;
+    order: -1;
+  }
+
+  .satsang-player-controls button,
+  .satsang-toggle-list,
+  .satsang-talk-list-item {
+    min-height: 2.95rem;
+    font-size: 0.96rem;
+  }
+}
+
+/*
+  Final Satsang title and banner clarity pass.
+*/
+#talks h2 {
+  margin-bottom: 0.95rem !important;
+}
+
+#talks h2 > span > span:nth-child(2) {
+  color: #9a5f18 !important;
+  -webkit-text-fill-color: #9a5f18 !important;
+  font-size: clamp(3.05rem, 8vw, 5.35rem) !important;
+  font-weight: 500 !important;
+  line-height: 1.08 !important;
+  text-align: center !important;
+}
+
+#talks h2 .satsang-main-title {
+  display: inline-block !important;
+  color: #9a5f18 !important;
+  -webkit-text-fill-color: #9a5f18 !important;
+  font-family: var(--spiritual-devanagari, "Tiro Devanagari Sanskrit", serif) !important;
+  font-size: clamp(3.25rem, 8.8vw, 5.75rem) !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.05 !important;
+  text-align: center !important;
+  text-shadow: none !important;
+  text-transform: none !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 svg,
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 .divider-ornament,
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 .satsang-corner {
+  display: none !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > p::before,
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > p::after {
+  content: none !important;
+  display: none !important;
+}
+
+@media (max-width: 640px) {
+  #talks h2 > span > span:nth-child(2),
+  #talks h2 .satsang-main-title {
+    font-size: clamp(2.35rem, 12vw, 3.55rem) !important;
+  }
+}
+
+/*
+  Unified devotional section titles.
+*/
+#leela h2,
+#photo-gallery2 h2,
+#stuti h2,
+#shraddanjali h2,
+#talks h2 .satsang-main-title,
+#bhajans h2 {
+  color: #9a5f18 !important;
+  -webkit-text-fill-color: #9a5f18 !important;
+  font-family: var(--spiritual-devanagari, "Tiro Devanagari Sanskrit", "Noto Serif Devanagari", serif) !important;
+  font-size: clamp(2.65rem, 6.4vw, 4.25rem) !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.08 !important;
+  text-align: center !important;
+  text-shadow: none !important;
+  text-transform: none !important;
+}
+
+#talks h2 .satsang-main-title {
+  display: inline-flex !important;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.18em;
+}
+
+#talks h2.satsang-heading-normalized {
+  display: block !important;
+  color: #9a5f18 !important;
+  -webkit-text-fill-color: #9a5f18 !important;
+  font-size: inherit !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+#talks h2.satsang-heading-normalized .satsang-main-title,
+#talks h2.satsang-heading-normalized .satsang-title-prefix,
+#talks h2.satsang-heading-normalized .satsang-vani-mark,
+#talks h2.satsang-heading-normalized .satsang-vani-special {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+#talks h2.satsang-heading-normalized .satsang-title-prefix {
+  display: inline !important;
+  color: #9a5f18 !important;
+  -webkit-text-fill-color: #9a5f18 !important;
+  font-size: 1em !important;
+}
+
+#talks h2 .satsang-vani-special {
+  display: inline-block;
+  color: #8a4a1a !important;
+  -webkit-text-fill-color: #8a4a1a !important;
+  font-style: italic !important;
+  text-shadow: 0 1px 0 rgba(255, 250, 238, 0.86);
+}
+
+#talks h2 .satsang-title-prefix,
+#talks h2 .satsang-vani-mark {
+  font-style: normal !important;
+}
+
+#talks h2 .satsang-vani-mark {
+  color: #b77826 !important;
+  -webkit-text-fill-color: #b77826 !important;
+  font-size: 0.58em !important;
+  line-height: 1;
+  transform: translateY(-0.08em);
+}
+
+#bhajans h2::before {
+  content: none !important;
+  display: none !important;
+}
+
+.charitra-combined-photo__media {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem;
+  width: 100%;
+}
+
+.charitra-combined-photo__media img {
+  width: 100%;
+  height: 13rem;
+  object-fit: cover;
+  border-radius: 0.65rem;
+}
+
+#charitra-anandvardhakaya-category {
+  display: block !important;
+  margin-top: 1rem;
+}
+
+#charitra-anandvardhakaya-category h3 > button {
+  width: 100%;
+  min-height: 4rem;
+  border-radius: inherit;
+}
+
+#charitra-anandvardhakaya-category .anandvardhakaya-special-caption {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  margin-top: 0.75rem !important;
+  padding: 0.55rem 0.85rem !important;
+  border: 1px solid rgba(183, 106, 32, 0.32);
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, rgba(255, 248, 232, 0.98), rgba(243, 213, 159, 0.92));
+  color: #6d3510 !important;
+  font-family: var(--spiritual-devanagari, "Noto Serif Devanagari", serif);
+  font-size: clamp(1.05rem, 2.6vw, 1.45rem) !important;
+  font-weight: 800;
+  line-height: 1.35;
+  text-align: center;
+  box-shadow: 0 10px 22px rgba(104, 66, 41, 0.12);
+}
+
+#charitra-anandvardhakaya-category .anandvardhakaya-special-caption::before,
+#charitra-anandvardhakaya-category .anandvardhakaya-special-caption::after {
+  content: "\0950";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.45rem;
+  height: 1.45rem;
+  border: 1px solid rgba(183, 106, 32, 0.34);
+  border-radius: 999px;
+  background: #fff4dc;
+  color: #9a5f18;
+  font-size: 0.88em;
+  line-height: 1;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.gangeshananda-stuti-text {
+  margin: 1.5rem auto 0;
+  max-width: 44rem;
+  color: #8a4a1a;
+  font-family: var(--spiritual-devanagari, "Noto Serif Devanagari", serif);
+  font-size: clamp(1rem, 2.2vw, 1.18rem);
+  line-height: 1.85;
+  text-align: center;
+}
+
+.gangeshananda-stuti-text p {
+  margin: 0 auto 1.4rem;
+  white-space: pre-line;
+}
+
+@media (max-width: 640px) {
+  .charitra-combined-photo__media {
+    grid-template-columns: 1fr;
+  }
+
+  .charitra-combined-photo__media img {
+    height: auto;
+    max-height: 18rem;
+    object-fit: contain;
+  }
+}
+
+/*
+  Hard reset for normalized Satsang title.
+*/
+#talks .mb-8.text-center::before {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+
+#talks h2.satsang-heading-normalized > span,
+#talks .mb-8.text-center h2.satsang-heading-normalized > span {
+  display: inline-flex !important;
+  align-items: baseline !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  gap: 0.18em !important;
+  color: #9a5f18 !important;
+  -webkit-text-fill-color: #9a5f18 !important;
+  font-size: clamp(2.65rem, 6.4vw, 4.25rem) !important;
+  line-height: 1.08 !important;
+  text-transform: none !important;
+}
+
+#talks h2.satsang-heading-normalized > span > span:first-child,
+#talks .mb-8.text-center h2.satsang-heading-normalized > span > span:first-child {
+  display: inline !important;
+  color: #9a5f18 !important;
+  -webkit-text-fill-color: #9a5f18 !important;
+  font-size: 1em !important;
+  font-style: normal !important;
+  line-height: inherit !important;
+  margin: 0 !important;
+}
+
+#talks h2.satsang-heading-normalized > span > span:first-child::before,
+#talks .mb-8.text-center h2.satsang-heading-normalized > span > span:first-child::before {
+  content: none !important;
+  display: none !important;
+}
+
+@media (max-width: 640px) {
+  #talks h2.satsang-heading-normalized > span,
+  #talks .mb-8.text-center h2.satsang-heading-normalized > span {
+    font-size: clamp(2.15rem, 10.5vw, 3.1rem) !important;
+  }
+}
+
+#talks h2.satsang-heading-normalized > .satsang-main-title > .satsang-vani-mark,
+#talks .mb-8.text-center h2.satsang-heading-normalized > .satsang-main-title > .satsang-vani-mark {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 0.9em !important;
+  min-width: 0.9em !important;
+  margin: 0 0.03em !important;
+  color: #b77826 !important;
+  -webkit-text-fill-color: #b77826 !important;
+  font-size: 0.46em !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  line-height: 1 !important;
+  transform: none !important;
+}
+
+@media (max-width: 640px) {
+  #leela h2,
+  #photo-gallery2 h2,
+  #stuti h2,
+  #shraddanjali h2,
+  #talks h2 .satsang-main-title,
+  #bhajans h2 {
+    font-size: clamp(2.15rem, 10.5vw, 3.1rem) !important;
+  }
+}
+
+img.om-image-loading {
+  background:
+    linear-gradient(110deg, #f2dfbd 8%, #fff6e8 18%, #f2dfbd 33%);
+  background-size: 220% 100%;
+  animation: om-image-shimmer 1.4s ease-in-out infinite;
+}
+
+img.om-image-ready {
+  animation: none;
+  background: transparent;
+}
+
+img.om-image-error {
+  animation: none;
+  background: #f2dfbd;
+}
+
+#photo-gallery2 .namami-sat-sad-main {
+  position: relative;
+}
+
+#photo-gallery2 .namami-sat-sad-title {
+  position: absolute;
+  top: 0.75rem;
+  left: 50%;
+  z-index: 2;
+  transform: translateX(-50%);
+  max-width: calc(100% - 1.5rem);
+  padding: 0.35rem 0.85rem;
+  border: 1px solid rgba(255, 243, 217, 0.72);
+  border-radius: 999px;
+  background: rgba(92, 47, 24, 0.72);
+  color: #fff8e8;
+  font-family: var(--spiritual-devanagari, "Noto Serif Devanagari", serif);
+  font-size: clamp(1.05rem, 2.4vw, 1.55rem);
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: center;
+  white-space: nowrap;
+  box-shadow: 0 8px 18px rgba(38, 18, 6, 0.2);
+  pointer-events: none;
+}
+
+@keyframes om-image-shimmer {
+  0% {
+    background-position: 120% 0;
+  }
+
+  100% {
+    background-position: -120% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  img.om-image-loading {
+    animation: none;
+  }
+}
+
+/*
+  Satsang app refinements: compact mobile cards and no persistent swipe hint.
+*/
+#satsang-tab-scroll-hint {
+  display: none !important;
+}
+
+#satsang-player-dialog .satsang-devotional-context {
+  display: none !important;
+}
+
+#talks .talk-title-with-thumb,
+.satsang-player-title-row {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+#talks .talk-identity-thumb,
+.satsang-player-title-thumb {
+  flex: 0 0 auto;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid rgba(216, 176, 106, 0.62);
+  border-radius: 0.42rem;
+  background: #f2dfbd;
+  object-fit: cover;
+}
+
+#talks .talk-title-with-thumb h3,
+.satsang-player-title-row h3 {
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  #talks .talk-identity-thumb,
+  .satsang-player-title-thumb {
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 0.36rem;
+  }
+
+  #talks a.talk-card-with-actions {
+    grid-template-columns: 5.8rem minmax(0, 1fr) !important;
+    grid-template-areas:
+      "lead copy"
+      "actions actions" !important;
+    align-items: center !important;
+    gap: 0.65rem !important;
+    padding: 0.75rem !important;
+  }
+
+  #talks a.talk-card-with-actions > .talk-preview {
+    width: 5.8rem !important;
+    min-height: 4.1rem !important;
+    aspect-ratio: 4 / 3 !important;
+    margin: 0 !important;
+  }
+
+  #talks .talk-preview-play {
+    right: 0.32rem !important;
+    bottom: 0.32rem !important;
+    width: 1.45rem !important;
+    height: 1.45rem !important;
+    font-size: 0.7rem !important;
+  }
+
+  #talks a.talk-card-with-actions h3 {
+    font-size: 0.98rem !important;
+    line-height: 1.28 !important;
+  }
+
+  #talks a.talk-card-with-actions p {
+    font-size: 0.78rem !important;
+    line-height: 1.35 !important;
+  }
+}
+
+/*
+  Sadguru-Smaran contribution CTA: larger Hindi-first actions for easier use.
+*/
+#hommage .sadguru-smaran-original-cta {
+  display: none !important;
+}
+
+#hommage .sadguru-smaran-cta-card {
+  width: min(42rem, calc(100% - 1rem));
+  margin: 0 auto 2rem;
+  padding: 1.15rem 1rem;
+  border: 2px solid rgba(189, 139, 66, 0.5);
+  border-radius: 1rem;
+  background:
+    linear-gradient(180deg, rgba(255, 250, 239, 0.98), rgba(248, 237, 218, 0.94));
+  box-shadow:
+    0 14px 32px rgba(104, 66, 41, 0.13),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.55);
+  text-align: center;
+}
+
+#hommage .sadguru-smaran-cta-card--primary {
+  margin-top: -0.25rem;
+  margin-bottom: 2.2rem;
+}
+
+#hommage .sadguru-smaran-cta-card--secondary {
+  width: min(38rem, 100%);
+  margin: 1rem auto 0;
+  padding: 0.95rem;
+}
+
+#hommage .sadguru-smaran-cta-instruction {
+  margin: 0 0 1rem;
+  color: #5c2f18;
+  font-family: "Noto Serif Devanagari", "Mukta", serif;
+  font-size: clamp(1.08rem, 2.8vw, 1.25rem);
+  font-weight: 800;
+  line-height: 1.55;
+}
+
+#hommage .sadguru-smaran-cta-button {
+  display: inline-flex;
+  min-height: 58px;
+  max-width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.9rem 1.7rem;
+  border: 2px solid rgba(255, 244, 218, 0.76);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #9a571f, #6b3414);
+  box-shadow: 0 10px 24px rgba(104, 66, 41, 0.25);
+  color: #fffaf0;
+  font-family: "Noto Serif Devanagari", "Mukta", serif;
+  font-size: clamp(1.18rem, 3vw, 1.25rem);
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+#hommage .sadguru-smaran-cta-button:hover {
+  background: linear-gradient(180deg, #a86424, #74401a);
+  box-shadow: 0 12px 26px rgba(104, 66, 41, 0.3);
+  transform: translateY(-1px);
+}
+
+#hommage .sadguru-smaran-cta-button:focus-visible {
+  outline: 4px solid rgba(168, 95, 30, 0.36);
+  outline-offset: 4px;
+}
+
+#hommage .sadguru-smaran-cta-icon {
+  flex: 0 0 auto;
+  font-size: 1.3em;
+  line-height: 1;
+}
+
+#hommage .sadguru-smaran-cta-button span:last-child {
+  min-width: 0;
+}
+
+#hommage .sadguru-smaran-card-mantra {
+  margin-top: 0.65rem;
+  margin-bottom: 0.35rem;
+  border-top: 1px solid rgba(183, 106, 32, 0.18);
+  padding-top: 0.55rem;
+  color: rgba(92, 47, 24, 0.78);
+  font-family: "Noto Serif Devanagari", "Mukta", serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.45;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  #hommage .sadguru-smaran-cta-card {
+    width: 100%;
+    padding: 1rem 0.85rem;
+  }
+
+  #hommage .sadguru-smaran-cta-button {
+    width: 100%;
+    min-height: 60px;
+    padding: 0.9rem 1.1rem;
+    font-size: 1.16rem;
+  }
+}
+
+/*
+  Home first view: keep the Namami line close to the content on mobile.
+*/
+.home-new .home-new__hero {
+  padding-top: clamp(0.45rem, 1.6vh, 0.85rem);
+  padding-bottom: clamp(0.75rem, 2vh, 1.25rem);
+}
+
+.home-new .home-new__portrait-frame {
+  position: relative;
+  isolation: isolate;
+  width: min(82vw, 20rem);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.home-new .home-new__portrait-frame::before {
+  content: "";
+  position: absolute;
+  inset: -2.5rem;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(
+    ellipse at 50% 45%,
+    rgba(237, 189, 121, 0.38) 0%,
+    rgba(255, 220, 160, 0.2) 35%,
+    transparent 68%
+  );
+  filter: blur(22px);
+  pointer-events: none;
+}
+
+.home-new .home-new__portrait {
+  box-shadow:
+    0 20px 60px rgba(104, 66, 41, 0.16),
+    0 0 0 1px rgba(189, 139, 66, 0.06);
+  transition:
+    transform 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+.home-new .home-new__portrait-frame:hover .home-new__portrait {
+  transform: scale(1.025);
+  box-shadow:
+    0 28px 70px rgba(104, 66, 41, 0.2),
+    0 0 0 1px rgba(189, 139, 66, 0.1);
+}
+
+.home-new .home-new__hero-subtitle {
+  margin-top: 0.34rem;
+}
+
+.home-new .home-new__charan-area {
+  width: min(60vw, 12.8rem);
+  margin-top: 0.26rem;
+}
+
+.home-new .home-new__charan-instruction {
+  right: calc(100% - 0.42rem);
+  width: 1.9rem;
+  height: 1.9rem;
+  font-size: 1.32rem;
+}
+
+.home-new .home-new__guru-lines--namami {
+  margin: 0.28rem auto 0;
+  padding: 0;
+  gap: 0.22rem;
+}
+
+.home-new .home-new__guru-lines--namami .namami-line {
+  font-size: clamp(22px, 5.2vw, 34px);
+  line-height: 1.28;
+}
+
+.home-new .home-new__guru-lines--namami .devotional-line-divider {
+  width: 160px;
+  height: 14px;
+  margin-top: 0.22rem;
+}
+
+@media (max-width: 700px) {
+  .home-new .home-new__hero {
+    min-height: auto;
+    padding-top: 0.38rem;
+    padding-bottom: 0.18rem;
+  }
+
+  .home-new .home-new__shloka-marquee {
+    height: 28px;
+    margin-bottom: 0.38rem;
+    padding-block: 2px;
+  }
+
+  .home-new .home-new__portrait-frame {
+    width: min(82vw, 21.5rem);
+    padding: 0;
+  }
+
+  .home-new .home-new__hero-subtitle {
+    margin-top: 0.26rem;
+    font-size: 0.88rem;
+    line-height: 1.25;
+  }
+
+  .home-new .home-new__charan-area {
+    width: min(58vw, 12rem);
+    margin-top: 0.2rem;
+  }
+
+  .home-new .home-new__charan-instruction {
+    width: 1.92rem;
+    height: 1.92rem;
+    font-size: 1.28rem;
+  }
+
+  .home-new .home-new__guru-lines--namami {
+    margin: 0.18rem auto 0;
+  }
+
+  .home-new .home-new__guru-lines--namami .namami-line {
+    font-size: clamp(20px, 5.5vw, 28px);
+  }
+}
+
+@media (max-width: 430px) and (max-height: 760px) {
+  .home-new .home-new__portrait-frame {
+    width: min(76vw, 18rem);
+  }
+
+  .home-new .home-new__charan-area {
+    width: min(50vw, 10.2rem);
+  }
+
+  .home-new .home-new__guru-lines--namami .devotional-line-divider {
+    width: 144px;
+    height: 11px;
+    margin-top: 0.06rem;
+  }
+}
+
+@media (max-width: 430px) and (max-height: 680px) {
+  .home-new .home-new__shloka-marquee {
+    height: 24px;
+    margin-bottom: 0.22rem;
+  }
+
+  .home-new .home-new__portrait-frame {
+    width: min(68vw, 15rem);
+  }
+
+  .home-new .home-new__hero-subtitle {
+    margin-top: 0.18rem;
+    font-size: 0.82rem;
+  }
+
+  .home-new .home-new__charan-area {
+    width: min(42vw, 9rem);
+    margin-top: 0.1rem;
+  }
+
+  .home-new .home-new__guru-lines--namami {
+    margin-top: 0.08rem;
+  }
+
+  .home-new .home-new__guru-lines--namami .namami-line {
+    font-size: clamp(18px, 5.1vw, 24px);
+  }
+}
+
+/*
+  Satsang intro: compact shloka banner for a calmer first view.
+*/
+#talks .mb-8.text-center {
+  margin-bottom: 1.25rem !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+#talks h2,
+#talks h2.satsang-heading-normalized {
+  margin-bottom: 0.42rem !important;
+}
+
+#talks h2.satsang-heading-normalized > span,
+#talks .mb-8.text-center h2.satsang-heading-normalized > span,
+#talks h2 .satsang-main-title {
+  gap: 0.14em !important;
+  font-size: clamp(2.05rem, 4.4vw, 3.35rem) !important;
+  line-height: 1.06 !important;
+}
+
+#talks h2.satsang-heading-normalized > .satsang-main-title > .satsang-vani-mark,
+#talks .mb-8.text-center h2.satsang-heading-normalized > .satsang-main-title > .satsang-vani-mark,
+#talks h2 .satsang-vani-mark {
+  font-size: 0.44em !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 {
+  position: relative !important;
+  box-sizing: border-box !important;
+  width: min(100%, 700px) !important;
+  max-width: 700px !important;
+  min-height: 0 !important;
+  height: auto !important;
+  margin: 0.35rem auto 0 !important;
+  padding: 26px clamp(22px, 4vw, 34px) !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(189, 139, 66, 0.28) !important;
+  border-radius: 20px !important;
+  background: rgba(255, 250, 239, 0.88) !important;
+  background-image: none !important;
+  background-blend-mode: normal !important;
+  box-shadow: 0 8px 20px rgba(92, 47, 24, 0.055) !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2::before,
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2::after,
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > p::before,
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > p::after {
+  content: none !important;
+  display: none !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > svg {
+  display: block !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  z-index: 0 !important;
+  width: clamp(8rem, 17vw, 10.5rem) !important;
+  height: clamp(8rem, 17vw, 10.5rem) !important;
+  max-width: none !important;
+  transform: translate(-50%, -50%) !important;
+  color: #bd8b42 !important;
+  opacity: 0.045 !important;
+  pointer-events: none !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > p,
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 p {
+  position: relative !important;
+  z-index: 1 !important;
+  max-width: 41rem !important;
+  margin: 0 auto !important;
+  color: #3f1c0c !important;
+  font-size: clamp(1.04rem, 1.7vw, 1.24rem) !important;
+  font-weight: 500 !important;
+  line-height: 1.75 !important;
+  text-align: center !important;
+  text-wrap: balance;
+  white-space: normal !important;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  hyphens: none;
+}
+
+#talks .mb-8.text-center > p {
+  max-width: min(34rem, 90vw) !important;
+  margin: 1rem auto 0 !important;
+  color: rgba(92, 47, 24, 0.68) !important;
+  font-family: "Lora", Georgia, serif !important;
+  font-size: clamp(0.78rem, 1.15vw, 0.9rem) !important;
+  font-style: normal !important;
+  line-height: 1.55 !important;
+  text-align: center !important;
+}
+
+@media (max-width: 640px) {
+  #talks .mb-8.text-center {
+    margin-bottom: 1.05rem !important;
+  }
+
+  #talks h2.satsang-heading-normalized > span,
+  #talks .mb-8.text-center h2.satsang-heading-normalized > span,
+  #talks h2 .satsang-main-title {
+    font-size: clamp(1.8rem, 8.5vw, 2.55rem) !important;
+    line-height: 1.08 !important;
+  }
+
+  #talks .mb-8.text-center > div.relative.mx-auto.mb-2 {
+    width: min(100%, 700px) !important;
+    margin-top: 0.28rem !important;
+    padding: 20px 18px !important;
+    border-radius: 18px !important;
+  }
+
+  #talks .mb-8.text-center > div.relative.mx-auto.mb-2 > svg {
+    width: 7.6rem !important;
+    height: 7.6rem !important;
+    opacity: 0.04 !important;
+  }
+
+  #talks .mb-8.text-center > div.relative.mx-auto.mb-2 > p,
+  #talks .mb-8.text-center > div.relative.mx-auto.mb-2 p {
+    max-width: 21rem !important;
+    font-size: clamp(0.96rem, 4vw, 1.06rem) !important;
+    line-height: 1.75 !important;
+  }
+
+  #talks .mb-8.text-center > p {
+    margin-top: 0.95rem !important;
+    font-size: 0.78rem !important;
+    line-height: 1.5 !important;
+  }
+}
+
+/*
+  Satsang intro: approved manuscript banner.
+*/
+#talks {
+  padding-top: clamp(3.1rem, 5.4vw, 4.6rem) !important;
+}
+
+#talks .mb-8.text-center {
+  position: relative !important;
+  isolation: isolate;
+  margin-bottom: 1.65rem !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+#talks .mb-8.text-center::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  left: 50%;
+  top: -0.95rem;
+  z-index: -1;
+  width: min(18rem, 58vw);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border: 1px solid rgba(150, 94, 42, 0.05);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, transparent 0 43%, rgba(150, 94, 42, 0.08) 43.5% 44%, transparent 44.5%),
+    repeating-conic-gradient(from 8deg, rgba(150, 94, 42, 0.08) 0deg 1.1deg, transparent 1.1deg 12deg);
+  opacity: 0.035 !important;
+  pointer-events: none;
+}
+
+#talks h2 {
+  position: relative !important;
+  margin: 0 auto !important;
+  max-width: min(100%, 58rem) !important;
+  overflow: visible !important;
+  color: #8f4d13 !important;
+  -webkit-text-fill-color: #8f4d13 !important;
+  font-family: var(--spiritual-devanagari, "Tiro Devanagari Sanskrit", "Noto Serif Devanagari", serif) !important;
+  text-align: center !important;
+}
+
+#talks h2::before {
+  content: "\25C6" !important;
+  display: block !important;
+  margin: 0 auto -0.22em !important;
+  color: #9f5b16 !important;
+  -webkit-text-fill-color: #9f5b16 !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(0.42rem, 0.9vw, 0.7rem) !important;
+  line-height: 1 !important;
+}
+
+#talks h2::after {
+  content: "\2022  \25C7  \2022" !important;
+  display: block !important;
+  width: min(16rem, 52vw);
+  margin: 0.18rem auto 1rem !important;
+  background:
+    linear-gradient(90deg, transparent, rgba(198, 130, 35, 0.38)) left 50% / 42% 1px no-repeat,
+    linear-gradient(90deg, rgba(198, 130, 35, 0.38), transparent) right 50% / 42% 1px no-repeat;
+  color: #d39a3d !important;
+  -webkit-text-fill-color: #d39a3d !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: 0.78rem !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.18em !important;
+  line-height: 1 !important;
+  text-align: center !important;
+}
+
+#talks h2 > span {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  max-width: none !important;
+  gap: 0 !important;
+}
+
+#talks h2 > span > span:first-child {
+  display: none !important;
+}
+
+#talks h2 > span > span:nth-child(2),
+#talks h2 .satsang-main-title {
+  display: inline-flex !important;
+  align-items: baseline !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+  gap: 0.12em !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  color: #8f4d13 !important;
+  -webkit-text-fill-color: #8f4d13 !important;
+  font-family: var(--spiritual-devanagari, "Tiro Devanagari Sanskrit", "Noto Serif Devanagari", serif) !important;
+  font-size: clamp(2.4rem, 5vw, 4.7rem) !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.08 !important;
+  text-shadow: none !important;
+  text-transform: none !important;
+}
+
+#talks h2 > span > span:nth-child(2)::before {
+  content: "सत्संग -" !important;
+  display: inline !important;
+  color: #8f4d13 !important;
+  -webkit-text-fill-color: #8f4d13 !important;
+  font-style: normal !important;
+}
+
+#talks h2 > span > span:nth-child(2) > span[aria-hidden="true"],
+#talks h2 .satsang-vani-mark {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: auto !important;
+  min-width: 0 !important;
+  margin: 0 0.04em !important;
+  color: #c78322 !important;
+  -webkit-text-fill-color: #c78322 !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: 0.42em !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 1 !important;
+  opacity: 1 !important;
+  transform: translateY(-0.08em) !important;
+}
+
+#talks h2 > span > span:nth-child(2) > span:not([aria-hidden="true"]),
+#talks h2 .satsang-vani-special {
+  color: #8a4a1a !important;
+  -webkit-text-fill-color: #8a4a1a !important;
+  font-style: italic !important;
+  font-weight: 500 !important;
+}
+
+#talks h2.satsang-heading-normalized > .satsang-main-title {
+  display: inline-flex !important;
+  align-items: baseline !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+  gap: 0.12em !important;
+  margin: 0 auto !important;
+  color: #8f4d13 !important;
+  -webkit-text-fill-color: #8f4d13 !important;
+  font-family: var(--spiritual-devanagari, "Tiro Devanagari Sanskrit", "Noto Serif Devanagari", serif) !important;
+  font-size: clamp(2.4rem, 5vw, 4.7rem) !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.08 !important;
+  text-shadow: none !important;
+}
+
+#talks .mb-8.text-center h2.satsang-heading-normalized > .satsang-main-title {
+  font-size: clamp(2.4rem, 5vw, 4.7rem) !important;
+  line-height: 1.08 !important;
+}
+
+#talks h2.satsang-heading-normalized > .satsang-main-title > span::before {
+  content: none !important;
+  display: none !important;
+}
+
+#talks h2.satsang-heading-normalized .satsang-title-prefix {
+  display: inline !important;
+  color: #8f4d13 !important;
+  -webkit-text-fill-color: #8f4d13 !important;
+  font-size: 1em !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  line-height: inherit !important;
+  margin: 0 !important;
+}
+
+#talks h2.satsang-heading-normalized .satsang-vani-special {
+  display: inline !important;
+  color: #8a4a1a !important;
+  -webkit-text-fill-color: #8a4a1a !important;
+  font-size: 1em !important;
+  font-style: italic !important;
+  font-weight: 500 !important;
+  line-height: inherit !important;
+}
+
+#talks h2.satsang-heading-normalized .satsang-vani-mark {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: auto !important;
+  min-width: 0 !important;
+  margin: 0 0.04em !important;
+  color: #c78322 !important;
+  -webkit-text-fill-color: #c78322 !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: 0.42em !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 1 !important;
+  opacity: 1 !important;
+  transform: translateY(-0.08em) !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 {
+  position: relative !important;
+  box-sizing: border-box !important;
+  width: min(92%, 720px) !important;
+  max-width: 720px !important;
+  min-height: 0 !important;
+  height: auto !important;
+  margin: 0 auto !important;
+  padding: 28px 80px !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(201, 139, 49, 0.52) !important;
+  border-radius: 20px !important;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 252, 244, 0.96),
+      rgba(255, 247, 231, 0.92)
+    ) !important;
+  background-blend-mode: normal !important;
+  box-shadow:
+    0 10px 25px rgba(111, 65, 19, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2::before,
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2::after,
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > p::before,
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > p::after {
+  content: none !important;
+  display: none !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > svg {
+  display: block !important;
+  position: absolute !important;
+  top: 50% !important;
+  z-index: 1 !important;
+  width: 52px !important;
+  height: 72px !important;
+  max-width: none !important;
+  color: #d79a35 !important;
+  opacity: 0.82 !important;
+  fill: none !important;
+  pointer-events: none !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > svg:first-of-type {
+  left: 18px !important;
+  transform: translateY(-50%) !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > svg:nth-of-type(2) {
+  right: 18px !important;
+  left: auto !important;
+  transform: translateY(-50%) scaleX(-1) !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > p,
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 p {
+  position: relative !important;
+  z-index: 2 !important;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+  color: #603718 !important;
+  font-family: var(--spiritual-devanagari, "Tiro Devanagari Sanskrit", "Noto Serif Devanagari", serif) !important;
+  font-size: clamp(1.18rem, 1.65vw, 1.46rem) !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  line-height: 1.75 !important;
+  text-align: center !important;
+  text-wrap: balance;
+  white-space: pre-line !important;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  hyphens: none;
+}
+
+#talks .mb-8.text-center > p {
+  max-width: min(38rem, 90vw) !important;
+  margin: 17px auto 0 !important;
+  color: rgba(128, 72, 27, 0.82) !important;
+  font-family: "Lora", Georgia, serif !important;
+  font-size: clamp(0.92rem, 1.25vw, 1.05rem) !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.5 !important;
+  text-align: center !important;
+}
+
+#talks .mb-7.overflow-x-auto {
+  margin-bottom: 1.6rem !important;
+}
+
+@media (max-width: 700px) {
+  #talks {
+    padding-top: 3.1rem !important;
+  }
+
+  #talks .mb-8.text-center {
+    margin-bottom: 1.35rem !important;
+  }
+
+  #talks h2::before {
+    margin-bottom: -0.12em !important;
+    font-size: 0.42rem !important;
+  }
+
+  #talks h2::after {
+    width: min(12rem, 58vw);
+    margin-bottom: 0.8rem !important;
+    font-size: 0.68rem !important;
+  }
+
+  #talks h2 > span > span:nth-child(2),
+  #talks h2 .satsang-main-title {
+    gap: 0.08em !important;
+    font-size: clamp(2rem, 10.5vw, 3rem) !important;
+    line-height: 1.1 !important;
+  }
+
+  #talks h2.satsang-heading-normalized > .satsang-main-title {
+    gap: 0.08em !important;
+    font-size: clamp(2rem, 10.5vw, 3rem) !important;
+    line-height: 1.1 !important;
+  }
+
+  #talks .mb-8.text-center h2.satsang-heading-normalized > .satsang-main-title {
+    font-size: clamp(2rem, 10.5vw, 3rem) !important;
+    line-height: 1.1 !important;
+  }
+
+  #talks h2 > span > span:nth-child(2) > span[aria-hidden="true"],
+  #talks h2 .satsang-vani-mark {
+    font-size: 0.38em !important;
+  }
+
+  #talks .mb-8.text-center > div.relative.mx-auto.mb-2 {
+    width: calc(100% - 28px) !important;
+    padding: 21px 20px !important;
+    border-radius: 17px !important;
+  }
+
+  #talks .mb-8.text-center > div.relative.mx-auto.mb-2 > svg {
+    display: none !important;
+  }
+
+  #talks .mb-8.text-center > div.relative.mx-auto.mb-2 > p,
+  #talks .mb-8.text-center > div.relative.mx-auto.mb-2 p {
+    font-size: clamp(1.05rem, 4.8vw, 1.25rem) !important;
+    line-height: 1.7 !important;
+  }
+
+  #talks .mb-8.text-center > p {
+    margin-top: 16px !important;
+    font-size: 0.84rem !important;
+    line-height: 1.48 !important;
+  }
+}
+
+/*
+  Satsang intro mobile correction: no title mandala, two-line shloka.
+*/
+#talks .mb-8.text-center::before {
+  content: none !important;
+  display: none !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > p,
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 p {
+  white-space: pre !important;
+}
+
+@media (max-width: 700px) {
+  #talks .mb-8.text-center > div.relative.mx-auto.mb-2 {
+    width: calc(100vw - 16px) !important;
+    max-width: calc(100vw - 16px) !important;
+    padding: 21px 8px !important;
+  }
+
+  #talks .mb-8.text-center > div.relative.mx-auto.mb-2 > svg {
+    display: block !important;
+    width: 30px !important;
+    height: 56px !important;
+    color: #d79a35 !important;
+    opacity: 0.52 !important;
+  }
+
+  #talks .mb-8.text-center > div.relative.mx-auto.mb-2 > svg:first-of-type {
+    left: 5px !important;
+  }
+
+  #talks .mb-8.text-center > div.relative.mx-auto.mb-2 > svg:nth-of-type(2) {
+    right: 5px !important;
+  }
+
+  #talks .mb-8.text-center > div.relative.mx-auto.mb-2 > p,
+  #talks .mb-8.text-center > div.relative.mx-auto.mb-2 p {
+    font-size: clamp(0.76rem, 3.14vw, 1rem) !important;
+    line-height: 1.82 !important;
+  }
+}
+
+/*
+  Satsang intro: title mandala removed.
+*/
+#talks .mb-8.text-center {
+  background-image: none !important;
+}
+
+#talks .mb-8.text-center::before {
+  content: none !important;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  border: 0 !important;
+  background: none !important;
+  opacity: 0 !important;
+}
+
+/*
+  Satsang intro refinement final pass.
+*/
+#talks {
+  overflow-x: clip;
+  padding-top: clamp(3rem, 5vw, 4.25rem) !important;
+}
+
+#talks .mb-8.text-center {
+  position: relative !important;
+  isolation: isolate;
+  margin-bottom: 1.65rem !important;
+  background-image: none !important;
+}
+
+#talks .mb-8.text-center::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  left: 50%;
+  top: -0.55rem;
+  z-index: -1;
+  width: min(15.5rem, 48vw) !important;
+  height: auto !important;
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border: 1px solid rgba(150, 94, 42, 0.045) !important;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, transparent 0 43%, rgba(150, 94, 42, 0.07) 43.5% 44%, transparent 44.5%),
+    repeating-conic-gradient(from 8deg, rgba(150, 94, 42, 0.07) 0deg 1deg, transparent 1deg 12deg) !important;
+  opacity: 0.025 !important;
+  pointer-events: none;
+}
+
+#talks h2::before {
+  content: none !important;
+  display: none !important;
+}
+
+#talks h2.satsang-heading-normalized > .satsang-main-title,
+#talks .mb-8.text-center h2.satsang-heading-normalized > .satsang-main-title {
+  gap: 0.11em !important;
+  font-size: clamp(2.5rem, 4.5vw, 4.15rem) !important;
+  line-height: 1.08 !important;
+}
+
+#talks h2.satsang-heading-normalized > .satsang-main-title > .satsang-title-prefix {
+  position: relative;
+  display: inline-block !important;
+  font-style: normal !important;
+  transform: none !important;
+}
+
+#talks h2.satsang-heading-normalized > .satsang-main-title > .satsang-title-prefix::before {
+  content: "\25C6" !important;
+  display: block !important;
+  position: absolute;
+  left: 50%;
+  top: -0.42em;
+  transform: translateX(-50%);
+  color: #9f5b16 !important;
+  -webkit-text-fill-color: #9f5b16 !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: 0.16em !important;
+  font-style: normal !important;
+  line-height: 1 !important;
+}
+
+#talks .mb-8.text-center h2.satsang-heading-normalized > span.satsang-main-title > span.satsang-title-prefix {
+  position: relative !important;
+}
+
+#talks .mb-8.text-center h2.satsang-heading-normalized > span.satsang-main-title > span.satsang-title-prefix::before {
+  content: "\25C6" !important;
+  display: block !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: -0.42em !important;
+  transform: translateX(-50%) !important;
+  color: #9f5b16 !important;
+  -webkit-text-fill-color: #9f5b16 !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: 0.16em !important;
+  font-style: normal !important;
+  line-height: 1 !important;
+}
+
+#talks h2.satsang-heading-normalized .satsang-vani-special {
+  display: inline-block !important;
+  font-style: oblique 8deg !important;
+  transform: skewX(-3deg);
+  transform-origin: center;
+}
+
+#talks h2.satsang-heading-normalized .satsang-vani-mark {
+  font-size: 0.39em !important;
+  margin-inline: 0.035em !important;
+  transform: translateY(-0.05em) !important;
+}
+
+#talks h2.satsang-heading-normalized .satsang-vani-mark:last-child {
+  font-size: 0.35em !important;
+  margin-left: 0.02em !important;
+}
+
+#talks h2::after {
+  width: min(13.5rem, 58vw) !important;
+  margin: 0.18rem auto 0.85rem !important;
+  background:
+    linear-gradient(90deg, transparent, rgba(198, 130, 35, 0.4)) left 50% / 35% 1px no-repeat,
+    linear-gradient(90deg, rgba(198, 130, 35, 0.4), transparent) right 50% / 35% 1px no-repeat !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 {
+  width: min(90%, 880px) !important;
+  max-width: 880px !important;
+  margin: 0 auto !important;
+  padding: 22px 84px !important;
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > svg {
+  width: 56px !important;
+  height: 72px !important;
+  opacity: 0.78 !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > svg:first-of-type {
+  left: 18px !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > svg:nth-of-type(2) {
+  right: 18px !important;
+}
+
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > p,
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 p {
+  font-size: clamp(1.18rem, 1.8vw, 1.48rem) !important;
+  line-height: 1.7 !important;
+  white-space: pre-line !important;
+}
+
+#talks .mb-8.text-center > p {
+  margin-top: 16px !important;
+}
+
+#talks .mb-7.overflow-x-auto {
+  margin-top: 1.65rem !important;
+}
+
+@media (max-width: 650px) {
+  #talks {
+    overflow-x: hidden;
+    padding-top: 3rem !important;
+  }
+
+  #talks .mb-8.text-center::before {
+    width: min(12rem, 52vw) !important;
+    opacity: 0.02 !important;
+  }
+
+  #talks h2.satsang-heading-normalized > .satsang-main-title,
+  #talks .mb-8.text-center h2.satsang-heading-normalized > .satsang-main-title {
+    gap: 0.08em !important;
+    font-size: clamp(2rem, 10vw, 2.8rem) !important;
+  }
+
+  #talks h2::after {
+    margin-bottom: 0.8rem !important;
+  }
+
+  #talks .mb-8.text-center > div.relative.mx-auto.mb-2 {
+    width: calc(100vw - 16px) !important;
+    max-width: calc(100vw - 16px) !important;
+    padding: 20px 8px !important;
+  }
+
+  #talks .mb-8.text-center > div.relative.mx-auto.mb-2 > svg {
+    display: none !important;
+  }
+
+  #talks .mb-8.text-center > div.relative.mx-auto.mb-2 > p,
+  #talks .mb-8.text-center > div.relative.mx-auto.mb-2 p {
+    font-size: clamp(0.76rem, 3.14vw, 1rem) !important;
+    line-height: 1.78 !important;
+    white-space: pre !important;
+  }
+}
+
+/*
+  Satsang intro refinement: category-row gap lock.
+*/
+#talks .mb-8.text-center {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+#talks .mb-7.overflow-x-auto {
+  margin-top: 0 !important;
+}
+
+#talks .satsang-category-scroll-shell,
+#talks .satsang-category-scroll {
+  margin-top: 1.7rem !important;
+}
+
+#talks .satsang-category-scroll-shell .satsang-category-scroll {
+  margin-top: 0 !important;
+}
+
+#talks .mb-7.overflow-x-auto.satsang-category-scroll-shell,
+#talks .mb-7.overflow-x-auto.satsang-category-scroll-shell > .satsang-category-scroll {
+  margin-top: 0 !important;
+}
+
+#talks .mb-7.overflow-x-auto.satsang-category-scroll-shell {
+  margin-top: 0 !important;
+  padding-top: 2.55rem !important;
+}
+
+@media (min-width: 651px) and (max-width: 1599px) {
+  #talks .mb-7.overflow-x-auto.satsang-category-scroll-shell {
+    padding-top: 2.8rem !important;
+  }
+}
+
+@media (max-width: 650px) {
+  #talks .mb-7.overflow-x-auto.satsang-category-scroll-shell {
+    padding-top: 2.25rem !important;
+  }
+}
+
+/*
+  ── Senior-friendly readability polish (appended last so it wins the cascade).
+     Safe to delete this whole block to revert. ──
+*/
+
+/* 1. Larger, easier-to-tap satsang action buttons (bookmark / favourite / notes / share).
+      Brings small touch targets closer to the ~44px comfortable size for older users. */
+#talks .talk-action,
+.talk-personal-action {
+  min-width: 2.6rem !important;
+  min-height: 2.6rem !important;
+}
+
+#talks .talk-action {
+  width: 2.6rem !important;
+  height: 2.6rem !important;
+  font-size: 1.05rem !important;
+}
+
+.talk-personal-action {
+  font-size: 0.82rem !important;
+}
+
+.talk-favourite-action {
+  font-size: 1.2rem !important;
+}
+
+@media (max-width: 640px) {
+  #talks .talk-action {
+    width: 2.6rem !important;
+    height: 2.6rem !important;
+  }
+
+  .talk-personal-action {
+    min-width: 2.6rem !important;
+    min-height: 2.6rem !important;
+    font-size: 0.72rem !important;
+  }
+}
+
+/* 2. Calmer Devanagari weight in the shloka panel (600 instead of 700).
+      Bold conjuncts can read as cramped on small phones; 600 stays strong but breathes. */
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 > p,
+#talks .mb-8.text-center > div.relative.mx-auto.mb-2 p {
+  font-weight: 600 !important;
+}
+
+/* 3. Satsang category chips: on phones, wrap all six onto a few centred rows
+      instead of a single horizontal scroll. Every category is then visible at a
+      glance — no hidden options, no sideways swiping (important for seniors). */
+@media (max-width: 640px) {
+  #talks .mb-7.overflow-x-auto,
+  #talks .satsang-category-scroll-shell {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    overflow-x: visible !important;
+  }
+
+  #talks .satsang-category-scroll {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    gap: 0.4rem !important;
+    margin: 0 auto !important;
+    padding: 0 0.25rem !important;
+    overflow: visible !important;
+  }
+
+  /* Smaller chips so three fit per row → all six sit on two tidy rows. */
+  #talks .satsang-category-scroll > button {
+    flex: 0 0 auto !important;
+    padding: 0.38rem 0.6rem !important;
+    font-size: 0.72rem !important;
+  }
+
+  #talks .satsang-category-scroll > button span {
+    margin-left: 0.12rem !important;
+    font-size: 0.58em !important;
+  }
+
+  /* The swipe hint and edge fades are no longer needed once chips wrap. */
+  #satsang-tab-scroll-hint {
+    display: none !important;
+  }
+
+  #talks .satsang-category-scroll-shell::before,
+  #talks .satsang-category-scroll-shell::after {
+    display: none !important;
+  }
+}
+
+/* 4. In the vertical mobile menu, drop the little left separator bar on the
+      injected सत्संग-अंश link (it is meant for the horizontal desktop bar) so the
+      item sits centred like every other menu row. */
+@media (max-width: 640px) {
+  nav a[data-excerpts-nav-link="true"] {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+    border-left: 0 !important;
+  }
+}
+
+/* 5. Remove the faint mandala watermark behind the Satsang and Bhajan section
+      headings — cleaner, calmer title area. */
+#talks::before,
+#bhajans::before {
+  display: none !important;
+  background-image: none !important;
+}
+
+/* 6. Special flourish for सद्गुरु वाणी only: italic on that phrase (the ✦ stars
+      stay, just a touch softer) so the Satsang heading reads as the flagship
+      title, while every other section title remains plain and uniform. */
+#talks h2 .satsang-vani-special {
+  font-style: italic !important;
+}
+
+#talks h2 .satsang-vani-mark {
+  opacity: 0.7 !important;
+}
+
+/* 7. Stuti-Vandan 108-names fix: the every-9th ✦ grouping mark is an ::after on
+      a display:flex row, so it was acting as a flex item and squeezing the name
+      onto extra lines (e.g. #9 "ॐ अद्वितीयाय नमः।" broke onto three lines). Let
+      the row wrap and drop the ✦ onto its own full-width line below the name. */
+#stuti .grid.grid-cols-1.gap-1 > div:nth-child(9n),
+#stuti .grid.grid-cols-1.gap-1 > div:nth-child(27n) {
+  flex-wrap: wrap !important;
+}
+
+#stuti .grid.grid-cols-1.gap-1 > div:nth-child(9n)::after,
+#stuti .grid.grid-cols-1.gap-1 > div:nth-child(27n)::after {
+  flex: 0 0 100% !important;
+  margin-top: 0.35rem !important;
+}
+
+/* 8. Remove the side mandala accent on the Charitra-Jhalak cards — unnecessary
+      and appeared on only every 3rd card, which read as arbitrary. */
+#photo-gallery2 article::before {
+  display: none !important;
+  background-image: none !important;
+}
+
+/* 9. Gentle variety in the repeated section-divider ornament (it was the same
+      gold ✦ under six headings). Same gold colour and size — just a rotating
+      motif per section so the page reads as composed rather than templated. */
+#leela .divider-ornament span,
+#stuti .divider-ornament span,
+#shraddanjali .divider-ornament span,
+#talks .divider-ornament span,
+#bhajans .divider-ornament span,
+#hommage .divider-ornament span {
+  font-size: 0 !important;
+}
+
+#leela .divider-ornament span::before,
+#stuti .divider-ornament span::before,
+#shraddanjali .divider-ornament span::before,
+#talks .divider-ornament span::before,
+#bhajans .divider-ornament span::before,
+#hommage .divider-ornament span::before {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+#leela .divider-ornament span::before,
+#talks .divider-ornament span::before {
+  content: "\2741"; /* ❁ florette */
+}
+
+#stuti .divider-ornament span::before,
+#bhajans .divider-ornament span::before {
+  content: "\274B"; /* ❋ eight-spoked flower */
+}
+
+#shraddanjali .divider-ornament span::before,
+#hommage .divider-ornament span::before {
+  content: "\2726"; /* ✦ star (original) */
+}
+
+/* 10. A little more breathing room in the busy Satsang header on phones. */
+@media (max-width: 640px) {
+  #talks .mb-8.text-center > p {
+    margin-top: 1rem !important;
+    margin-bottom: 0.4rem !important;
+    line-height: 1.6 !important;
+  }
+}
+
+/* 11. First Virah-Smaran tribute (Swami Adhyatmananda's letter): show his photo
+       in the avatar circle. The .virah-photo-avatar class is toggled onto the
+       avatar only for that post by virah-first-avatar.js. */
+#shraddanjali .max-w-2xl.mx-auto.rounded-2xl > .flex.items-center.gap-3 > .w-9.h-9.rounded-full.virah-photo-avatar {
+  background:
+    url("/assets/virah-adhyatmananda-avatar.jpg?v=1") center 28% / cover no-repeat !important;
+  color: transparent !important;
+}
+
+#shraddanjali .max-w-2xl.mx-auto.rounded-2xl > .flex.items-center.gap-3 > .w-9.h-9.rounded-full.virah-photo-avatar::before {
+  content: "" !important;
+}
+
+/* 12. Fix: the senior-friendly .talk-action sizing (block 1) accidentally shrank
+       the "सुनें" play button — it shares the .talk-action class — into a small
+       circle, so its label overflowed. The double-class selector outranks the
+       .talk-action rule and restores its pill shape. */
+#talks .talk-action.talk-play-action {
+  width: auto !important;
+  min-width: 6.75rem !important;
+  height: 2.8rem !important;
+  padding: 0 1.15rem !important;
+}
+
+@media (max-width: 640px) {
+  #talks .talk-action.talk-play-action {
+    min-width: 6.25rem !important;
+  }
+}
+
+/*
+  13. Second view (#photos): pull the charan (feet) nav up so the 7-photo
+      slideshow, the "नमामि वाङ्मयीं मूर्तिम्" line and the charan orbit all sit
+      on one mobile screen without scrolling. ONLY whitespace is trimmed — the
+      photo, the namami line and the shloka keep their existing sizes. Scoped to
+      the photos section so no other panel's spacing changes.
+*/
+@media (max-width: 700px) {
+  .home-new .home-new__section--photos {
+    padding-top: 2rem;
+    padding-bottom: 1.6rem;
+  }
+
+  .home-new .home-new__section--photos .home-new__section-heading--photos {
+    margin-bottom: 0.65rem;
+  }
+
+  .home-new .home-new__section--photos .home-new__mobile-slideshow {
+    margin-bottom: 0.6rem;
+  }
+
+  .home-new .home-new__section--photos .home-new__guru-lines--photos {
+    margin-top: 0.6rem;
+  }
+
+  .home-new .home-new__section--photos .home-new__section-charan-nav {
+    margin-top: 0.55rem;
+  }
+}
+
+/* Shorter phones: tighten a little more so the feet stay above the fold. */
+@media (max-width: 480px) and (max-height: 780px) {
+  .home-new .home-new__section--photos {
+    padding-top: 1.4rem;
+    padding-bottom: 1.1rem;
+  }
+
+  .home-new .home-new__section--photos .home-new__section-heading--photos {
+    margin-bottom: 0.45rem;
+  }
+
+  .home-new .home-new__section--photos .home-new__mobile-slideshow {
+    margin-bottom: 0.45rem;
+  }
+
+  .home-new .home-new__section--photos .home-new__guru-lines--photos {
+    margin-top: 0.45rem;
+  }
+
+  .home-new .home-new__section--photos .home-new__section-charan-nav {
+    margin-top: 0.4rem;
+  }
+}
+
+/*
+  14. Bring the shloka panel (#welcome) and the photos view together so the
+      shloka + 7-photo slideshow + "नमामि वाङ्मयीं मूर्तिम्" + charan read as one
+      screen. Whitespace only — the shloka, photo, namami and charan all keep
+      their sizes. Scoped to #welcome so the second shloka panel (#smaran) is
+      left alone.
+*/
+@media (max-width: 700px) {
+  .home-new #welcome {
+    padding-top: 1.3rem;
+    padding-bottom: 0.9rem;
+  }
+
+  .home-new #welcome .home-new__welcome-shloka {
+    margin-block: 0.15rem;
+  }
+
+  /* Decorative ✦ between the shloka and the photos: kept, but tightened. */
+  .home-new #photos::before {
+    margin: -1.4rem auto 0.5rem;
+  }
+
+  /* Photos view starts right under the shloka now, so it needs less top room. */
+  .home-new .home-new__section--photos {
+    padding-top: 1.4rem;
+  }
+}
+
+@media (max-width: 480px) and (max-height: 780px) {
+  .home-new #welcome {
+    padding-top: 0.9rem;
+    padding-bottom: 0.6rem;
+  }
+
+  .home-new #welcome .home-new__welcome-shloka {
+    margin-block: 0.1rem;
+  }
+
+  .home-new #photos::before {
+    margin: -1.2rem auto 0.35rem;
+  }
+
+  .home-new .home-new__section--photos {
+    padding-top: 1rem;
+  }
+}
+
+/*
+  15. Closing blessing injected at the end of the classic page (see
+      closing-blessing.js). It reuses the home-new closing classes, which read a
+      few devotional CSS variables that are normally defined on the home-new
+      tree; supply them here so the injected block looks identical on the classic
+      page. (The home-new page itself is untouched — the script never injects
+      there.)
+*/
+#site-closing-blessing {
+  --devotional-font: "Tiro Devanagari Sanskrit", "Noto Serif Devanagari", serif;
+  --devotional-gold: #c8953c;
+  --devotional-divider-bg: #fffaf0;
+}
+
+/*
+  16. Remove the "Made for स्वान्तः सुखाय" credit footer on the classic page, so
+      the "श्री सद्गुरुनाथ महाराज की जय" closing (injected above it) is the final
+      note. This footer's only content is that one credit line.
+*/
+footer.border-t.border-orange-200.bg-orange-50 {
+  display: none !important;
+}
