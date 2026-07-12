@@ -126,6 +126,7 @@
           </div>
           <p class="excerpts-now-playing"></p>
           <a class="excerpts-youtube-open" href="${playlistUrl}" target="_blank" rel="noopener noreferrer">YouTube पर खोलें</a>
+          <p class="excerpts-gratitude">🙏 सुनने के बाद, YouTube पर 👍 Like व 💬 Comment से प. पू. स्वामीजी के प्रति कृतज्ञता व्यक्त कर सकते हैं</p>
         </div>
         <div class="excerpts-saved" hidden>
           <div class="excerpts-subhead">

@@ -2107,16 +2107,28 @@ nav a[data-excerpts-nav-link="true"] {
 .satsang-player-close {
   display: grid;
   flex: 0 0 auto;
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 3rem;
+  height: 3rem;
   place-items: center;
-  border: 1px solid rgba(189, 139, 66, 0.28);
+  border: 2px solid rgba(145, 80, 35, 0.6);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
-  color: #5c2f18;
+  background: #fff;
+  color: #8a3a1a;
   cursor: pointer;
-  font-size: 1.45rem;
+  font-size: 2.15rem;
+  font-weight: 700;
   line-height: 1;
+  box-shadow: 0 4px 14px rgba(92, 47, 24, 0.3);
+  transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.satsang-player-close:hover,
+.satsang-player-close:focus-visible {
+  transform: scale(1.07);
+  background: #c47d24;
+  color: #fff8e8;
+  border-color: #915023;
+  outline: none;
 }
 
 #satsang-youtube-player {
@@ -2686,6 +2698,22 @@ img.om-image-ready {
 img.om-image-error {
   animation: none;
   background: #f2dfbd;
+}
+
+/* Charitra Jhalak — "ॐ सद्गुरु प्रियाय नमः" mahasamadhi collage sub-grid.
+   Those captions (incl. "ॐ श्री चिन्मय सद्गुरवे नमः") render with a tiny
+   text-xs / md:text-sm class (unique colour text-[#74421d]). Bump them up so
+   they sit close in size to the neighbouring captions. */
+#photo-gallery2 p.text-\[\#74421d\] {
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
+}
+
+@media (min-width: 768px) {
+  #photo-gallery2 p.text-\[\#74421d\] {
+    font-size: 1.08rem !important;
+    line-height: 1.65 !important;
+  }
 }
 
 #photo-gallery2 .namami-sat-sad-main {
@@ -4244,4 +4272,289 @@ img.om-image-error {
 */
 footer.border-t.border-orange-200.bg-orange-50 {
   display: none !important;
+}
+
+/*
+  17. Reading-size control (see reading-size.js): floating A- / reset / A+ pill,
+      bottom-left, that zooms the whole page for easier reading. Lives outside
+      #root, so it stays a fixed, usable size while the content scales.
+*/
+#reading-size-control {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+  padding: 0.28rem 0.45rem;
+  border: 1px solid rgba(189, 139, 66, 0.55);
+  border-radius: 999px;
+  background: rgba(255, 250, 239, 0.97);
+  box-shadow: 0 6px 18px rgba(92, 47, 24, 0.18);
+  font-family: var(--spiritual-heading-serif, Georgia, serif);
+}
+
+.reading-size-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.1rem;
+  min-height: 2.1rem;
+  padding: 0 0.3rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #6b3414;
+  cursor: pointer;
+  font-weight: 800;
+  line-height: 1;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.reading-size-btn:hover:not(:disabled),
+.reading-size-btn:focus-visible:not(:disabled) {
+  background: #f1dcb4;
+  color: #8a4a1a;
+  outline: none;
+}
+
+.reading-size-btn:disabled {
+  opacity: 0.38;
+  cursor: default;
+}
+
+.reading-size-btn--minus { font-size: 0.82rem; }
+.reading-size-btn--reset { font-size: 1rem; opacity: 0.8; }
+.reading-size-btn--plus  { font-size: 1.28rem; }
+
+.reading-size-label {
+  min-width: 2.7rem;
+  padding: 0 0.25rem 0 0.15rem;
+  color: rgba(92, 47, 24, 0.72);
+  font-family: var(--font-body, Georgia, serif);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  #reading-size-control {
+    bottom: 0.7rem;
+    left: 0.7rem;
+    padding: 0.22rem 0.34rem;
+  }
+  .reading-size-btn { min-width: 1.95rem; min-height: 1.95rem; }
+  .reading-size-label { display: none; }
+}
+
+/*
+  18. Bhajan cards: show only the Hindi name (English removed — the cards read
+      cleaner and less full), and recolour the Krishna accent from blue (which
+      clashed with the warm palette) to a deep, muted indigo — Krishna's
+      traditional blue, kept deep/muted (not the bright periwinkle it was) so it
+      settles as well as a blue can against the warm palette. Chosen for meaning.
+      Card height is also tightened so the now single-line cards are not empty.
+      Ram stays orange; Shiv (grey) untouched. Blank/uncoloured cards stay blank.
+*/
+#bhajans .grid a.group span span:first-child {
+  display: none !important;
+}
+
+#bhajans .grid a.group span span:nth-child(2) {
+  font-size: 1rem !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  opacity: 1 !important;
+}
+
+#bhajans .grid a.group {
+  min-height: 4.4rem !important;
+}
+
+#bhajans .grid a.group[data-bhajan-devotion="krishna"]::after {
+  background: #3f4a86;
+}
+
+/*
+  19. Satsang search (see satsang-search.js): a single clean search bar above the
+      Satsang category tabs. Typing shows cross-category results (from
+      /data/satsang-talks.json) and hides the normal category view; clearing
+      restores it. Satsang only — Satsang-Ansh is untouched.
+*/
+.satsang-search-bar {
+  width: min(46rem, 100%);
+  margin: 0 auto 1.5rem;
+  text-align: center;
+}
+
+.satsang-search-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.satsang-search-icon {
+  position: absolute;
+  left: 1rem;
+  font-size: 1rem;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.satsang-search-input {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.6rem 2.9rem 0.6rem 2.8rem;
+  border: 1px solid rgba(189, 139, 66, 0.5);
+  border-radius: 999px;
+  background: rgba(255, 250, 239, 0.95);
+  color: #5c2f18;
+  font-family: var(--spiritual-devanagari, "Noto Serif Devanagari", serif);
+  font-size: 1.05rem;
+  box-shadow: inset 0 1px 3px rgba(92, 47, 24, 0.06);
+}
+
+.satsang-search-input:focus {
+  border-color: rgba(145, 80, 35, 0.7);
+  outline: 2px solid rgba(196, 125, 36, 0.18);
+  outline-offset: 1px;
+}
+
+.satsang-search-input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.satsang-search-clear {
+  position: absolute;
+  right: 0.55rem;
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #8a4a1a;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.satsang-search-clear:hover {
+  background: rgba(216, 176, 106, 0.25);
+}
+
+.satsang-search-count {
+  display: inline-block;
+  margin-top: 0.55rem;
+  color: rgba(92, 47, 24, 0.7);
+  font-family: var(--spiritual-devanagari, serif);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+/* When there is no query, the count is empty — collapse it so it adds no gap. */
+.satsang-search-count:empty {
+  display: none;
+  margin: 0;
+}
+
+.satsang-search-results {
+  width: min(48rem, 100%);
+  margin: 0 auto;
+}
+
+.satsang-search-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.satsang-search-result {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid rgba(216, 176, 106, 0.42);
+  border-radius: 0.75rem;
+  background: rgba(255, 250, 239, 0.94);
+  color: #5c2f18;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(92, 47, 24, 0.05);
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.satsang-search-result:hover,
+.satsang-search-result:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(145, 80, 35, 0.6);
+  box-shadow: 0 8px 18px rgba(92, 47, 24, 0.09);
+  outline: none;
+}
+
+.satsang-search-play {
+  flex: 0 0 auto;
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  padding-left: 0.12rem;
+  place-items: center;
+  border: 1px solid rgba(189, 139, 66, 0.5);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #c47d24, #915023);
+  color: #fff8e8;
+  font-size: 0.78rem;
+}
+
+.satsang-search-copy {
+  min-width: 0;
+}
+
+.satsang-search-title {
+  display: block;
+  color: #5c2f18;
+  font-family: var(--spiritual-heading-serif, serif);
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.satsang-search-meta {
+  display: block;
+  margin-top: 0.15rem;
+  color: rgba(92, 47, 24, 0.66);
+  font-size: 0.84rem;
+}
+
+.satsang-search-empty {
+  margin: 0;
+  padding: 1.5rem 1rem;
+  color: rgba(92, 47, 24, 0.72);
+  font-style: italic;
+  text-align: center;
+}
+
+/* While searching, hide the normal category view (tabs + list + personal bits). */
+#talks.satsang-searching .mb-7.overflow-x-auto,
+#talks.satsang-searching .satsang-category-scroll-shell,
+#talks.satsang-searching #satsang-tab-scroll-hint,
+#talks.satsang-searching #recently-listened,
+#talks.satsang-searching #satsang-personal-filters,
+#talks.satsang-searching #satsang-device-privacy,
+#talks.satsang-searching .space-y-3 {
+  display: none !important;
+}
+
+/*
+  20. Gratitude line inside the Satsang-Ansh player (see excerpts-playlist.js).
+      Shows only while a talk is playing — invites a like/comment on YouTube as
+      an offering of gratitude to Pujya Swamiji, while listening stays in the app.
+*/
+.excerpts-gratitude {
+  margin: 0.75rem auto 0;
+  max-width: 36rem;
+  color: rgba(92, 47, 24, 0.82);
+  font-family: var(--spiritual-devanagari, "Noto Serif Devanagari", serif);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  text-align: center;
 }

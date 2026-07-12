@@ -604,7 +604,7 @@
           <button type="button" class="satsang-next-talk">अगला ▶</button>
         </div>
         <div class="satsang-talk-list" hidden></div>
-        <p class="satsang-progress-note">नोट: हाल ही में सुना गया प्रवचन केवल ऐप के अंदर सुनने पर सेव होगा।</p>
+        <p class="satsang-progress-note">🙏 सुनने के बाद, YouTube पर 👍 Like व 💬 Comment से प. पू. स्वामीजी के प्रति कृतज्ञता व्यक्त कर सकते हैं</p>
         <a class="satsang-youtube-open" target="_blank" rel="noopener noreferrer">YouTube पर खोलें</a>
       </div>
     `;
@@ -797,6 +797,32 @@
       info,
     });
   }
+
+  // Exposed so other overlays (e.g. the Satsang search) can open the SAME
+  // in-app player instead of sending the visitor out to YouTube. Returns true
+  // if the integrated player opened; false lets the caller fall back to YouTube.
+  function playByUrl(url, meta) {
+    if (!url) return false;
+    meta = meta || {};
+    const title = meta.title || "सत्संग";
+    const category = meta.category || "Satsang";
+    const playlist = parsePlaylistInfo(url);
+    if (playlist && playlist.playlistId) {
+      return openPlaylistPlayer({
+        ...playlist,
+        playlistTitle: title,
+        title,
+        category,
+      });
+    }
+    const video = parseVideoInfo(url);
+    if (video && video.videoId) {
+      return openVideoPlayer({ ...video, title, category, url });
+    }
+    return false;
+  }
+  window.SatsangPlayer = window.SatsangPlayer || {};
+  window.SatsangPlayer.playByUrl = playByUrl;
 
   function actionButton(className, label, symbol) {
     const button = document.createElement("span");

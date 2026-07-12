@@ -32,7 +32,7 @@ In Cyberduck, turn on **View → Show Hidden Files** so `.htaccess` is visible.
 ### Folders (upload the whole folder)
 - [ ] `assets/`   *(all images + the app bundle + styles — largest, ~17 MB)*
 - [ ] `home/`     *(contains home/index.html)*
-- [ ] `data/`     *(excerpts fallback list)*
+- [ ] `data/`     *(excerpts fallback + Satsang search list)*
 
 ### Root files
 - [ ] `index.html`
@@ -52,7 +52,9 @@ In Cyberduck, turn on **View → Show Hidden Files** so `.htaccess` is visible.
 - [ ] `home-slideshow-overrides.js`
 - [ ] `charan-carousel-polish.js`
 - [ ] `sadguru-smaran-cta.js`
-- [ ] `closing-blessing.js`   ← **new file this round**
+- [ ] `closing-blessing.js`
+- [ ] `reading-size.js`   ← **new file (A-/A+ text-size control)**
+- [ ] `satsang-search.js`   ← **new file (Satsang talks search)**
 - [ ] `image-loading-optimizations.js`
 - [ ] `favicon.ico`
 - [ ] `apple-touch-icon.png`
@@ -88,6 +90,19 @@ In Cyberduck, turn on **View → Show Hidden Files** so `.htaccess` is visible.
       की जय** (the small "Made for स्वान्तः सुखाय" line is gone).
 - [ ] The **nav shows सिद्धबाड़ी रेखाचित्र** (renamed from Sidhbari Leela).
 - [ ] Open the **☰ menu** on mobile → सत्संग-अंश appears and closes the menu on tap.
+
+### This batch (latest changes) — also check:
+- [ ] **Stuti 1 (108 names):** names are corrected — e.g. #5 **विनाशकाय**, #15
+      **कर्मयोगिने**, #31 **आनन्दवर्धकाय**, #75 **साधु प्रियाय**, #80 **दृढप्रतिज्ञे**,
+      and the list ends **…दीन वत्सलाय → श्री सद्गुरवे → नित्यशुद्धबुद्धमुक्तस्वरूपाय**
+      (no stray **शिवाय**). Numbering still **१ → १०८**.
+- [ ] **Satsang search:** no empty gap under the search box before the
+      "जहाँ छोड़ा था" resume box.
+- [ ] **Charitra Jhalak → ॐ सद्गुरु प्रियाय नमः:** the small collage captions
+      (incl. **ॐ श्री चिन्मय सद्गुरवे नमः**) are now a comfortable size, close to
+      the captions around them.
+- [ ] **Satsang search → tap a result:** it opens the **in-app player**
+      (same as the normal list), **not** a jump to YouTube.
 
 The service-worker version was bumped, so once each visitor hard-refreshes (or
 reopens the app) once, everyone auto-updates from then on.

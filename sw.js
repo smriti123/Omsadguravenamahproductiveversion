@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "omsadguravenamah";
-const CACHE_VERSION = "2026-07-11-137";
+const CACHE_VERSION = "2026-07-12-154";
 const CACHE_NAME = `${CACHE_PREFIX}-${CACHE_VERSION}`;
 const IMAGE_CACHE_NAME = `${CACHE_PREFIX}-images-${CACHE_VERSION}`;
 const isLocalDevelopment =
@@ -9,9 +9,9 @@ const isLocalDevelopment =
 const APP_SHELL = [
   "/",
   "/index.html",
-  "/assets/index-wjuQPPKu.js?v=8",
+  "/assets/index-wjuQPPKu.js?v=9",
   "/assets/index-NEP4d6NH.css",
-  "/section-banner-overrides.css?v=100",
+  "/section-banner-overrides.css?v=112",
   "/virah-layout.js?v=3",
   "/virah-first-avatar.js?v=1",
   "/assets/virah-adhyatmananda-avatar.jpg?v=1",
@@ -33,8 +33,10 @@ const APP_SHELL = [
   "/assets/stuti-gangeshananda-CKp1HJji.jpg",
   "/assets/subodhananda-stotram-enhanced-color.jpg",
   "/assets/stuti-gangeshananda-BlQ4qr1T.jpg",
-  "/satsang-bookmarks.js?v=33",
-  "/excerpts-playlist.js?v=22",
+  "/satsang-bookmarks.js?v=36",
+  "/satsang-search.js?v=3",
+  "/data/satsang-talks.json",
+  "/excerpts-playlist.js?v=23",
   "/data/excerpts-playlist-fallback.json",
   "/image-loading-optimizations.js?v=1",
   "/home-scroll-button.js?v=1",
@@ -43,6 +45,7 @@ const APP_SHELL = [
   "/charan-carousel-polish.js?v=1",
   "/sadguru-smaran-cta.js?v=5",
   "/closing-blessing.js?v=1",
+  "/reading-size.js?v=1",
   "/assets/dravinam.jpeg",
   "/assets/saraswatiiji.jpg",
   "/assets/wheelchairnew.jpg",
