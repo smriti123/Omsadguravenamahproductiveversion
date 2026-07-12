@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "omsadguravenamah";
-const CACHE_VERSION = "2026-07-12-154";
+const CACHE_VERSION = "2026-07-12-155";
 const CACHE_NAME = `${CACHE_PREFIX}-${CACHE_VERSION}`;
 const IMAGE_CACHE_NAME = `${CACHE_PREFIX}-images-${CACHE_VERSION}`;
 const isLocalDevelopment =
@@ -16,7 +16,7 @@ const APP_SHELL = [
   "/virah-first-avatar.js?v=1",
   "/assets/virah-adhyatmananda-avatar.jpg?v=1",
   "/assets/virah-adhyatmananda-full.jpg?v=1",
-  "/charitra-special.js?v=41",
+  "/charitra-special.js?v=42",
   "/assets/anandvardhakaya-1.jpg",
   "/assets/anandvardhakaya-2.jpeg",
   "/assets/anandvardhakaya-3.jpg",
@@ -26,6 +26,7 @@ const APP_SHELL = [
   "/assets/anandvardhakaya-7.jpeg",
   "/assets/anandvardhakaya-8.jpeg",
   "/assets/anandvardhakaya-9.jpeg",
+  "/assets/anandvardhakaya-kalash.jpeg",
   "/assets/diw-YaPSf2re.jpg",
   "/assets/arununcle-new.jpeg",
   "/assets/guruparampara.jpeg",

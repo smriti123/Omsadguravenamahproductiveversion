@@ -18,6 +18,7 @@
   const arunUncleItemId = "adwitaya-arun-uncle-new";
   const arunUncleCaption = "\u0950 \u0905\u0926\u094D\u0935\u093F\u0924\u0940\u092F\u093E\u092F \u0928\u092E\u0903\u0964";
   const anandvardhakayaPhotos = [
+    { id: "charitra-anandvardhakaya-kalash", src: "/assets/anandvardhakaya-kalash.jpeg" },
     {
       id: "charitra-anandvardhakaya-2",
       src: "/assets/anandvardhakaya-2.jpeg",
@@ -605,23 +606,51 @@
     const gallery = document.querySelector("#photo-gallery2");
     if (!gallery) return;
 
-    document.querySelector(`#${anandvardhakayaArticleId}`)?.remove();
-
     const articles = Array.from(gallery.querySelectorAll("article"));
     const reference = findAdwitayaArticle() || articles[articles.length - 1];
     if (!reference) return;
 
-    const photoGrid = reference.querySelector('[role="region"] .columns-1');
-    if (!photoGrid) return;
-
-    const currentPhotos = photoGrid.querySelectorAll('[id^="charitra-anandvardhakaya-"]');
-    if (
-      currentPhotos.length !== anandvardhakayaPhotos.length ||
-      currentPhotos[0]?.id !== anandvardhakayaPhotos[0].id
-    ) {
-      currentPhotos.forEach((photo) => photo.remove());
-      photoGrid.append(...anandvardhakayaPhotos.map((photo) => createAnandvardhakayaItem(photo)));
+    // If the standalone category already exists and is up to date, leave it be.
+    const existing = document.querySelector(`#${anandvardhakayaArticleId}`);
+    if (existing) {
+      const grid = existing.querySelector('[role="region"] .columns-1');
+      const photos = grid
+        ? grid.querySelectorAll('[id^="charitra-anandvardhakaya-"]')
+        : [];
+      const upToDate =
+        grid &&
+        photos.length === anandvardhakayaPhotos.length &&
+        photos[0]?.id === anandvardhakayaPhotos[0].id;
+      if (upToDate) return;
+      existing.remove();
     }
+
+    // Clean up any legacy photos that were merged into another category.
+    gallery
+      .querySelectorAll(
+        `article:not(#${anandvardhakayaArticleId}) [id^="charitra-anandvardhakaya-"]`,
+      )
+      .forEach((el) => el.remove());
+
+    // Build the standalone "ॐ आनन्दवर्धकाय नमः" category (heading + photos).
+    const article = createAnandvardhakayaArticle(reference);
+    const grid = article.querySelector('[role="region"] .columns-1');
+    if (grid) {
+      grid.append(...anandvardhakayaPhotos.map((photo) => createAnandvardhakayaItem(photo)));
+    }
+
+    // Wire its accordion toggle (this article is injected, not React-managed).
+    const button = article.querySelector("h3 > button");
+    const region = article.querySelector('[role="region"]');
+    if (button && region) {
+      button.addEventListener("click", () => {
+        const expanded = button.getAttribute("aria-expanded") === "true";
+        button.setAttribute("aria-expanded", String(!expanded));
+        region.hidden = expanded;
+      });
+    }
+
+    reference.insertAdjacentElement("afterend", article);
   }
 
   function findVedantVedyaArticle() {

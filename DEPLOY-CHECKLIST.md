@@ -103,6 +103,9 @@ In Cyberduck, turn on **View → Show Hidden Files** so `.htaccess` is visible.
       the captions around them.
 - [ ] **Satsang search → tap a result:** it opens the **in-app player**
       (same as the normal list), **not** a jump to YouTube.
+- [ ] **Charitra Jhalak → ॐ आनन्दवर्धकाय नमः:** the new photo (Swamiji with
+      garland + kalash) is the **first** picture in that group. *(New file to
+      upload: `assets/anandvardhakaya-kalash.jpeg`.)*
 
 The service-worker version was bumped, so once each visitor hard-refreshes (or
 reopens the app) once, everyone auto-updates from then on.
