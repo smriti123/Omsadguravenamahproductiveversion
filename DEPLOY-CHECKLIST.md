@@ -106,6 +106,14 @@ In Cyberduck, turn on **View → Show Hidden Files** so `.htaccess` is visible.
 - [ ] **Charitra Jhalak → ॐ आनन्दवर्धकाय नमः:** the new photo (Swamiji with
       garland + kalash) is the **first** picture in that group. *(New file to
       upload: `assets/anandvardhakaya-kalash.jpeg`.)*
+- [ ] **सुविचार / दिव्य वाणी calendar:** days **1–10** are now clickable (was
+      only 6–9); tapping a day shows its quote image. Headings are now Hindi
+      (**पूज्य स्वामीजी के अनमोल वचन**) and the per-quote titles were removed.
+      *(New files to upload: `assets/q1.png`, `assets/q2.jpg`, `assets/q3.jpg`,
+      `assets/q4.jpg`, `assets/q5.jpg`, `assets/q10.jpg`, plus the updated
+      `assets/index-wjuQPPKu.js`.)*
+- [ ] **Sadguru-Smaran invite text** now reads: "कृपया परम पूज्य स्वामीजी से जुड़े
+      अपने अनुभव, विशेष चित्र, प्रसंग एवं संस्मरण साझा करें…" *(file: `sadguru-smaran-cta.js`.)*
 
 The service-worker version was bumped, so once each visitor hard-refreshes (or
 reopens the app) once, everyone auto-updates from then on.

@@ -4383,7 +4383,7 @@ footer.border-t.border-orange-200.bg-orange-50 {
       restores it. Satsang only — Satsang-Ansh is untouched.
 */
 .satsang-search-bar {
-  width: min(46rem, 100%);
+  width: min(34rem, 100%);
   margin: 0 auto 1.5rem;
   text-align: center;
 }
@@ -4460,7 +4460,7 @@ footer.border-t.border-orange-200.bg-orange-50 {
 }
 
 .satsang-search-results {
-  width: min(48rem, 100%);
+  width: min(34rem, 100%);
   margin: 0 auto;
 }
 

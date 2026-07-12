@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "omsadguravenamah";
-const CACHE_VERSION = "2026-07-12-155";
+const CACHE_VERSION = "2026-07-12-158";
 const CACHE_NAME = `${CACHE_PREFIX}-${CACHE_VERSION}`;
 const IMAGE_CACHE_NAME = `${CACHE_PREFIX}-images-${CACHE_VERSION}`;
 const isLocalDevelopment =
@@ -9,9 +9,9 @@ const isLocalDevelopment =
 const APP_SHELL = [
   "/",
   "/index.html",
-  "/assets/index-wjuQPPKu.js?v=9",
+  "/assets/index-wjuQPPKu.js?v=10",
   "/assets/index-NEP4d6NH.css",
-  "/section-banner-overrides.css?v=112",
+  "/section-banner-overrides.css?v=113",
   "/virah-layout.js?v=3",
   "/virah-first-avatar.js?v=1",
   "/assets/virah-adhyatmananda-avatar.jpg?v=1",
@@ -44,7 +44,7 @@ const APP_SHELL = [
   "/hindi-titles.js?v=3",
   "/home-slideshow-overrides.js?v=1",
   "/charan-carousel-polish.js?v=1",
-  "/sadguru-smaran-cta.js?v=5",
+  "/sadguru-smaran-cta.js?v=6",
   "/closing-blessing.js?v=1",
   "/reading-size.js?v=1",
   "/assets/dravinam.jpeg",
