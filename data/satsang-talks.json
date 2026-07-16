@@ -7,6 +7,13 @@
         "category":  "Ramayana"
     },
     {
+        "title":  "Ram Charitra at Sidhbari Oct 2017",
+        "location":  "Sidhbari",
+        "year":  "2017",
+        "youtubeUrl":  "https://www.youtube.com/playlist?list=PLgy41qSqQO42BEErA7w8q-BBHGgkK_gAO",
+        "category":  "Ramayana"
+    },
+    {
         "title":  "Shri Ram Valmiki Samvad Part 1/12",
         "location":  null,
         "year":  null,
@@ -242,6 +249,20 @@
         "location":  "Patiala",
         "year":  "March 2018",
         "youtubeUrl":  "https://www.youtube.com/playlist?list=PLgy41qSqQO43TI_vVTyjExJxXaikPlgQa",
+        "category":  "Bhagwat Geeta"
+    },
+    {
+        "title":  "Bhagvad Geeta Ch 2 (Jabalpur)",
+        "location":  "Jabalpur",
+        "year":  null,
+        "youtubeUrl":  "https://www.youtube.com/playlist?list=PLgy41qSqQO41C2gN9A-gPdBBi-0m1BrfI",
+        "category":  "Bhagwat Geeta"
+    },
+    {
+        "title":  "Bhagvad Geeta Ch 12 (Dehradun 2016)",
+        "location":  "Dehradun",
+        "year":  "2016",
+        "youtubeUrl":  "https://www.youtube.com/playlist?list=PLgy41qSqQO42wqplsTjI_Ol4P63VgbtcF",
         "category":  "Bhagwat Geeta"
     },
     {

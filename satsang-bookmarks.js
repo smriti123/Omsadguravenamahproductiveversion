@@ -824,14 +824,28 @@
   window.SatsangPlayer = window.SatsangPlayer || {};
   window.SatsangPlayer.playByUrl = playByUrl;
 
-  function actionButton(className, label, symbol) {
+  function actionButton(className, label, symbol, word) {
     const button = document.createElement("span");
     button.className = `talk-action ${className}`;
     button.setAttribute("role", "button");
     button.setAttribute("tabindex", "0");
     button.setAttribute("aria-label", label);
     button.title = label;
-    button.textContent = symbol;
+    if (word) {
+      // Icon + a tiny word beneath it, so the meaning is clear on phones (where the
+      // desktop-only `title` tooltip never shows).
+      button.classList.add("talk-action--labeled");
+      const icon = document.createElement("span");
+      icon.className = "talk-action__icon";
+      icon.setAttribute("aria-hidden", "true");
+      icon.textContent = symbol;
+      const text = document.createElement("span");
+      text.className = "talk-action__word";
+      text.textContent = word;
+      button.append(icon, text);
+    } else {
+      button.textContent = symbol;
+    }
     button.addEventListener("keydown", (event) => {
       if (event.key !== "Enter" && event.key !== " ") return;
       event.preventDefault();
@@ -1308,13 +1322,15 @@
           "talk-partial-action",
           "आंशिक सुना",
           "◐",
+          "आंशिक",
         );
         const listened = actionButton(
           "talk-listened-action",
           "सुना हुआ",
           "✓",
+          "सुना",
         );
-        const notes = actionButton("talk-notes-action", "मनन नोट्स", "✎");
+        const notes = actionButton("talk-notes-action", "मनन नोट्स", "✎", "मनन");
 
         play.addEventListener("click", playTalk);
         partial.addEventListener("click", (event) => setStatus(event, "partial"));
@@ -1376,10 +1392,10 @@
     section.hidden = false;
     section.innerHTML = `
       <button type="button" class="continue-listening-card" id="recently-listened-title">
-        <span class="continue-listening-main">▶ जहाँ छोड़ा था वहाँ से सुनें</span>
+        <span class="continue-listening-main">▶ Resume last talk</span>
         <span class="continue-listening-detail"></span>
       </button>
-      <p class="satsang-progress-note satsang-progress-note--compact">नोट: हाल ही में सुना गया प्रवचन केवल ऐप के अंदर सुनने पर सेव होगा।</p>
+      <p class="satsang-progress-note satsang-progress-note--compact">Saved on this device only.</p>
     `;
 
     const record = records[0];
@@ -1388,7 +1404,7 @@
       `प्रवचन ${record.videoNumber || sanitizeIndex(record.videoIndex) + 1}`;
     const button = section.querySelector(".continue-listening-card");
     button.querySelector(".continue-listening-detail").textContent =
-      `${detailText} — ${formatTime(record.seconds)} से आगे`;
+      `${detailText} — from ${formatTime(record.seconds)}`;
     button.addEventListener("click", () => {
       openPlaylistPlayer({
         playlistId: record.playlistId,

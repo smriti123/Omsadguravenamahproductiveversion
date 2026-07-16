@@ -3,10 +3,8 @@
     "https://www.youtube.com/playlist?list=PLPZZ4rJCboBUaa3CHa8jdPV2tN9OhNCcG";
   const playlistId = new URL(playlistUrl).searchParams.get("list") || "";
   const cacheKey = `excerpts-playlist-cache-v1:${playlistId}`;
-  const savedKey = `excerpts-listen-later-v1:${playlistId}`;
   const staticFallbackUrl = "/data/excerpts-playlist-fallback.json";
   const durationFilters = [
-    { key: "all", label: "All" },
     { key: "under5", label: "≤5 min", max: 5 * 60 },
     { key: "under10", label: "5-10 min", min: 5 * 60, max: 10 * 60 },
     { key: "under15", label: "10-15 min", min: 10 * 60, max: 15 * 60 },
@@ -15,8 +13,55 @@
     { key: "over30", label: "30+ min", min: 30 * 60 },
   ];
   const cacheMaxAgeMs = 6 * 60 * 60 * 1000;
+  // Topic-wise (प्रकरण) full Satsang playlists shown as a "Playlists" group at the
+  // top of Satsang-Ansh. Tapping one opens the same integrated player used by the
+  // Satsang list (window.SatsangPlayer); falls back to YouTube if unavailable.
+  const excerptPlaylists = [
+    {
+      title: "भक्ति प्रकरण",
+      subtitle: "Bhakti Prakaran",
+      videoId: "Y89LVnRuDhI",
+      url: "https://www.youtube.com/playlist?list=PLgy41qSqQO40vxoignhmCfgRJYTpbBHAj",
+    },
+    {
+      title: "ईश्वर प्रकरण",
+      subtitle: "Ishwar Prakaran",
+      videoId: "-VF1D_r_KZM",
+      url: "https://www.youtube.com/playlist?list=PLgy41qSqQO43xNVt8WOEGZszlUUURRdi_",
+    },
+    {
+      title: "जीवन प्रकरण",
+      subtitle: "Jeevan Prakaran",
+      videoId: "E6-2U5U_Y9g",
+      url: "https://www.youtube.com/playlist?list=PLgy41qSqQO40O0ec0PWpNMlBNHThamJQO",
+    },
+    {
+      title: "साधना प्रकरण",
+      subtitle: "Sadhna Prakaran",
+      videoId: "s39y4fNXepk",
+      url: "https://www.youtube.com/playlist?list=PLgy41qSqQO420ztBxZE6tga9I4bMkMgM4",
+    },
+    {
+      title: "कर्म प्रकरण",
+      subtitle: "Karma Prakaran",
+      videoId: "VSixisuFNnI",
+      url: "https://www.youtube.com/playlist?list=PLgy41qSqQO43KWmNeH8OijWevP014gyTo",
+    },
+    {
+      title: "वेद-वेदांत, आगम-निगम",
+      subtitle: "Ved, Vedant, Aagam, Nigam",
+      videoId: "CThjnmM02J8",
+      url: "https://www.youtube.com/playlist?list=PLgy41qSqQO41a83lWCTUXFMJmAtwJqITj",
+    },
+    {
+      title: "कृपणता",
+      subtitle: "Miserliness",
+      videoId: "4EV3v5UXKOY",
+      url: "https://www.youtube.com/playlist?list=PLgy41qSqQO42ywATXayBhAulpElojvBlZ",
+    },
+  ];
   let videos = [];
-  let activeDurationFilter = "all";
+  let activeDurationFilter = "under5";
   let listExpanded = false;
   const collapsedCount = 8;
   let selectedVideoId = "";
@@ -31,6 +76,7 @@
   let playlistIds = [];
   let metadataResolveTimer = null;
   const metadataKey = `excerpts-video-metadata-v1:${playlistId}`;
+  const recentKey = "excerpts-recent-v1";
 
   function readJson(key, fallback) {
     try {
@@ -49,20 +95,49 @@
     }
   }
 
-  function savedIds() {
-    const value = readJson(savedKey, []);
-    return Array.isArray(value) ? value.filter(Boolean) : [];
-  }
-
-  function setSavedIds(ids) {
-    writeJson(savedKey, Array.from(new Set(ids)));
-  }
-
   function createEl(tag, className = "", text = "") {
     const element = document.createElement(tag);
     if (className) element.className = className;
     if (text) element.textContent = text;
     return element;
+  }
+
+  function playExcerptPlaylist(item) {
+    const player = window.SatsangPlayer;
+    if (player && typeof player.playByUrl === "function") {
+      const opened = player.playByUrl(item.url, {
+        title: item.title,
+        category: "सत्संग अंश",
+      });
+      if (opened) return;
+    }
+    window.open(item.url, "_blank", "noopener,noreferrer");
+  }
+
+  // Build the प्रकरण playlist cards as a grid element (shown in the list area
+  // when the प्रकरण tab is active).
+  function buildPlaylistGrid() {
+    const grid = createEl("div", "excerpts-playlists-grid");
+    grid.append(
+      ...excerptPlaylists.map((item) => {
+        const card = createEl("button", "excerpts-playlist-card");
+        card.type = "button";
+        card.setAttribute("aria-label", `${item.title} — सुनें`);
+        card.innerHTML = `
+          <span class="excerpts-playlist-thumb" aria-hidden="true">
+            <img src="https://img.youtube.com/vi/${item.videoId}/hqdefault.jpg" alt="" loading="lazy">
+            <span class="excerpts-playlist-play">▶</span>
+          </span>
+          <span class="excerpts-playlist-copy">
+            <span class="excerpts-playlist-title">${escapeHtml(item.title)}</span>
+            <span class="excerpts-playlist-sub">${escapeHtml(item.subtitle)}</span>
+          </span>
+        `;
+        card.addEventListener("click", () => playExcerptPlaylist(item));
+        return card;
+      }),
+    );
+    return grid;
   }
 
   // Place (or re-place) the excerpts section immediately after Satsang (#talks).
@@ -128,13 +203,7 @@
           <a class="excerpts-youtube-open" href="${playlistUrl}" target="_blank" rel="noopener noreferrer">YouTube पर खोलें</a>
           <p class="excerpts-gratitude">🙏 सुनने के बाद, YouTube पर 👍 Like व 💬 Comment से प. पू. स्वामीजी के प्रति कृतज्ञता व्यक्त कर सकते हैं</p>
         </div>
-        <div class="excerpts-saved" hidden>
-          <div class="excerpts-subhead">
-            <h3>Saved for later</h3>
-            <p>Saved items stay only on this browser/device.</p>
-          </div>
-          <div class="excerpts-saved-list"></div>
-        </div>
+        <div class="excerpts-recent" hidden></div>
         <div class="excerpts-filter-wrap">
           <p>Browse by duration</p>
           <div class="excerpts-duration-tabs" role="tablist" aria-label="Browse talks by duration"></div>
@@ -475,11 +544,48 @@
       card.classList.toggle("is-playing", card.dataset.videoId === videoId);
     });
 
+    // Remember the last excerpt opened (on this device only) so it can be resumed.
+    writeJson(recentKey, { id: video.id, title: video.title });
+    renderRecent();
+
     if (shouldScroll) {
       section.querySelector("#excerpts-player-anchor")?.scrollIntoView({
         behavior: "smooth",
         block: "start",
       });
+    }
+  }
+
+  // A lightweight "recently listened" card: reopens the last excerpt you tapped.
+  // (The excerpts player doesn't save a playback position, so this resumes the
+  // excerpt, not an exact timestamp — and it lives only in this browser.)
+  function renderRecent() {
+    if (!section) return;
+    const box = section.querySelector(".excerpts-recent");
+    if (!box) return;
+
+    const saved = readJson(recentKey, null);
+    const video = saved && saved.id ? videos.find((item) => item.id === saved.id) : null;
+    if (!video) {
+      box.hidden = true;
+      box.replaceChildren();
+      return;
+    }
+
+    if (box.dataset.videoId !== video.id) {
+      box.dataset.videoId = video.id;
+      box.hidden = false;
+      box.innerHTML = `
+        <button type="button" class="excerpts-recent-card">
+          <span class="excerpts-recent-main">▶ Resume last excerpt</span>
+          <span class="excerpts-recent-detail"></span>
+        </button>
+        <p class="excerpts-recent-note">Saved on this device only.</p>
+      `;
+      box.querySelector(".excerpts-recent-detail").textContent = video.title;
+      box
+        .querySelector(".excerpts-recent-card")
+        .addEventListener("click", () => selectVideo(video.id));
     }
   }
 
@@ -494,16 +600,6 @@
         block: "start",
       });
     }
-  }
-
-  function toggleSaved(videoId) {
-    const ids = savedIds();
-    if (ids.includes(videoId)) {
-      setSavedIds(ids.filter((id) => id !== videoId));
-    } else {
-      setSavedIds([...ids, videoId]);
-    }
-    renderLists();
   }
 
   function durationSeconds(video) {
@@ -558,6 +654,22 @@
     const tabs = section.querySelector(".excerpts-duration-tabs");
     if (!tabs) return;
 
+    // प्रकरण tab — sits alongside the duration tabs; shows the topic-wise playlists.
+    const prakaranTab = createEl(
+      "button",
+      "excerpts-duration-tab excerpts-tab-prakaran",
+      `Playlists (${excerptPlaylists.length})`,
+    );
+    prakaranTab.type = "button";
+    prakaranTab.setAttribute("role", "tab");
+    prakaranTab.setAttribute("aria-selected", String(activeDurationFilter === "prakaran"));
+    prakaranTab.classList.toggle("is-active", activeDurationFilter === "prakaran");
+    prakaranTab.addEventListener("click", () => {
+      activeDurationFilter = "prakaran";
+      listExpanded = false;
+      renderLists();
+    });
+
     tabs.replaceChildren(
       ...durationFilters.map((filter) => {
         const count = videos.filter((video) => matchesDurationFilter(video, filter)).length;
@@ -573,6 +685,7 @@
         });
         return button;
       }),
+      prakaranTab,
     );
   }
 
@@ -585,9 +698,8 @@
     status.textContent = `${shown} of ${videos.length} talks shown (${rangeText}), sorted shortest to longest.`;
   }
 
-  function renderCard(video, compact = false) {
-    const isSaved = savedIds().includes(video.id);
-    const card = createEl("article", compact ? "excerpt-card excerpt-card--saved" : "excerpt-card");
+  function renderCard(video) {
+    const card = createEl("article", "excerpt-card");
     card.dataset.videoId = video.id;
     if (video.id === selectedVideoId) card.classList.add("is-playing");
 
@@ -599,13 +711,11 @@
         ${durationDisplay ? `<span class="excerpt-duration">${escapeHtml(durationDisplay)}</span>` : ""}
       </button>
       <div class="excerpt-actions">
-        <button type="button" class="excerpt-save" aria-pressed="${isSaved}">${isSaved ? "★ Saved" : "☆ Listen later"}</button>
         <a class="excerpt-youtube-link" href="https://www.youtube.com/watch?v=${encodeURIComponent(video.id)}&list=${encodeURIComponent(sourcePlaylistIdFor(video))}" target="_blank" rel="noopener noreferrer">YouTube</a>
       </div>
     `;
 
     card.querySelector(".excerpt-main").addEventListener("click", () => selectVideo(video.id));
-    card.querySelector(".excerpt-save").addEventListener("click", () => toggleSaved(video.id));
     return card;
   }
 
@@ -635,30 +745,32 @@
   function renderLists() {
     if (!section) return;
     const list = section.querySelector(".excerpts-list");
-    const savedBox = section.querySelector(".excerpts-saved");
-    const savedList = section.querySelector(".excerpts-saved-list");
-    const saved = savedIds();
-    const visibleVideos = filteredVideos();
 
     renderDurationTabs();
-    if (visibleVideos.length) {
-      const collapsed = !listExpanded && visibleVideos.length > collapsedCount;
-      const shownVideos = collapsed ? visibleVideos.slice(0, collapsedCount) : visibleVideos;
-      const children = shownVideos.map((video) => renderCard(video));
-      if (visibleVideos.length > collapsedCount) {
-        children.push(renderShowMoreToggle(visibleVideos.length, collapsed));
-      }
-      list.replaceChildren(...children);
-    } else {
-      list.replaceChildren(createEl("p", "excerpts-empty", "No talks in this duration yet."));
-    }
-    updateStatusSummary();
 
-    const savedVideos = saved
-      .map((id) => videos.find((video) => video.id === id))
-      .filter(Boolean);
-    savedBox.hidden = savedVideos.length === 0;
-    savedList.replaceChildren(...savedVideos.map((video) => renderCard(video, true)));
+    if (activeDurationFilter === "prakaran") {
+      list.replaceChildren(buildPlaylistGrid());
+      const status = section.querySelector(".excerpts-status");
+      if (status) {
+        status.textContent = "विषय अनुसार पूर्ण सत्संग शृंखला — सुनने के लिए किसी प्रकरण को चुनें।";
+      }
+    } else {
+      const visibleVideos = filteredVideos();
+      if (visibleVideos.length) {
+        const collapsed = !listExpanded && visibleVideos.length > collapsedCount;
+        const shownVideos = collapsed ? visibleVideos.slice(0, collapsedCount) : visibleVideos;
+        const children = shownVideos.map((video) => renderCard(video));
+        if (visibleVideos.length > collapsedCount) {
+          children.push(renderShowMoreToggle(visibleVideos.length, collapsed));
+        }
+        list.replaceChildren(...children);
+      } else {
+        list.replaceChildren(createEl("p", "excerpts-empty", "No talks in this duration yet."));
+      }
+      updateStatusSummary();
+    }
+
+    renderRecent();
   }
 
   function applyPlaylistData(data, statusMessage = "") {
@@ -788,8 +900,6 @@
 
     const status = section.querySelector(".excerpts-status");
     const list = section.querySelector(".excerpts-list");
-    const savedBox = section.querySelector(".excerpts-saved");
-    savedBox.hidden = true;
 
     if (playlistIds.length) {
       updateFallbackPlaylistList();

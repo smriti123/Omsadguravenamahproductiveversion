@@ -308,13 +308,42 @@ function is_authorized(string $adminPassword): bool
         return false;
     }
 
-    $header = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
+    $header = get_authorization_header();
     if (strpos($header, 'Bearer ') !== 0) {
         return false;
     }
 
     $token = substr($header, 7);
     return hash_equals($adminPassword, $token);
+}
+
+function get_authorization_header(): string
+{
+    // The Authorization header lands in different places depending on how PHP
+    // runs (mod_php, CGI, FPM) and the server's config. Check them all.
+    foreach (['HTTP_AUTHORIZATION', 'REDIRECT_HTTP_AUTHORIZATION'] as $key) {
+        if (!empty($_SERVER[$key])) {
+            return trim((string) $_SERVER[$key]);
+        }
+    }
+
+    if (function_exists('apache_request_headers')) {
+        foreach (apache_request_headers() as $name => $value) {
+            if (strcasecmp($name, 'Authorization') === 0) {
+                return trim((string) $value);
+            }
+        }
+    }
+
+    if (function_exists('getallheaders')) {
+        foreach (getallheaders() as $name => $value) {
+            if (strcasecmp($name, 'Authorization') === 0) {
+                return trim((string) $value);
+            }
+        }
+    }
+
+    return '';
 }
 
 function init_storage(

@@ -123,10 +123,63 @@
     return true;
   };
 
+  // The photo attachment is a native <input type="file">. Its default
+  // "Choose File" button is greyed and easy to miss, so devotees couldn't tell
+  // where to attach a photo. Hide that native control and show a clear, English,
+  // underlined "Attach a photo" link that opens the picker and, once a file is
+  // chosen, shows its name.
+  const enhanceAttachment = () => {
+    const input = document.getElementById("hommage-image");
+    if (!input || input.dataset.smaranAttachEnhanced === "true") return;
+    input.dataset.smaranAttachEnhanced = "true";
+
+    input.classList.add("sadguru-smaran-file-input-hidden");
+
+    const trigger = document.createElement("button");
+    trigger.type = "button";
+    trigger.className = "sadguru-smaran-attach-link";
+    trigger.innerHTML =
+      '<span class="sadguru-smaran-attach-icon" aria-hidden="true">📎</span><span>Attach a photo</span>';
+    trigger.addEventListener("click", () => input.click());
+
+    const status = document.createElement("span");
+    status.className = "sadguru-smaran-attach-status";
+
+    input.insertAdjacentElement("afterend", status);
+    input.insertAdjacentElement("afterend", trigger);
+
+    input.addEventListener("change", () => {
+      const file = input.files && input.files[0];
+      status.textContent = file ? `✓ ${file.name}` : "";
+    });
+  };
+
+  // The section's opening shloka (यस्य स्मरणमात्रेण… सद्गुरवे नमस्तस्मै…) sits in a
+  // pale washed-out box that blends into the tan section background. Tag its
+  // plaque + verse with stable classes so the override CSS can turn it into a
+  // proper devotional plaque (warm frame, ॐ watermark, larger serif verse).
+  const SHLOKA_HINT = "सद्गुरवे नमस्तस्मै";
+  const tagShlokaPlaque = () => {
+    const section = document.getElementById("hommage");
+    if (!section) return;
+
+    const paras = section.querySelectorAll("p");
+    for (const para of paras) {
+      if (!para.textContent.includes(SHLOKA_HINT)) continue;
+
+      para.classList.add("sadguru-shloka-text");
+      const plaque = para.parentElement;
+      if (plaque) plaque.classList.add("sadguru-shloka-plaque");
+      break;
+    }
+  };
+
   const applyEnhancements = () => {
     hideOriginalCta();
     const primaryReady = enhancePrimaryCta();
     addCardMantras();
+    enhanceAttachment();
+    tagShlokaPlaque();
     return primaryReady;
   };
 

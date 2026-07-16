@@ -15,13 +15,14 @@
 **Before you start:** make a **zip backup** of this whole folder (right-click →
 Send to → Compressed). This work is not in git, so the zip is your only undo.
 
-Your site has a PHP backend and live user photos. Our changes were all **frontend**,
-so you only re-upload the frontend and **leave two things on the server alone**:
+This batch is mostly frontend, **plus a small backend fix** (admin-delete for
+Sadguru-Smaran). So this time you DO upload two files inside `api/` — but you must
+still **never touch two things**:
 
-1. **Do NOT overwrite `api/`** — it holds your server/database settings
-   (`config.local.php`). Overwriting can break the "Shared Sadguru-Smaran" sharing.
-2. **Do NOT overwrite `uploads/`** — it holds devotees' submitted photos.
-   Your local copy is older; overwriting would delete newer submissions.
+1. **NEVER overwrite `api/config.local.php`** — it holds your live database + admin
+   passwords. (You will upload `api/index.php` and `api/.htaccess`, but **not** this file.)
+2. **NEVER overwrite `uploads/`** — devotees' submitted photos. Your local copy is
+   older; overwriting would delete newer submissions.
 
 In Cyberduck, turn on **View → Show Hidden Files** so `.htaccess` is visible.
 
@@ -30,45 +31,53 @@ In Cyberduck, turn on **View → Show Hidden Files** so `.htaccess` is visible.
 ## ✅ UPLOAD — overwrite these (frontend + PWA)
 
 ### Folders (upload the whole folder)
-- [ ] `assets/`   *(all images + the app bundle + styles — largest, ~17 MB)*
-- [ ] `home/`     *(contains home/index.html)*
-- [ ] `data/`     *(excerpts fallback + Satsang search list)*
+- [x] `assets/`   *(all images + the app bundle + styles — largest, ~17 MB)*
+- [x] `home/`     *(contains home/index.html)*
+- [x] `data/`     *(excerpts fallback + Satsang search list)*
 
 ### Root files
-- [ ] `index.html`
-- [ ] `.htaccess`   ← **important** (needs "Show Hidden Files")
-- [ ] `sw.js`
-- [ ] `manifest.webmanifest`
-- [ ] `registerSW.js`
-- [ ] `workbox-9c191d2f.js`
-- [ ] `section-banner-overrides.css`
-- [ ] `excerpts-playlist.js`
-- [ ] `charitra-special.js`
-- [ ] `virah-first-avatar.js`
-- [ ] `home-scroll-button.js`
-- [ ] `satsang-bookmarks.js`
-- [ ] `virah-layout.js`
-- [ ] `hindi-titles.js`
-- [ ] `home-slideshow-overrides.js`
-- [ ] `charan-carousel-polish.js`
-- [ ] `sadguru-smaran-cta.js`
-- [ ] `closing-blessing.js`
-- [ ] `reading-size.js`   ← **new file (A-/A+ text-size control)**
-- [ ] `satsang-search.js`   ← **new file (Satsang talks search)**
-- [ ] `image-loading-optimizations.js`
-- [ ] `favicon.ico`
-- [ ] `apple-touch-icon.png`
-- [ ] `pwa-192x192.png`
-- [ ] `pwa-512x512.png`
-- [ ] `pwa-maskable-512x512.png`
-- [ ] `placeholder.svg`
-- [ ] `robots.txt`
+- [x] `index.html`
+- [x] `.htaccess`   ← **important** (needs "Show Hidden Files")
+- [x] `sw.js`
+- [x] `manifest.webmanifest`
+- [x] `registerSW.js`
+- [x] `workbox-9c191d2f.js`
+- [x] `section-banner-overrides.css`
+- [x] `excerpts-playlist.js`
+- [x] `charitra-special.js`
+- [x] `virah-first-avatar.js`
+- [x] `home-scroll-button.js`
+- [x] `satsang-bookmarks.js`
+- [x] `virah-layout.js`
+- [x] `hindi-titles.js`
+- [x] `home-slideshow-overrides.js`
+- [x] `charan-carousel-polish.js`
+- [x] `sadguru-smaran-cta.js`
+- [x] `my-photos.js`   ← **new file (private on-device photo section — "मेरी निजी तस्वीरें")**
+- [x] `quotes-carousel.js`   ← **new file (Divya Vani daily quote card)**
+- [x] `quick-jump.js`   ← **new file (sticky section chip-bar on the classic page)**
+- [x] `ios-tap-fix.js`   ← **new file (iPhone button fix; no-op on Android)**
+- [x] `closing-blessing.js`
+- [x] `reading-size.js`
+- [x] `satsang-search.js`
+- [x] `image-loading-optimizations.js`
+- [x] `favicon.ico`
+- [x] `apple-touch-icon.png`
+- [x] `pwa-192x192.png`
+- [x] `pwa-512x512.png`
+- [x] `pwa-maskable-512x512.png`
+- [x] `placeholder.svg`
+- [x] `robots.txt`
+
+### Backend — this batch's admin-delete fix (inside `api/`)
+- [x] `api/index.php`
+- [x] `api/.htaccess`   ← needs "Show Hidden Files"
 
 ---
 
 ## ⛔ LEAVE ON THE SERVER (do not touch)
-- `api/`       — PHP backend + your live settings
-- `uploads/`   — devotees' submitted photos
+- `api/config.local.php`   — your live DB + admin passwords (**never** overwrite)
+- `uploads/`               — devotees' submitted photos
 
 ---
 
@@ -80,43 +89,117 @@ In Cyberduck, turn on **View → Show Hidden Files** so `.htaccess` is visible.
 ---
 
 ## After uploading
-- [ ] Open the live site → **hard-refresh** (Ctrl + Shift + R).
+- [x] Open the live site → **hard-refresh** (Ctrl + Shift + R).
       On phone: fully close and reopen the app.
-- [ ] **Home page** (scroll straight down): Satsang-Ansh is **NOT** dangling at
+- [x] **Home page** (scroll straight down): Satsang-Ansh is **NOT** dangling at
       the very bottom anymore.
-- [ ] **Classic page:** **सत्संग-अंश** appears **right after सत्संग** (Satsang),
+- [x] **Classic page:** **सत्संग-अंश** appears **right after सत्संग** (Satsang),
       as a **compact list** with a **"Show all / Show fewer"** button.
-- [ ] **Classic page ends** with **Quotes (दिव्य वाणी) → 🌸 श्री सद्गुरुनाथ महाराज
+- [x] **Classic page ends** with **Quotes (दिव्य वाणी) → 🌸 श्री सद्गुरुनाथ महाराज
       की जय** (the small "Made for स्वान्तः सुखाय" line is gone).
-- [ ] The **nav shows सिद्धबाड़ी रेखाचित्र** (renamed from Sidhbari Leela).
-- [ ] Open the **☰ menu** on mobile → सत्संग-अंश appears and closes the menu on tap.
+- [x] The **nav shows सिद्धबाड़ी कालरेखा** (renamed from Sidhbari Leela).
+- [x] Open the **☰ menu** on mobile → सत्संग-अंश appears and closes the menu on tap.
 
-### This batch (latest changes) — also check:
-- [ ] **Stuti 1 (108 names):** names are corrected — e.g. #5 **विनाशकाय**, #15
-      **कर्मयोगिने**, #31 **आनन्दवर्धकाय**, #75 **साधु प्रियाय**, #80 **दृढप्रतिज्ञे**,
-      and the list ends **…दीन वत्सलाय → श्री सद्गुरवे → नित्यशुद्धबुद्धमुक्तस्वरूपाय**
-      (no stray **शिवाय**). Numbering still **१ → १०८**.
-- [ ] **Satsang search:** no empty gap under the search box before the
-      "जहाँ छोड़ा था" resume box.
-- [ ] **Charitra Jhalak → ॐ सद्गुरु प्रियाय नमः:** the small collage captions
-      (incl. **ॐ श्री चिन्मय सद्गुरवे नमः**) are now a comfortable size, close to
-      the captions around them.
-- [ ] **Satsang search → tap a result:** it opens the **in-app player**
-      (same as the normal list), **not** a jump to YouTube.
-- [ ] **Charitra Jhalak → ॐ आनन्दवर्धकाय नमः:** the new photo (Swamiji with
-      garland + kalash) is the **first** picture in that group. *(New file to
-      upload: `assets/anandvardhakaya-kalash.jpeg`.)*
-- [ ] **सुविचार / दिव्य वाणी calendar:** days **1–10** are now clickable (was
-      only 6–9); tapping a day shows its quote image. Headings are now Hindi
-      (**पूज्य स्वामीजी के अनमोल वचन**) and the per-quote titles were removed.
-      *(New files to upload: `assets/q1.png`, `assets/q2.jpg`, `assets/q3.jpg`,
-      `assets/q4.jpg`, `assets/q5.jpg`, `assets/q10.jpg`, plus the updated
-      `assets/index-wjuQPPKu.js`.)*
-- [ ] **Sadguru-Smaran invite text** now reads: "कृपया परम पूज्य स्वामीजी से जुड़े
-      अपने अनुभव, विशेष चित्र, प्रसंग एवं संस्मरण साझा करें…" *(file: `sadguru-smaran-cta.js`.)*
+### ⭐ 16 July 2026 — today's changes:
+*(These are also detailed further down; this is just today's quick list.)*
+- [x] **Nav renamed:** सिद्धबाड़ी रेखाचित्र → **सिद्धबाड़ी कालरेखा**.
+- [x] **Satsang list — more title space:** the big empty gap between the round play
+      button and the title is gone; titles truncate far less.
+- [x] **Satsang list — buttons labelled:** ◐ / ✓ / ✎ now show a word under each icon —
+      **◐ आंशिक · ✓ सुना · ✎ मनन** (clear on phones, not just desktop hover).
+- [x] **Satsang — "▶ Resume last talk" card:** short English & prominent, with the note
+      **"Saved on this device only."** (appears once you've played a talk in-app).
+- [x] **Satsang-Ansh — "▶ Resume last excerpt" card (new):** after you play an excerpt,
+      a prominent card appears above the duration tabs; tapping it reopens that excerpt.
+
+---
+
+### Earlier in this batch (13–15 Jul 2026) — check:
+- [x] **iPhone buttons:** on an iPhone, the Satsang search ✕, the player ×, and the
+      प्रवचन सूची buttons now respond to taps. (Android unchanged.)
+- [x] **Satsang list:** new playlists appear — Bhagwat Geeta "Ch 2 (Jabalpur)" &
+      "Ch 12 (Dehradun 2016)", Ramayana "Ram Charitra at Sidhbari Oct 2017" — and
+      they're findable in Satsang search.
+- [x] **Satsang-Ansh:** a **"Playlists (7)"** tab sits at the END of the duration
+      tabs; clicking it shows the 7 प्रकरण playlists (भक्ति, ईश्वर, जीवन, साधना,
+      कर्म, वेद-वेदांत, कृपणता).
+- [x] **Satsang-Ansh — cleaner cards:** the **"☆ Listen later" / Saved-for-later**
+      button is gone from every excerpt card (and the "Saved for later" box is gone);
+      each card now shows just the play title + a **YouTube** link.
+- [x] **Satsang list — more title space:** the big empty gap between the round play
+      button and the talk title is gone (mobile column was reserving 5.8rem for a
+      removed preview); titles now use that space and truncate far less.
+- [x] **Satsang list — action buttons labelled:** the ◐ / ✓ / ✎ buttons now show a
+      small word under each icon — **◐ आंशिक · ✓ सुना · ✎ मनन** — so their meaning is
+      clear on phones (not just a desktop hover tooltip). The **▶ सुनें** play button
+      is unchanged.
+- [x] **Satsang — "Resume last talk" card:** the recently-listened card is now short
+      English & prominent — **▶ Resume last talk**, detail "… — from M:SS", small note
+      **"Saved on this device only."** (Shows once you've played a talk in-app.)
+- [x] **Satsang-Ansh — "Resume last excerpt":** after you play an excerpt, a matching
+      prominent card appears above the duration tabs (**▶ Resume last excerpt** + the
+      excerpt name); tapping it reopens that excerpt. Private to this device.
+- [x] **Charitra Jhalak:** the नन्दनाय photo (ॐ स्मित ईक्षणाय), the "Sabhaghar" photo
+      (ॐ दृढ़प्रतिज्ञे) and the Arun-uncle photo (ॐ अद्वितीयाय) are gone; the boat/Ganga
+      photo is added to ॐ आनन्दवर्धकाय.
+- [x] **Charitra — ॐ स्मित ईक्षणाय captions:** the "He loves out of joy…" photo now
+      reads **गुर कर कोमल सील सुभाऊ॥**; the "ॐ स्वयं तेजस्विने" photo now reads
+      **नन्दति नन्दति नन्दत्येव।**; the smiling close-up now carries **श्री प्रमोदनाय नमः**.
+- [x] **Charitra — photo moved:** the श्री प्रमोदनाय photo left ॐ स्मित ईक्षणाय and now
+      appears in **ॐ आनन्दवर्धकाय** with the caption **ॐ स्पर्शविहीनाय नमः।**
+- [x] **Charitra — ॐ आनन्दवर्धकाय new photo:** the Ganga/Himalaya photo appears with
+      caption **देखि हिमालय गंग तट रीझे**.
+- [x] **Charitra — ॐ वेदान्तवेद्याय:** the first "हे शंकर-रूप! हे वेदांत-मूर्ति!" photo
+      is gone; a **hero shloka banner** now sits at the top —
+      *जिसकी वाणी से झर-झर अमृत झरता हो — अमृतभाषी।* / **ॐ अमृतभाषिणे नमः।**
+      The old second "भाष्यकार" quote banner is **removed**; its line now shows as a
+      **caption on the भाष्यकार-प्रियाय photo** — *भाष्यकार की शैली दीवाना बना देती है। — परम पूज्य स्वामीजी*.
+- [x] **मेरी निजी तस्वीरें (My Private Photos):** a new section appears right after
+      सद्गुरु-स्मरण. Test **on a real phone**: tap **फ़ोटो जोड़ें / Add photo** → pick a
+      photo → it shows in the grid (stored only on that phone). Tap **📥 गैलरी में सहेजें**
+      → the phone's share sheet opens with **Save Image / Save to Photos**. Tap 🗑 to
+      delete. Photos are **private** (never on the server) — open the site on another
+      device and the grid is empty there. The 🔒 note explains all this to visitors.
+- [x] **Divya Vani (सुविचार):** quotes for **16, 17, 18 July** are loaded; each stays
+      hidden until its own date, then unlocks automatically (16th → q16, etc.).
+- [x] **Sadguru-Smaran form:** the greyed file button is now a clear
+      **"📎 Attach a photo"** link that shows the chosen file name.
+- [x] **Divya Vani (सुविचार):** now a **daily card** — top bar shows Month · ॐ श्री
+      सद्गुरवे नमः · Weekday · dd-mm-yyyy, opens on today's date, with ‹ Prev / date
+      picker / Next ›. Future dates stay hidden until their day.
+- [x] **Virah-Smaran posts:** lighter cream background + darker text (easier for seniors).
+- [x] **Virah-Smaran navigation (30 tributes):** one clear bar above the number grid —
+      **[‹ पिछली]  श्रद्धांजलि N / 30  [अगली ›]** — with पिछली & अगली **together** (left/right)
+      and the count in the middle (current number in a gold pill). पिछली is greyed on #1,
+      अगली greyed on #30. Tapping पिछली/अगली or any number moves through all 30 and the
+      counter updates. The old tiny “N of 30 tributes” line is hidden.
+- [x] **Admin delete:** at **/admin/hommages**, the admin password now logs in (the
+      "Unauthorized" bug is fixed) and you can delete submissions.
+- [x] **Quick-jump bar (classic page):** a sticky row of section chips (सत्संग,
+      सुविचार, भजन, सत्संग-अंश, चरित्र, स्तुति, विरह, स्मरण) rides at the top and
+      highlights the section you're in; the back arrow stays clear of it.
+- [x] **Bigger default reading size:** text starts a touch larger (110%); the
+      size control still adjusts and resets to this.
+- [x] **Softer contrast:** headings/muted text are a little darker on cream for
+      easier reading, without losing the devotional look.
+- [x] **Tribute wall framing:** every uploaded Sadguru-Smaran photo now sits in
+      the **same portrait frame** with a cream mat (photos are never cropped);
+      cards are still tall for long messages and short for brief ones.
 
 The service-worker version was bumped, so once each visitor hard-refreshes (or
 reopens the app) once, everyone auto-updates from then on.
+
+---
+
+## 🔐 Admin — delete visitor-uploaded Sadguru-Smaran photos
+- **URL:** **https://omshrisadguravenamah.in/admin/hommages**
+- **Password:** the `HOMMAGE_ADMIN_PASSWORD` value inside **`api/config.local.php`
+  on the server** (never in the public frontend).
+- Log in → moderation queue → **Delete** any submission (removes it **and** its
+  photo). Only this page asks for a password; the rest of the site never does — so
+  only you can delete.
+- ⚠️ Requires this batch's **`api/index.php` + `api/.htaccess`** to be deployed —
+  they fix the "Unauthorized" login bug (the server was stripping the auth header).
 
 ---
 

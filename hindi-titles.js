@@ -1,7 +1,7 @@
 (() => {
   const titleMap = new Map([
     ["Charan-Vandan", "चरण-वंदन"],
-    ["Sidhbari Leela", "सिद्धबाड़ी रेखाचित्र"],
+    ["Sidhbari Leela", "सिद्धबाड़ी कालरेखा"],
     ["Charitra-Jhalak", "चरित्र-झलक"],
     ["Stuti-Vandan", "स्तुति-वंदन"],
     ["Virah-Smaran", "विरह-स्मरण"],

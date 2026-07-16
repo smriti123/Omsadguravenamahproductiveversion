@@ -34,15 +34,29 @@
     { id: "charitra-anandvardhakaya-8", src: "/assets/anandvardhakaya-8.jpeg" },
     { id: "charitra-anandvardhakaya-9", src: "/assets/anandvardhakaya-9.jpeg" },
     { id: "charitra-anandvardhakaya-diwali", src: "/assets/diw-YaPSf2re.jpg" },
+    { id: "charitra-anandvardhakaya-boat", src: "/assets/anandvardhakaya-boat.jpg" },
+    {
+      // Moved here from ॐ स्मित ईक्षणाय (was captioned श्री प्रमोदनाय); re-captioned.
+      id: "charitra-anandvardhakaya-sparshviheen",
+      src: "/assets/smile3-D8MyYcv9.jpg",
+      caption:
+        "ॐ स्पर्शविहीनाय नमः।",
+    },
+    {
+      id: "charitra-anandvardhakaya-ganga",
+      src: "/assets/anandvardhakaya-ganga.jpg",
+      caption: "देखि हिमालय गंग तट रीझे",
+    },
   ];
   const anandvardhakayaArticleId = "charitra-anandvardhakaya-category";
   const anandvardhakayaTitle =
     "\u0950 \u0906\u0928\u0928\u094D\u0926\u0935\u0930\u094D\u0927\u0915\u093E\u092F \u0928\u092E\u0903";
-  const vedantVedyaBannerId = "vedant-vedya-banner";
+  const vedantAmritbhashiBannerId = "vedant-amritbhashi-banner";
   const vedantAmritbhashineImageUrl = "/assets/vedant-bhashyakar-priyaya.jpeg";
   const vedantAmritbhashineItemId = "vedant-amritbhashine-new";
-  const vedantAmritbhashineCaption =
-    "\u0950 \u0905\u092E\u0943\u0924\u092D\u093E\u0937\u093F\u0923\u0947 \u0928\u092E\u0903\u0964";
+  // Caption for the भाष्यकार-प्रियाय photo (moved off the removed second banner).
+  const vedantBhashyakarCaption =
+    "भाष्यकार की शैली दीवाना बना देती है। — परम पूज्य स्वामीजी";
   const namamiAnandaCaption =
     "\u091C\u094B \u0906\u0928\u0928\u094D\u0926 \u0938\u093F\u0928\u094D\u0927\u0941 \u0938\u0941\u0916\u0930\u093E\u0938\u0940\u0964\n\u0938\u0940\u0915\u0930 \u0924\u0947\u0902 \u0924\u094D\u0930\u0948\u0932\u094B\u0915 \u0938\u0941\u092A\u093E\u0938\u0940\u0965";
   const wheelchairCaption =
@@ -671,27 +685,45 @@
     return article?.querySelector("h3 > button")?.getAttribute("aria-expanded") === "true";
   }
 
-  function addVedantVedyaBanner() {
-    if (document.querySelector(`#${vedantVedyaBannerId}`)) return;
+  // Hero shloka banner at the very top of ॐ वेदान्तवेद्याय — it replaces the removed
+  // "हे शंकर-रूप! हे वेदांत-मूर्ति!" featured photo with a nicely-set अमृतभाषी verse.
+  function addVedantAmritbhashiBanner() {
+    if (document.querySelector(`#${vedantAmritbhashiBannerId}`)) return;
 
     const vedantArticle = findVedantVedyaArticle();
     if (!isGalleryArticleOpen(vedantArticle)) return;
 
     const panel = vedantArticle?.querySelector('[role="region"] > div');
-    const photoGrid = vedantArticle?.querySelector('[role="region"] .columns-1');
-    if (!panel || !photoGrid) return;
+    if (!panel) return;
 
     const banner = document.createElement("div");
-    banner.id = vedantVedyaBannerId;
-    banner.className = "vedant-vedya-banner";
+    banner.id = vedantAmritbhashiBannerId;
+    banner.className = "vedant-amritbhashi-banner";
     banner.innerHTML = `
-      <p class="vedant-vedya-banner__quote">भाष्यकार की शैली दीवाना बना देती है</p>
-      <p class="vedant-vedya-banner__source">-- परम पूज्य स्वामीजी</p>
-      <div class="vedant-vedya-banner__gap" aria-hidden="true"></div>
-      <p class="vedant-vedya-banner__reply">और हमें परम पूज्य स्वामीजी की....</p>
+      <p class="vedant-amritbhashi-banner__line">जिसकी वाणी से झर-झर अमृत झरता हो — अमृतभाषी।</p>
+      <p class="vedant-amritbhashi-banner__mantra">ॐ अमृतभाषिणे नमः।</p>
     `;
 
-    photoGrid.insertAdjacentElement("beforebegin", banner);
+    panel.insertAdjacentElement("afterbegin", banner);
+  }
+
+  // Inject the vedant enhancements the instant the section is opened, with a couple
+  // of retries. The observer-driven path is debounced (420ms) and, in a real browser
+  // where images lazy-load, that debounce can keep resetting so the banner lands late
+  // or not at all. This click handler makes opening the section deterministic.
+  function wireVedantOpenHandler() {
+    const vedantArticle = findVedantVedyaArticle();
+    const btn = vedantArticle?.querySelector("h3 > button");
+    if (!btn || btn.dataset.vedantWired === "1") return;
+    btn.dataset.vedantWired = "1";
+    btn.addEventListener("click", () => {
+      [120, 400, 900].forEach((delay) =>
+        window.setTimeout(() => {
+          addVedantAmritbhashiBanner();
+          updateVedantAmritbhashinePhoto();
+        }, delay),
+      );
+    });
   }
 
   function updateVedantAmritbhashinePhoto() {
@@ -703,8 +735,13 @@
 
     const existingItem = photoGrid.querySelector(`#${vedantAmritbhashineItemId}`);
     if (existingItem) {
-      const existingCaption = existingItem.querySelector("p");
-      if (existingCaption) existingCaption.textContent = vedantAmritbhashineCaption;
+      // Ensure this photo carries the भाष्यकार caption (moved off the old banner).
+      let existingCaption = existingItem.querySelector("p");
+      if (!existingCaption) {
+        existingCaption = document.createElement("p");
+        existingItem.appendChild(existingCaption);
+      }
+      existingCaption.textContent = vedantBhashyakarCaption;
       return;
     }
 
@@ -719,13 +756,13 @@
         alt="Om Amritbhashine Namah"
         loading="lazy"
       />
-      <p>${vedantAmritbhashineCaption}</p>
+      <p>${vedantBhashyakarCaption}</p>
     `;
     item.addEventListener("click", () =>
       openInsertedImageViewer(
         vedantAmritbhashineImageUrl,
         "Om Amritbhashine Namah",
-        vedantAmritbhashineCaption,
+        vedantBhashyakarCaption,
       ),
     );
 
@@ -1010,7 +1047,7 @@
     if (vedantEnhanceTimer !== null) window.clearTimeout(vedantEnhanceTimer);
     vedantEnhanceTimer = window.setTimeout(() => {
       vedantEnhanceTimer = null;
-      addVedantVedyaBanner();
+      addVedantAmritbhashiBanner();
       updateVedantAmritbhashinePhoto();
     }, 420);
   }
@@ -1025,13 +1062,15 @@
       addGuruparamparaImage();
       addWheelchairImage();
       removeSadguruPetCaption();
-      addArunUncleImage();
       updateAdwitayaPhotoCaptions();
       updateNamamiAnandaPhoto();
       removeNamamiDiwaliPhoto();
       addAnandvardhakayaCategory();
+      wireVedantOpenHandler();
       scheduleVedantEnhancements();
       addFinalImage();
+      // (ॐ वेदान्तवेद्याय's second "भाष्यकार" banner was removed — its line now
+      // rides as the caption on the भाष्यकार-प्रियाय photo, see below.)
       updateAdwitayaExistingBanner();
       updateSidhbariLeelaBanner();
       repairStutiGangeshanandaImages();

@@ -8,6 +8,9 @@
   const MIN = 0.9;
   const MAX = 1.4;
   const STEP = 0.1;
+  // Start visitors a comfortable step larger (110%) instead of 100% — easier
+  // reading for older eyes. "Reset" returns here; they can still go up or down.
+  const DEFAULT = 1.1;
 
   // React renders the whole app into #root; our control lives OUTSIDE #root (on
   // <body>), so zooming #root scales all content but leaves the control itself
@@ -21,12 +24,12 @@
 
   function readScale() {
     const v = parseFloat(localStorage.getItem(KEY) || "");
-    return Number.isFinite(v) ? clamp(v) : 1;
+    return Number.isFinite(v) ? clamp(v) : DEFAULT;
   }
 
   function writeScale(v) {
     try {
-      if (v === 1) localStorage.removeItem(KEY);
+      if (v === DEFAULT) localStorage.removeItem(KEY);
       else localStorage.setItem(KEY, String(v));
     } catch {
       // localStorage is optional; the control still works for this visit.
@@ -82,7 +85,7 @@
 
     minusBtn.addEventListener("click", () => setScale(scale - STEP));
     plusBtn.addEventListener("click", () => setScale(scale + STEP));
-    reset.addEventListener("click", () => setScale(1));
+    reset.addEventListener("click", () => setScale(DEFAULT));
 
     wrap.append(minusBtn, reset, plusBtn, labelEl);
     document.body.appendChild(wrap);

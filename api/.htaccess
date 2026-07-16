@@ -3,7 +3,18 @@ Options -MultiViews
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
+  # Forward the Authorization header to PHP. Many Apache/CGI/FPM setups strip it,
+  # which makes the admin Bearer-token login fail with "Unauthorized" even when
+  # the password is correct.
+  RewriteCond %{HTTP:Authorization} .
+  RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^ index.php [QSA,L]
+</IfModule>
+
+# Belt-and-suspenders for hosts where the rewrite env trick isn't enough.
+<IfModule mod_setenvif.c>
+  SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
 </IfModule>
