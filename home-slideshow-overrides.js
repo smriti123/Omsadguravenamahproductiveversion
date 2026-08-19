@@ -11,6 +11,17 @@
         image.src = newSaraswatiSrc;
         image.alt = image.alt || "Saraswatiji";
       });
+
+    document.querySelectorAll(".home-new__guru-lines .namami-text").forEach((line) => {
+      if ((line.textContent || "").trim() === "नमामि वाङ्मयीं मूर्तिम्॥") {
+        line.textContent = "नमामि ज्ञानमूर्तये॥";
+      }
+    });
+
+    document.querySelectorAll(".home-new__card-grid a").forEach((card) => {
+      card.querySelector("small")?.remove();
+      card.querySelector("em")?.remove();
+    });
   }
 
   function scheduleReplace() {

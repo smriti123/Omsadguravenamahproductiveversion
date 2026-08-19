@@ -9,6 +9,23 @@
   */
   const HOME_URL = "/";
 
+  // The React "Back" button (the fixed top-left arrow, now the "मुख्य पृष्ठ" pill)
+  // links to "/#explore", which lands on the section CARD grid rather than the
+  // true first page. Intercept its click and send it to the home landing (/) —
+  // capture phase + stopPropagation so React Router's own navigation is bypassed.
+  document.addEventListener(
+    "click",
+    (event) => {
+      const target = event.target;
+      const back = target && target.closest && target.closest('a[aria-label="Back"]');
+      if (!back) return;
+      event.preventDefault();
+      event.stopPropagation();
+      window.location.href = HOME_URL;
+    },
+    true,
+  );
+
   function init() {
     if (document.getElementById("home-scroll-fab")) return;
 

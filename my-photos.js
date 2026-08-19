@@ -1,16 +1,20 @@
 (function () {
   /*
-    मेरी निजी तस्वीरें — My Private Photos.
+    मेरी निजी तस्वीरें व नोट्स — My Private Photos & Notes.
 
-    A personal, PRIVATE photo keepsake. Unlike सद्गुरु-स्मरण (which posts to the
-    server for everyone), these photos are stored ONLY in this browser, on this
-    device, using IndexedDB. They are never uploaded and nobody else can see them.
+    A personal, PRIVATE keepsake. Unlike सद्गुरु-स्मरण (which posts to the server
+    for everyone), these items are stored ONLY in this browser, on this device,
+    using IndexedDB. They are never uploaded and nobody else can see them.
+
+    Holds two kinds of items:
+      • Photos — downscaled and shown as picture thumbnails.
+      • Notes (PDF) — spiritual notes etc., shown as a 📄 card you can open, and
+        stored as-is (PDFs aren't downscaled).
 
     Because on-device storage can be cleared (clearing browser data, switching
     phones, iOS evicting storage), a clear note tells the visitor this, and a
-    "फ़ोन गैलरी में सहेजें / Save to phone gallery" button lets them keep any photo
-    permanently in their real Photos app (via the native share sheet on mobile,
-    or a normal download on desktop).
+    "सहेजें / Save" button lets them keep any item permanently on their phone
+    (via the native share sheet on mobile, or a normal download on desktop).
 
     Injected right after the सद्गुरु-स्मरण (#hommage) section and kept alive with a
     debounced MutationObserver, matching the other enhancement scripts.
@@ -99,13 +103,14 @@
     });
   }
 
-  // ---- Save a photo into the real phone gallery --------------------------
-  async function saveToGallery(blob) {
-    const name = `sadguru-smriti-${Date.now()}.jpg`;
-    const file = new File([blob], name, { type: blob.type || "image/jpeg" });
+  // ---- Save an item permanently to the phone -----------------------------
+  async function saveBlob(blob, filename) {
+    const file = new File([blob], filename, {
+      type: blob.type || "application/octet-stream",
+    });
 
     // On phones this opens the native share sheet → "Save Image" / "Save to
-    // Photos", which lands the picture in the real gallery.
+    // Files", which keeps the item permanently outside the browser.
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
       try {
         await navigator.share({ files: [file] });
@@ -119,14 +124,28 @@
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = name;
+    a.download = filename;
     document.body.appendChild(a);
     a.click();
     a.remove();
     window.setTimeout(() => URL.revokeObjectURL(url), 4000);
   }
 
-  // ---- Lightbox ----------------------------------------------------------
+  // ---- Open a PDF note in a new tab / the phone's PDF viewer --------------
+  function openDoc(blob) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.target = "_blank";
+    a.rel = "noopener";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    // Keep the URL alive long enough for the new tab to load the PDF.
+    window.setTimeout(() => URL.revokeObjectURL(url), 60000);
+  }
+
+  // ---- Lightbox (photos) -------------------------------------------------
   function openLightbox(objectUrl) {
     const overlay = document.createElement("div");
     overlay.className = "my-photos-lightbox";
@@ -157,7 +176,7 @@
     objectUrls.clear();
   }
 
-  function tileFor(record) {
+  function photoTileFor(record) {
     const url = URL.createObjectURL(record.blob);
     objectUrls.add(url);
 
@@ -168,18 +187,53 @@
         <img src="${url}" alt="मेरी तस्वीर" loading="lazy">
       </button>
       <figcaption class="my-photo__actions">
-        <button type="button" class="my-photo__save">📥 गैलरी में सहेजें</button>
+        <button type="button" class="my-photo__save">📥 Save करें</button>
         <button type="button" class="my-photo__delete" aria-label="हटाएँ / Delete">🗑</button>
       </figcaption>
     `;
     figure.querySelector(".my-photo__view").addEventListener("click", () => openLightbox(url));
-    figure.querySelector(".my-photo__save").addEventListener("click", () => saveToGallery(record.blob));
+    figure.querySelector(".my-photo__save").addEventListener("click", () =>
+      saveBlob(record.blob, `sadguru-smriti-${record.ts || Date.now()}.jpg`),
+    );
     figure.querySelector(".my-photo__delete").addEventListener("click", async () => {
       if (!window.confirm("यह तस्वीर हटाएँ? / Delete this photo from this device?")) return;
       await dbDelete(record.id);
       await refreshGrid();
     });
     return figure;
+  }
+
+  function docTileFor(record) {
+    const name = record.name || "note.pdf";
+
+    const figure = document.createElement("figure");
+    figure.className = "my-photo my-photo--doc";
+    figure.innerHTML = `
+      <button type="button" class="my-photo__view my-photo__view--doc" aria-label="नोट खोलें / Open note">
+        <span class="my-photo__doc-icon" aria-hidden="true">📄</span>
+        <span class="my-photo__doc-name"></span>
+      </button>
+      <figcaption class="my-photo__actions">
+        <button type="button" class="my-photo__save">📥 Save करें</button>
+        <button type="button" class="my-photo__delete" aria-label="हटाएँ / Delete">🗑</button>
+      </figcaption>
+    `;
+    // Use textContent for the filename so it can never be treated as HTML.
+    figure.querySelector(".my-photo__doc-name").textContent = name;
+    figure.querySelector(".my-photo__view").addEventListener("click", () => openDoc(record.blob));
+    figure.querySelector(".my-photo__save").addEventListener("click", () =>
+      saveBlob(record.blob, name),
+    );
+    figure.querySelector(".my-photo__delete").addEventListener("click", async () => {
+      if (!window.confirm("यह नोट हटाएँ? / Delete this note from this device?")) return;
+      await dbDelete(record.id);
+      await refreshGrid();
+    });
+    return figure;
+  }
+
+  function tileFor(record) {
+    return record.kind === "pdf" ? docTileFor(record) : photoTileFor(record);
   }
 
   async function refreshGrid() {
@@ -200,12 +254,22 @@
     if (empty) empty.hidden = records.length > 0;
   }
 
+  function isPdf(file) {
+    return file.type === "application/pdf" || /\.pdf$/i.test(file.name || "");
+  }
+
   async function handleFiles(fileList) {
-    const files = Array.from(fileList || []).filter((f) => f.type.startsWith("image/"));
+    const files = Array.from(fileList || []);
     for (const file of files) {
       try {
-        const blob = await compress(file);
-        await dbAdd({ blob, ts: Date.now() });
+        if (isPdf(file)) {
+          // Store the PDF as-is (not downscaled), tagged as a note.
+          await dbAdd({ blob: file, ts: Date.now(), kind: "pdf", name: file.name || "note.pdf" });
+        } else if (file.type.startsWith("image/")) {
+          const blob = await compress(file);
+          await dbAdd({ blob, ts: Date.now(), kind: "image" });
+        }
+        // anything else is ignored
       } catch (e) {
         /* skip a file that fails; keep going with the rest */
       }
@@ -213,43 +277,83 @@
     await refreshGrid();
   }
 
+  // The "नमामि स्नेहमूर्तिम्" text orbits a circle via an SVG <textPath>. Building
+  // it in JS (with the correct SVG namespace + both href and xlink:href) makes the
+  // curved text render reliably — inline SVG in innerHTML often fails to link the
+  // path in some browsers, so the ring shows no text.
+  const SVG_NS = "http://www.w3.org/2000/svg";
+  const XLINK_NS = "http://www.w3.org/1999/xlink";
+  function buildNamamiOrbitSvg() {
+    const svg = document.createElementNS(SVG_NS, "svg");
+    svg.setAttribute("viewBox", "0 0 320 320");
+
+    const defs = document.createElementNS(SVG_NS, "defs");
+    const path = document.createElementNS(SVG_NS, "path");
+    path.setAttribute("id", "namami-sneh-orbit");
+    path.setAttribute("d", "M 160,160 m -128,0 a 128,128 0 1,1 256,0 a 128,128 0 1,1 -256,0");
+    defs.appendChild(path);
+
+    const text = document.createElementNS(SVG_NS, "text");
+    const textPath = document.createElementNS(SVG_NS, "textPath");
+    textPath.setAttribute("href", "#namami-sneh-orbit");
+    textPath.setAttributeNS(XLINK_NS, "xlink:href", "#namami-sneh-orbit");
+    textPath.textContent = "ॐ श्री सद्गुरवे नमः • ".repeat(7);
+    text.appendChild(textPath);
+
+    svg.appendChild(defs);
+    svg.appendChild(text);
+    return svg;
+  }
+
   function buildSection() {
     const section = document.createElement("section");
     section.id = SECTION_ID;
     section.className = "my-photos-section";
     section.innerHTML = `
+      <div class="namami-divider">
+        <div class="namami-block">
+          <span class="namami-line namami-line--sneh"><span class="namami-text">नमामि स्नेहमूर्तये</span></span>
+          <div class="devotional-line-divider namami-divider__rule" aria-hidden="true">
+            <span class="divider-symbol"><svg viewBox="0 0 34 18" role="presentation" focusable="false"><path d="M17 15.4C12.8 12.9 10.7 9.5 11.2 5.4C14 6.5 16.1 9.5 17 15.4Z"></path><path d="M17 15.4C21.2 12.9 23.3 9.5 22.8 5.4C20 6.5 17.9 9.5 17 15.4Z"></path><path d="M17 15.4C14.8 11.3 14.8 6.5 17 2.6C19.2 6.5 19.2 11.3 17 15.4Z"></path><path d="M8.8 15.3H25.2" class="divider-symbol__base"></path></svg></span>
+          </div>
+        </div>
+        <div class="namami-divider__area">
+          <div class="namami-divider__orbit" aria-hidden="true"></div>
+          <img class="namami-divider__feet" src="/assets/charan-vandan-feet-DRcPUe7y.jpg" alt="" loading="lazy">
+        </div>
+      </div>
+
       <div class="my-photos-inner">
         <div class="my-photos-head">
-          <h2 class="my-photos-title">मेरी निजी तस्वीरें</h2>
-          <p class="my-photos-subtitle">My Private Photos · केवल आपके फ़ोन पर</p>
+          <h2 class="my-photos-title">Personal Photos and Files</h2>
         </div>
 
         <div class="my-photos-note" role="note">
           <span class="my-photos-note__icon" aria-hidden="true">🔒</span>
           <div class="my-photos-note__text">
-            <p><strong>ये तस्वीरें केवल आपके इस फ़ोन में सुरक्षित हैं।</strong> इन्हें आपके अलावा
-            कोई नहीं देख सकता और ये कहीं इंटरनेट/सर्वर पर नहीं भेजी जातीं। यदि आप ब्राउज़र का डेटा
-            साफ़ करें या दूसरा फ़ोन इस्तेमाल करें तो ये मिट सकती हैं — इसलिए ज़रूरी तस्वीरें
-            <strong>“📥 गैलरी में सहेजें”</strong> से अपने फ़ोन की गैलरी में सुरक्षित कर लें।</p>
-            <p class="my-photos-note__en">These photos stay only on this device — no one else can
-            see them and they are never uploaded. They may be lost if you clear your browser data
-            or switch phones, so use <strong>“📥 Save to gallery”</strong> to keep important ones
-            permanently in your phone's Photos.</p>
+            <p>Photos and files added to this section are never uploaded to the website.
+            This private space can serve as a single place for personal spiritual photos,
+            PDF, notes etc.</p>
+            <p>These items are stored only in the browser on the current device. They may be
+            lost if the browser data is cleared, app is reinstalled or device is changed.
+            Please download important items to the phone for safekeeping.</p>
           </div>
         </div>
 
         <div class="my-photos-actions">
           <button type="button" class="my-photos-add">
-            <span aria-hidden="true">＋</span> फ़ोटो जोड़ें / Add photo
+            <span aria-hidden="true">＋</span> Add Photo or PDF
           </button>
-          <input type="file" accept="image/*" multiple class="my-photos-input" hidden>
+          <input type="file" accept="image/*,application/pdf" multiple class="my-photos-input" hidden>
         </div>
 
-        <p class="my-photos-empty">अभी तक कोई तस्वीर नहीं जोड़ी गई। ऊपर “फ़ोटो जोड़ें” दबाएँ।<br>
-          <span class="my-photos-note__en">No photos yet — tap “Add photo” above.</span></p>
+        <p class="my-photos-empty">Nothing added yet.</p>
         <div class="my-photos-grid"></div>
       </div>
     `;
+
+    const orbit = section.querySelector(".namami-divider__orbit");
+    if (orbit) orbit.appendChild(buildNamamiOrbitSvg());
 
     const input = section.querySelector(".my-photos-input");
     section.querySelector(".my-photos-add").addEventListener("click", () => input.click());

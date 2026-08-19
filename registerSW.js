@@ -23,10 +23,16 @@ if ("serviceWorker" in navigator) {
       location.reload();
     });
 
-    const registration = await navigator.serviceWorker.register("/sw.js", {
+    const registration = await navigator.serviceWorker.register("/sw.js?v=321", {
       scope: "/",
       updateViaCache: "none",
     });
-    registration.update();
+    const requestUpdate = () => registration.update().catch(() => {});
+    requestUpdate();
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") requestUpdate();
+    });
+    window.setInterval(requestUpdate, 60 * 60 * 1000);
   });
 }

@@ -1,6 +1,18 @@
 (() => {
   const playlistId = "PLgy41qSqQO42bitLVDIT5sn9EHGtMkrZO";
 
+  function buildVirahIntroBanner() {
+    const banner = document.createElement("div");
+    banner.id = "virah-intro-banner";
+    banner.className = "virah-intro-banner";
+    banner.setAttribute("role", "note");
+    banner.innerHTML = `
+      <span class="virah-intro-banner__ornament" aria-hidden="true">◆</span>
+      <p>परम पूज्य स्वामीजी की महासमाधि पर भक्त-हृदयों से अर्पित कुछ भावपूर्ण श्रद्धांजलियाँ<span class="virah-intro-banner__ellipsis" aria-label="...">...</span></p>
+    `;
+    return banner;
+  }
+
   function buildVideoSection() {
     const section = document.createElement("section");
     section.id = "bhav-suman-video";
@@ -35,6 +47,18 @@
       section,
       NodeFilter.SHOW_TEXT,
     );
+
+    if (!document.querySelector("#virah-intro-banner")) {
+      const heading = Array.from(container.children).find(
+        (child) => child.querySelector?.("h2"),
+      );
+      if (heading) {
+        heading.querySelectorAll("p").forEach((subtitle) => {
+          if (/[A-Za-z]/.test(subtitle.textContent || "")) subtitle.remove();
+        });
+        heading.insertAdjacentElement("afterend", buildVirahIntroBanner());
+      }
+    }
     let textNode;
     while ((textNode = textWalker.nextNode())) {
       if (textNode.nodeValue.includes("भव-सुमन")) {
@@ -170,11 +194,29 @@
 
     setNavDisabled(bar.querySelector(".virah-nav-btn--prev"), realPrev.disabled);
     setNavDisabled(bar.querySelector(".virah-nav-btn--next"), realNext.disabled);
+    addMissingVirahAttributions();
+  }
+
+  function addMissingVirahAttributions() {
+    const section = document.querySelector("#shraddanjali");
+    const active = section?.querySelector(
+      'button[aria-label^="Show written tribute"][aria-current="page"]',
+    );
+    const current = active ? parseInt(active.textContent, 10) : 0;
+    if (current !== 6 && current !== 10) return;
+
+    const author = section.querySelector(
+      ".max-w-2xl.mx-auto span.font-display.font-semibold",
+    );
+    if (author && author.textContent.trim() !== "SBS Iyer") {
+      author.textContent = "SBS Iyer";
+    }
   }
 
   function runVirahEnhancements() {
     arrangeVirahSection();
     enhanceVirahPager();
+    addMissingVirahAttributions();
   }
 
   document.addEventListener("DOMContentLoaded", () => {

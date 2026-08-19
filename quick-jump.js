@@ -8,13 +8,15 @@
   */
   const CHIPS = [
     { id: "talks", label: "सत्संग" },
-    { id: "quotes", label: "सुविचार" },
+    { id: "quotes", label: "सद्गुरु कैलेंडर" },
     { id: "bhajans", label: "भजन" },
     { id: "excerpts", label: "सत्संग-अंश" },
     { id: "photo-gallery2", label: "चरित्र" },
     { id: "stuti", label: "स्तुति" },
     { id: "shraddanjali", label: "विरह" },
     { id: "hommage", label: "स्मरण" },
+    { id: "my-photos", label: "मेरा संग्रह" },
+    { id: "about-website", label: "About" },
   ];
 
   let bar = null;

@@ -22,7 +22,7 @@ AddDefaultCharset UTF-8
 </IfModule>
 
 <IfModule mod_headers.c>
-  <FilesMatch "^(index\.html|sw\.js|registerSW\.js)$">
+  <FilesMatch "^(index\.html|refresh-site\.html|sw\.js|registerSW\.js|quotes-carousel\.js|main-install\.js|main-install\.css)$">
     Header set Cache-Control "no-cache, no-store, must-revalidate"
     Header set Pragma "no-cache"
     Header set Expires "0"

@@ -7,7 +7,6 @@ const IMAGE_MAX_BYTES = 1048576;
 const SUBMISSION_WINDOW_MINUTES = 60;
 const SUBMISSION_LIMIT_PER_WINDOW = 5;
 const REQUEST_MAX_BYTES = 3200000;
-const THIRTY_DAYS_SECONDS = 2592000;
 
 $config = load_merged_config([
     __DIR__ . '/config.php',
@@ -460,12 +459,6 @@ function to_public_message(array $message): array
     ];
 }
 
-function is_within_thirty_days(array $message): bool
-{
-    $timestamp = strtotime((string) ($message['created_at'] ?? ''));
-    return $timestamp !== false && (time() - $timestamp) <= THIRTY_DAYS_SECONDS;
-}
-
 function get_public_hommages(
     string $storageType,
     string $fileStoragePath,
@@ -477,12 +470,16 @@ function get_public_hommages(
 ): array {
     if ($storageType === 'mysql') {
         $pdo = get_pdo($dbHost, $dbPort, $dbName, $dbUser, $dbPassword);
+        // Approved posts stay on the wall for good. There used to be an
+        // "AND created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)" here, which quietly
+        // hid posts once they turned 30 days old (they were never deleted, just
+        // hidden). Removed — posts are now taken down only by an explicit admin
+        // delete.
         $statement = $pdo->query(
             'SELECT id, name, message, image_url, created_at
              FROM hommages
              WHERE approved = 1
                AND rejected = 0
-               AND created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)
              ORDER BY created_at DESC, id DESC'
         );
 
@@ -492,9 +489,9 @@ function get_public_hommages(
     $messages = array_values(array_filter(
         read_file_messages($fileStoragePath),
         static function (array $message): bool {
+            // No age limit — see the note in the mysql branch above.
             return ((int) ($message['approved'] ?? 0) === 1)
-                && ((int) ($message['rejected'] ?? 0) !== 1)
-                && is_within_thirty_days($message);
+                && ((int) ($message['rejected'] ?? 0) !== 1);
         }
     ));
 

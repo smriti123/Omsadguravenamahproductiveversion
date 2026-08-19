@@ -10,7 +10,7 @@
     ["SATSANGS & DISCOURSES", "सत्संग-प्रवचन"],
     ["Bhajan", "भजन"],
     ["Bhajans & Samkeertan", "भजन एवं संकीर्तन"],
-    ["Quotes", "सुविचार"],
+    ["Quotes", "सद्गुरु कैलेंडर"],
     ["Sadguru-Smaran", "सद्गुरु-स्मरण"],
   ]);
 
@@ -40,6 +40,15 @@
   function translateTitles() {
     const root = document.body;
     if (!root) return;
+
+    root.querySelectorAll("#stuti p").forEach((paragraph) => {
+      if (
+        paragraph.textContent.trim() ===
+        "108 divine names, Aarti and devotional compositions in reverence to Pujya Swamiji"
+      ) {
+        paragraph.remove();
+      }
+    });
 
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
       acceptNode(node) {

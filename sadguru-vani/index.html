@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="hi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#fff9ef" />
+    <meta name="description" content="परम पूज्य स्वामी सुबोधानन्द सरस्वती जी का विषयवार सत्संग-संग्रह" />
+    <link rel="manifest" href="./manifest.webmanifest?v=4" />
+    <link rel="icon" href="./icons/version2-icon-192.png?v=3" />
+    <link rel="apple-touch-icon" href="./icons/version2-icon-192.png?v=3" />
+    <link rel="stylesheet" href="./styles.css?v=6" />
+    <title>Sadguru Vani · सद्गुरु वाणी</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">मुख्य सामग्री पर जाएँ</a>
+
+    <header class="app-header">
+      <a class="brand" href="#home" aria-label="Sadguru Vani — होम">
+        <span class="brand-mark" aria-hidden="true">ॐ</span>
+        <span class="brand-copy"><strong data-hi="सद्गुरु वाणी" data-en="Sadguru Vani">सद्गुरु वाणी</strong><svg class="brand-ornament" viewBox="0 0 92 8" aria-hidden="true"><path d="M1 4h35m20 0h35M40 4l6-3 6 3-6 3z" /></svg></span>
+      </a>
+      <div class="header-actions">
+        <button id="languageButton" class="ghost-button" type="button" aria-label="भाषा बदलें">हिं / EN</button>
+      </div>
+    </header>
+
+    <div class="main-site-return-bar">
+      <a class="main-site-back" href="../#talks" aria-label="Main website Satsang page">
+        <span aria-hidden="true">&#8592;</span>
+        <span>&#2350;&#2369;&#2326;&#2381;&#2351; &#2357;&#2375;&#2348;&#2360;&#2366;&#2311;&#2335; &#2325;&#2375; &#2360;&#2340;&#2381;&#2360;&#2306;&#2327; &#2346;&#2352; &#2357;&#2366;&#2346;&#2360;</span>
+      </a>
+    </div>
+
+    <main id="main" tabindex="-1">
+      <div id="offlineNotice" class="offline-notice" role="status" hidden>आप ऑफलाइन हैं। संग्रह देखा जा सकता है, लेकिन YouTube सत्संग चलाने के लिए इंटरनेट आवश्यक है।</div>
+      <section id="homeView" class="view is-active" aria-labelledby="homeTitle">
+        <div class="home-intro">
+          <img src="../assets/vedant-2-B-oiwEtb.png" alt="परम पूज्य स्वामीजी" />
+          <div><p class="eyebrow">ॐ श्री सद्गुरवे नमः ॥</p><p id="homeTitle" class="devotional-motto"><span aria-hidden="true"></span>तव कथामृतं तप्तजीवनं<span aria-hidden="true"></span></p></div>
+        </div>
+
+        <div class="home-install-action">
+          <button id="installButton" class="ghost-button install-button" type="button" data-hi="Install App" data-en="Install App" hidden>Install App</button>
+          <button id="dismissInstallButton" class="dismiss-install-button" type="button" aria-label="इंस्टॉल सुझाव छिपाएँ" title="Hide" hidden>×</button>
+        </div>
+        <div id="vaniInstallInstructions" class="vani-install-instructions" hidden>
+          <p data-hi="इसी सद्गुरु वाणी पेज पर रहते हुए browser menu (⋮) खोलें और ‘Install app’ या ‘Add to Home screen’ चुनें।" data-en="Stay on this Sadguru Vani page, open the browser menu (⋮), and choose ‘Install app’ or ‘Add to Home screen’." >इसी सद्गुरु वाणी पेज पर रहते हुए browser menu (⋮) खोलें और ‘Install app’ या ‘Add to Home screen’ चुनें।</p>
+        </div>
+
+        <section class="home-search" aria-label="सत्संग खोज">
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <input id="searchInput" type="search" autocomplete="off" placeholder="नाम, स्थान, वर्ष या विषय खोजें…" />
+            <button id="clearSearch" type="button" aria-label="खोज मिटाएँ" hidden>×</button>
+          </label>
+          <p id="searchSummary" class="search-summary">सभी सत्संगों में खोजें</p>
+          <div id="searchResults" class="talk-grid"></div>
+        </section>
+
+        <section id="continueSection" class="content-section" hidden>
+          <div id="continueCard"></div>
+        </section>
+
+        <section class="content-section" aria-labelledby="categoriesTitle">
+          <div class="section-heading">
+            <h2 id="categoriesTitle" data-hi="सत्संग संग्रह" data-en="Satsang Collection">सत्संग संग्रह</h2>
+          </div>
+          <div id="categoryGrid" class="category-grid" aria-live="polite"></div>
+        </section>
+
+      </section>
+
+      <section id="catalogueView" class="view" aria-labelledby="catalogueTitle">
+        <div class="page-heading catalogue-page-heading">
+          <button class="back-button" type="button" data-action="home" aria-label="होम पर वापस">←</button>
+          <div class="heading-copy"><h1 id="catalogueTitle">सभी सत्संग</h1><p id="catalogueSubtitle"></p></div>
+          <button class="global-search-button" type="button" data-open-search aria-label="वैश्विक सत्संग खोज खोलें"><span aria-hidden="true"></span></button>
+        </div>
+        <div id="talkGrid" class="series-list" aria-live="polite"></div>
+        <p id="emptyCatalogue" class="empty-state" hidden>इस श्रेणी में कोई सत्संग नहीं मिला।</p>
+      </section>
+
+      <section id="seriesView" class="view" aria-labelledby="seriesTitle">
+        <div class="page-heading">
+          <button class="back-button" type="button" data-action="back-to-category" aria-label="श्रेणी पर वापस">←</button>
+          <div class="heading-copy"><h1 id="seriesTitle">सत्संग क्रम</h1><p id="seriesMeta"></p></div>
+          <button class="global-search-button" type="button" data-open-search aria-label="वैश्विक सत्संग खोज खोलें"><span aria-hidden="true"></span></button>
+        </div>
+        <p id="seriesSummary" class="series-summary">क्रमबद्ध सत्संग सूची</p>
+        <div id="seriesLoading" class="skeleton-list" aria-label="सत्संग सूची तैयार हो रही है" hidden><span></span><span></span><span></span></div>
+        <div id="episodeList" class="episode-list" aria-live="polite"></div>
+        <div id="seriesFallback" class="empty-state" hidden>
+          <span aria-hidden="true">▶</span>
+          <h2>पूरी सूची स्थानीय सर्वर पर उपलब्ध नहीं</h2>
+          <p>होस्ट की गई ऐप में सूची स्वतः खुलेगी। अभी YouTube playlist में सभी सत्संग देख सकते हैं।</p>
+          <button id="playSeriesFallback" class="primary-button" type="button">Playlist चलाएँ</button>
+        </div>
+      </section>
+
+      <section id="anshView" class="view" aria-labelledby="anshTitle">
+        <div class="page-heading">
+          <button class="back-button" type="button" data-action="back-to-ansh-durations" aria-label="अवधि सूची पर वापस">←</button>
+          <div class="heading-copy"><h1 id="anshTitle">सत्संग-अंश</h1><p id="anshSubtitle"></p></div>
+          <button class="global-search-button" type="button" data-open-search aria-label="वैश्विक सत्संग खोज खोलें"><span aria-hidden="true"></span></button>
+        </div>
+        <div id="anshTalkList" class="series-list" aria-live="polite"></div>
+      </section>
+
+      <section id="libraryView" class="view" aria-labelledby="libraryTitle">
+        <div class="page-heading compact"><div class="heading-copy"><p class="kicker">आपकी गतिविधि</p><h1 id="libraryTitle">मनन</h1></div><button class="global-search-button" type="button" data-open-search aria-label="वैश्विक सत्संग खोज खोलें"><span aria-hidden="true"></span></button></div>
+        <div id="libraryGrid" class="talk-grid"></div>
+        <div id="emptyLibrary" class="empty-state"><span aria-hidden="true">✎</span><h2>मनन हेतु कोई सत्संग नहीं</h2><p>किसी सत्संग पर पेंसिल चिह्न दबाकर उसे मनन के लिए यहाँ रखें।</p></div>
+      </section>
+
+      <section id="playerView" class="view" aria-labelledby="playerTitle">
+        <div class="page-heading player-page-heading">
+          <button id="closePlayer" class="back-button" type="button" aria-label="सत्संग सूची पर वापस">←</button>
+          <span class="player-heading-spacer" aria-hidden="true"></span>
+          <button class="global-search-button" type="button" data-open-search aria-label="वैश्विक सत्संग खोज खोलें"><span aria-hidden="true"></span></button>
+        </div>
+        <div class="player-page">
+          <div class="player-intro">
+            <h1 id="playerTitle"></h1>
+            <p id="playerMeta"></p>
+          </div>
+          <div class="video-frame"><div id="youtubePlayer"></div></div>
+          <div class="player-copy">
+            <div class="player-nav">
+              <button id="previousTalk" type="button" data-hi="◀ पिछला" data-en="◀ Previous">◀ पिछला</button>
+              <span id="playerPosition"></span>
+              <button id="nextTalk" type="button" data-hi="अगला ▶" data-en="Next ▶">अगला ▶</button>
+            </div>
+            <div class="player-actions">
+              <button id="markListened" class="secondary-button" type="button">✓ सुना हुआ</button>
+              <button id="playerContemplate" class="secondary-button" type="button">✎ मनन</button>
+            </div>
+            <aside class="youtube-gratitude">
+              <span class="gratitude-symbol" aria-hidden="true">🙏</span>
+              <span class="gratitude-copy"><strong data-hi="कृपया परम पूज्य स्वामीजी के प्रति YouTube पर जाकर कृतज्ञता व्यक्त करें" data-en="Please express gratitude to Param Pujya Swamiji by visiting YouTube">कृपया परम पूज्य स्वामीजी के प्रति YouTube पर जाकर कृतज्ञता व्यक्त करें</strong><small data-hi="मूल YouTube वीडियो पर Like, Comment और Subscribe कर सकते हैं" data-en="You can Like, Comment and Subscribe on the original YouTube video">मूल YouTube वीडियो पर Like, Comment और Subscribe कर सकते हैं</small></span>
+              <a id="openYouTube" class="gratitude-button" target="_blank" rel="noopener noreferrer">YouTube पर जाएँ</a>
+            </aside>
+            <details id="mananPanel" class="private-note">
+              <summary>✎ मेरे मनन</summary>
+              <p class="manan-context"><strong id="mananTalkTitle"></strong><br /><span id="mananTalkMeta"></span></p>
+              <label class="manan-label" for="privateNote">नया मनन</label>
+              <textarea id="privateNote" rows="4" maxlength="2000" placeholder="मनन, प्रश्न या स्मरण लिखें…"></textarea>
+              <div class="manan-compose-actions">
+                <button id="addCurrentTime" class="secondary-button" type="button">＋ वर्तमान समय जोड़ें</button>
+                <span id="selectedTimestamp" class="selected-timestamp" hidden></span>
+                <button id="savePrivateNote" class="primary-button" type="button" hidden>मनन सुरक्षित करें</button>
+              </div>
+              <small>मनन केवल इसी उपकरण में सुरक्षित रहते हैं।</small>
+              <div id="talkMananNotes" class="manan-note-list"></div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section id="searchView" class="view" aria-labelledby="globalSearchTitle">
+        <div class="page-heading">
+          <button id="closeGlobalSearch" class="back-button" type="button" aria-label="पिछले पृष्ठ पर वापस">←</button>
+          <div class="heading-copy"><h1 id="globalSearchTitle" data-hi="खोजें" data-en="Search">खोजें</h1><p data-hi="सभी सत्संगों में" data-en="Across all satsangs">सभी सत्संगों में</p></div>
+        </div>
+        <label class="search-box global-search-box">
+          <span aria-hidden="true">⌕</span>
+          <input id="globalSearchInput" type="search" autocomplete="off" placeholder="नाम, स्थान, वर्ष या विषय खोजें…" />
+          <button id="clearGlobalSearch" type="button" aria-label="खोज मिटाएँ" hidden>×</button>
+        </label>
+        <p id="globalSearchSummary" class="search-summary"></p>
+        <div id="globalSearchResults" class="series-list" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="मुख्य नेविगेशन">
+      <a href="#home" data-route="home" aria-current="page"><span aria-hidden="true">⌂</span><small data-hi="होम" data-en="Home">होम</small></a>
+      <a href="#listened" data-route="listened"><span aria-hidden="true">✓</span><small data-hi="सुना हुआ" data-en="Listened">सुना हुआ</small></a>
+      <a href="#manan" data-route="manan"><span aria-hidden="true">✎</span><small data-hi="मनन" data-en="Manan">मनन</small></a>
+    </nav>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <dialog id="v2MananDialog" class="v2-manan-dialog">
+      <div class="v2-manan-dialog__body">
+        <p class="eyebrow" data-hi="निजी मनन" data-en="Private Manan">निजी मनन</p>
+        <h2 id="v2MananTitle"></h2>
+        <textarea id="v2MananText" rows="6" data-hi-placeholder="अपना मनन लिखें…" data-en-placeholder="Write your Manan…" placeholder="अपना मनन लिखें…"></textarea>
+        <div class="v2-manan-dialog__actions">
+          <button id="cancelV2Manan" class="secondary-button" type="button" data-hi="रद्द करें" data-en="Cancel">रद्द करें</button>
+          <button id="saveV2Manan" class="primary-button" type="button" data-hi="मनन सुरक्षित करें" data-en="Save Manan">मनन सुरक्षित करें</button>
+        </div>
+        <small data-hi="यह मनन केवल इसी उपकरण में सुरक्षित रहेगा।" data-en="This Manan stays private on this device.">यह मनन केवल इसी उपकरण में सुरक्षित रहेगा।</small>
+      </div>
+    </dialog>
+    <div id="playlistProbe" class="playlist-probe" aria-hidden="true"></div>
+    <noscript>इस ऐप को चलाने के लिए JavaScript आवश्यक है।</noscript>
+    <script src="./app.js?v=9" defer></script>
+  </body>
+</html>

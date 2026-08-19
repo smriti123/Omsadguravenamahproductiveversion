@@ -2,20 +2,130 @@
   const storageKey = "satsang-local-library-v1";
   const progressStorageKey = "satsang-listening-progress-v1";
   const playlistThumbnailStorageKey = "satsang-playlist-thumbnails-v1";
-  const recentLimit = 5;
+  const playlistCountStorageKey = "satsang-playlist-counts-v1";
+  const recentLimit = 3;
   const progressSaveIntervalMs = 10000;
   let renderScheduled = false;
   let youtubeApiPromise = null;
   let activePlayer = null;
   let activeSession = null;
   let activeSaveTimer = null;
+  let categoryViewOpen = false;
+  let selectedCategoryKey = "Ramayana";
+  const websiteSeriesCache = new Map();
+  let websiteSeriesRequest = 0;
+  let seriesCountHydrationRunning = false;
   const defaultDevotionalImage = "/assets/swamiji-new-portrait-PXN53uw1.jpg";
   const customRamayanaPlaylistId = "PLgy41qSqQO41ofxQ1igZ2JjJNNsX96B2n";
   const customRamayanaPlaylistUrl =
     `https://www.youtube.com/playlist?list=${customRamayanaPlaylistId}`;
-  const customBhagwatamPlaylistId = "PLgy41qSqQO43D930r7EMtCfqS60nzT1FB";
-  const customBhagwatamPlaylistUrl =
-    `https://www.youtube.com/watch?v=Fxkh34i9KVU&list=${customBhagwatamPlaylistId}`;
+  // Extra Bhagwatam playlists that aren't in the main talks list. Each card shows
+  // its title on top and its place/year in the little pill below (like the other
+  // talks) — the city/year is deliberately kept OUT of the title. Add more anytime
+  // by appending { id, title, place, year } here.
+  const customBhagwatamPlaylists = [
+    { id: "PLgy41qSqQO43D930r7EMtCfqS60nzT1FB", title: "Bhagvad 6th Skandh/Canto", place: "Sidhbari", year: "2010" },
+    { id: "PLNpiOil-BP1Q", title: "Bhagvat 1st Skandh", place: "Ghaziabad", year: "2018" },
+    { id: "PLgy41qSqQO41-g4laNSNDesP8dTzsA_7E", title: "Bhagvad katha 1st Canto", place: "Jabalpur", year: "2019" },
+    { id: "PLgy41qSqQO41KafYdIVVPxzUSeCJSuPUT", title: "Bhagvad katha 1st Canto", place: "Prayagraj", year: "2020" },
+  ];
+  const satsangAnshGroups = [
+    { key: "under5", title: "5 मिनट तक", max: 5 * 60 },
+    { key: "under10", title: "5–10 मिनट", min: 5 * 60, max: 10 * 60 },
+    { key: "under15", title: "10–15 मिनट", min: 10 * 60, max: 15 * 60 },
+    { key: "under20", title: "15–20 मिनट", min: 15 * 60, max: 20 * 60 },
+    { key: "under30", title: "20–30 मिनट", min: 20 * 60, max: 30 * 60 },
+    { key: "over30", title: "30 मिनट से अधिक", min: 30 * 60 },
+  ];
+  let satsangAnshVideos = [];
+  const customSatsangPlaylists = [
+    {
+      id: "PLZfEqZUPNXrs",
+      title: "Bhagvad Geeta Ch 18 (35 talks)",
+      category: "Bhagwat Geeta",
+      meta: "Sidhbari · 2005–2008 · 35 talks",
+      afterId: "PLgy41qSqQO41r8ff4ae_kydqliiNLpTHo",
+    },
+    {
+      id: "PLgy41qSqQO42A-m00YaX7toLoe3R4h05C",
+      title: "Drig Drishya Vivek · July 2017",
+      category: "Prakaran Granth",
+      meta: "July 2017",
+      position: "top",
+    },
+    {
+      id: "PLdh1eVwY_OVQ",
+      title: "Taitreya Upanishad Shiksha Valli",
+      category: "Prakaran Granth",
+      meta: "YouTube Playlist",
+      position: "top",
+    },
+    {
+      id: "PLOf4SJ61UrIc",
+      title: "Taitreya Brahmanand Valli",
+      category: "Prakaran Granth",
+      meta: "YouTube Playlist",
+      position: "top",
+    },
+    {
+      id: "PLgy41qSqQO40SPrHWliuXfiBLXwHMhjLA",
+      title: "Vedanta Saar · 2002–2004",
+      category: "Prakaran Granth",
+      meta: "2002–2004",
+      position: "top",
+    },
+    {
+      id: "PLgy41qSqQO43UDjac01cjCbEtzUPiPn7r",
+      title: "Bhagvad Geeta Ch 15 · Indore",
+      category: "Bhagwat Geeta",
+      meta: "Indore · 2019",
+      afterId: "PLZfEqZUPNXrs",
+    },
+    {
+      id: "PLgy41qSqQO427tw1qiaKhtx4Jy6jK_LkE",
+      title: "Bhagavad Geeta Introduction",
+      category: "Bhagwat Geeta",
+      meta: "Sidhbari · 2005–2008",
+      position: "top",
+    },
+    {
+      id: "PLgy41qSqQO40bzVIjUr9yukQc1m6PJjjQ",
+      title: "Bhagvad Geeta in Practical Life",
+      category: "Bhagwat Geeta",
+      meta: "YouTube Playlist",
+      position: "top",
+    },
+    {
+      id: "PLQegAJFfEGb0",
+      title: "Prashnopanishad",
+      category: "Upanishads",
+      meta: "YouTube Playlist",
+    },
+    {
+      id: "PLS96Dj8suYdE",
+      title: "Bhagvad Geeta Chapter 12",
+      category: "Bhagwat Geeta",
+      meta: "September 2017",
+    },
+    {
+      videoId: "8dM5ELs3AUU",
+      title: "Question & Answer",
+      category: "Others",
+      meta: "28 October 2018",
+    },
+  ];
+
+  // A few existing talks have the city/year baked into the title. Show a clean
+  // title and move the place/year into the little pill below (like the others).
+  const talkTitleFixes = [
+    { from: "Bhagvat Katha Day 1", title: "Bhagvad Katha · Jaipur", pill: "Jaipur · 2018 · 7 talks", href: "https://www.youtube.com/playlist?list=PLgy41qSqQO43W-9jVknI-WfVMhcZoGgY0" },
+    { from: "राम कथा - १ | RAAM-KATHA - 1", title: "राम कथा - १ | RAAM-KATHA - 1 · Jaipur", pill: "Jaipur" },
+    { from: "Vedanta Saar", title: "Vedanta Saar · 2021", pill: "2021" },
+    { from: "Ram Charitra at Sidhbari Oct 2017", title: "Ram Charitra", pill: "Sidhbari - 2017" },
+    { from: "Sadhna Panchkam Dehradun", title: "Sadhna Panchkam", pill: "Dehradun" },
+    { from: "Sadhna Panchkam at Bhavnagar", title: "Sadhna Panchkam", pill: "Bhavnagar" },
+    { from: "Brahmasutra 1989-1991", title: "Brahmasutra", pill: "1989-1991" },
+  ];
 
   function readLibrary() {
     try {
@@ -221,13 +331,19 @@
       videoId: record.videoId || "",
       videoTitle: record.videoTitle || "",
       seconds: sanitizeSeconds(record.seconds),
+      duration: sanitizeSeconds(record.duration),
       updatedAt: Number(record.updatedAt) || Date.now(),
     };
 
-    const withoutSamePlaylist = readProgressList().filter(
-      (item) => item?.playlistId !== cleanRecord.playlistId,
-    );
-    const nextItems = [cleanRecord, ...withoutSamePlaylist]
+      const sameTalk = (item) => {
+        if (!item || item.playlistId !== cleanRecord.playlistId) return false;
+        if (cleanRecord.videoId && item.videoId) {
+          return item.videoId === cleanRecord.videoId;
+        }
+        return sanitizeIndex(item.videoIndex) === cleanRecord.videoIndex;
+      };
+      const withoutSameTalk = readProgressList().filter((item) => !sameTalk(item));
+      const nextItems = [cleanRecord, ...withoutSameTalk]
       .sort((a, b) => Number(b.updatedAt || 0) - Number(a.updatedAt || 0))
       .slice(0, recentLimit);
     const saved = writeProgressList(nextItems);
@@ -369,6 +485,7 @@
     let videoIndex = activeSession.videoIndex;
     let videoId = activeSession.videoId || "";
     let videoTitle = "";
+    let duration = 0;
 
     try {
       seconds = activePlayer.getCurrentTime?.() || 0;
@@ -377,6 +494,7 @@
       const data = activePlayer.getVideoData?.() || {};
       videoId = data.video_id || videoId;
       videoTitle = data.title || "";
+      duration = activePlayer.getDuration?.() || 0;
     } catch {
       return;
     }
@@ -388,6 +506,7 @@
       videoId,
       videoTitle,
       seconds,
+      duration,
       updatedAt: Date.now(),
     });
   }
@@ -481,22 +600,30 @@
 
     const data = activePlayer?.getVideoData?.() || {};
     const currentVideoTitle = firstText(data.title);
+    const count = playlistListCount();
     const label = dialog.querySelector(".satsang-current-talk");
-    if (label) label.textContent = "प्रवचन सूची";
+    if (label) label.textContent = `${index + 1} / ${count}`;
 
     if (currentVideoTitle) {
       const title = dialog.querySelector("#satsang-player-title");
       if (title) title.textContent = currentVideoTitle;
-
-      const devotionalTitle = dialog.querySelector(".satsang-devotional-copy h4");
-      if (devotionalTitle) devotionalTitle.textContent = currentVideoTitle;
+      const videoId = firstText(data.video_id);
+      activeSession.info = {
+        ...activeSession.info,
+        id: videoId ? `video:${videoId}` : `playlist:${activeSession.playlistId}:${index}`,
+        title: currentVideoTitle,
+        videoId,
+        videoIndex: index,
+        playlistId: activeSession.playlistId,
+      };
     }
 
     const previous = dialog.querySelector(".satsang-prev-talk");
     if (previous) previous.disabled = index <= 0;
-
-    const list = dialog.querySelector(".satsang-talk-list");
-    if (list && !list.hidden) renderTalkList();
+    const next = dialog.querySelector(".satsang-next-talk");
+    if (next) next.disabled = index >= count - 1;
+    refreshInlineManan(dialog);
+    updateDevotionalStatus(dialog);
   }
 
   function renderTalkList() {
@@ -555,6 +682,28 @@
     updateDevotionalStatus(document.querySelector("#satsang-player-dialog"));
   }
 
+  function refreshInlineManan(dialog) {
+    if (!dialog || !activeSession?.info) return;
+    const record = ensureRecord(readLibrary(), activeSession.info);
+    const textarea = dialog.querySelector(".satsang-inline-manan-text");
+    if (textarea && document.activeElement !== textarea) textarea.value = record.note || "";
+    const heading = dialog.querySelector(".satsang-inline-manan-title");
+    if (heading) heading.textContent = activeSession.info.title || "सत्संग";
+  }
+
+  function saveInlineManan(dialog) {
+    if (!dialog || !activeSession?.info) return;
+    const textarea = dialog.querySelector(".satsang-inline-manan-text");
+    const status = dialog.querySelector(".satsang-inline-manan-status");
+    const library = readLibrary();
+    const record = ensureRecord(library, activeSession.info);
+    record.note = textarea?.value.trim() || "";
+    const saved = writeLibrary(library);
+    if (status) status.textContent = saved ? "मनन इसी उपकरण में सुरक्षित है।" : "मनन सुरक्षित नहीं हो सका।";
+    scheduleRender();
+    updateDevotionalStatus(dialog);
+  }
+
   function createPlayerDialog(info, playlistId) {
     closePlayer();
 
@@ -566,58 +715,37 @@
     dialog.innerHTML = `
       <div class="satsang-player-panel">
         <div class="satsang-player-top">
-          <div>
-            <p class="satsang-player-kicker">सत्संग श्रवण</p>
-            <div class="satsang-player-title-row">
-              <img class="satsang-player-title-thumb" alt="" loading="lazy">
-              <h3 id="satsang-player-title"></h3>
-            </div>
-          </div>
+          <h3 id="satsang-player-title"></h3>
           <button type="button" class="satsang-player-close" aria-label="Close">&times;</button>
         </div>
         <div id="satsang-youtube-player"></div>
-        <section class="satsang-devotional-context" aria-label="Devotional context">
-          <img class="satsang-devotional-image" alt="" loading="lazy">
-          <div class="satsang-devotional-copy">
-            <p class="satsang-devotional-kicker"></p>
-            <h4></h4>
-            <p class="satsang-devotional-note"></p>
-            <div class="satsang-devotional-actions" aria-label="Listening status">
-              <button type="button" class="satsang-devotional-status satsang-devotional-partial" aria-pressed="false">
-                <span aria-hidden="true">●</span>
-                <span>Partially listened</span>
-              </button>
-              <button type="button" class="satsang-devotional-status satsang-devotional-listened" aria-pressed="false">
-                <span aria-hidden="true">✓</span>
-                <span>Listened</span>
-              </button>
-              <button type="button" class="satsang-devotional-status satsang-devotional-notes">
-                <span aria-hidden="true">✎</span>
-                <span>Manan</span>
-              </button>
-            </div>
-          </div>
-        </section>
         <div class="satsang-player-controls" aria-label="प्रवचन नियंत्रण">
           <button type="button" class="satsang-prev-talk">◀ पिछला</button>
-          <button type="button" class="satsang-toggle-list satsang-current-talk" aria-expanded="false">प्रवचन सूची</button>
+          <span class="satsang-current-talk"></span>
           <button type="button" class="satsang-next-talk">अगला ▶</button>
         </div>
-        <div class="satsang-talk-list" hidden></div>
-        <p class="satsang-progress-note">🙏 सुनने के बाद, YouTube पर 👍 Like व 💬 Comment से प. पू. स्वामीजी के प्रति कृतज्ञता व्यक्त कर सकते हैं</p>
-        <a class="satsang-youtube-open" target="_blank" rel="noopener noreferrer">YouTube पर खोलें</a>
+        <div class="satsang-player-actions">
+          <button type="button" class="satsang-devotional-status satsang-devotional-listened" aria-pressed="false">✓ सुना हुआ</button>
+          <button type="button" class="satsang-devotional-status satsang-devotional-notes">✎ मनन</button>
+        </div>
+        <aside class="satsang-youtube-gratitude">
+          <span aria-hidden="true">🙏</span>
+          <span><strong>YouTube पर Like या Comment करके परम पूज्य स्वामीजी के प्रति कृतज्ञता व्यक्त करें।</strong><small class="satsang-gratitude-actions"><b>👍 Like</b><b>💬 Comment</b></small></span>
+          <a class="satsang-youtube-open" target="_blank" rel="noopener noreferrer">YouTube पर जाएँ ↗</a>
+        </aside>
+        <details class="satsang-inline-manan">
+          <summary>✎ मेरे मनन</summary>
+          <p class="satsang-inline-manan-title"></p>
+          <label for="satsang-inline-manan-text">नया मनन</label>
+          <textarea id="satsang-inline-manan-text" class="satsang-inline-manan-text" rows="5" maxlength="2000" placeholder="मनन, प्रश्न या स्मरण लिखें…"></textarea>
+          <button type="button" class="satsang-inline-manan-save">मनन सुरक्षित करें</button>
+          <p class="satsang-inline-manan-status" aria-live="polite"></p>
+          <small>मनन केवल इसी उपकरण में सुरक्षित रहता है।</small>
+        </details>
       </div>
     `;
     dialog.querySelector("h3").textContent = info?.title || "सत्संग";
     dialog.querySelector(".satsang-player-close").textContent = "\u00d7";
-    dialog.querySelector(".satsang-player-title-thumb").src =
-      info?.thumbnail || info?.image || defaultDevotionalImage;
-    dialog.querySelector(".satsang-devotional-image").src = info?.image || defaultDevotionalImage;
-    dialog.querySelector(".satsang-devotional-image").alt = info?.title || "";
-    dialog.querySelector(".satsang-devotional-kicker").textContent = info?.category || "Satsang";
-    dialog.querySelector(".satsang-devotional-copy h4").textContent = info?.title || "Satsang";
-    dialog.querySelector(".satsang-devotional-note").textContent =
-      info?.description || "Keep the YouTube player visible above while listening.";
     dialog.querySelector(".satsang-youtube-open").href = playlistId
       ? `https://www.youtube.com/playlist?list=${encodeURIComponent(playlistId)}`
       : info?.url || info?.youtubeUrl || "#";
@@ -629,30 +757,23 @@
     dialog.querySelector(".satsang-next-talk").addEventListener("click", () => {
       loadPlaylistIndex(currentPlaylistIndex() + 1, 0);
     });
-    dialog.querySelector(".satsang-toggle-list").addEventListener("click", (event) => {
-      const button = event.currentTarget;
-      const list = dialog.querySelector(".satsang-talk-list");
-      const willOpen = list.hidden;
-      list.hidden = !willOpen;
-      button.setAttribute("aria-expanded", String(willOpen));
-      button.textContent = willOpen ? "प्रवचन सूची छुपाएँ" : "प्रवचन सूची";
-      if (willOpen) renderTalkList();
-    });
-    dialog.querySelector(".satsang-devotional-partial").addEventListener("click", () => {
-      if (activeSession?.info) setStatusForInfo(activeSession.info, "partial");
-    });
     dialog.querySelector(".satsang-devotional-listened").addEventListener("click", () => {
       if (activeSession?.info) setStatusForInfo(activeSession.info, "listened");
     });
     dialog.querySelector(".satsang-devotional-notes").addEventListener("click", () => {
-      if (activeSession?.info) openNotesForInfo(activeSession.info);
+      const manan = dialog.querySelector(".satsang-inline-manan");
+      manan.open = true;
+      refreshInlineManan(dialog);
+      dialog.querySelector(".satsang-inline-manan-text")?.focus();
     });
+    dialog.querySelector(".satsang-inline-manan-save").addEventListener("click", () => saveInlineManan(dialog));
     dialog.addEventListener("click", (event) => {
       if (event.target === dialog) closePlayer();
     });
 
     document.body.append(dialog);
     document.body.style.overflow = "hidden";
+    refreshInlineManan(dialog);
     updateDevotionalStatus(dialog);
     return dialog;
   }
@@ -726,6 +847,342 @@
       title: info.title,
       info,
     });
+  }
+
+  function declaredEpisodeCount(info) {
+    const text = `${info?.title || ""} ${info?.description || ""}`.replace(/[\u0966-\u096f]/g, (digit) =>
+      String(digit.charCodeAt(0) - 0x0966),
+    );
+    const explicit = text.match(/(?:\(|\b)(\d+)\s*(?:talks?|videos?|satsangs?)/i);
+    if (explicit) return Number(explicit[1]) || 0;
+    const fraction = text.match(/(?:part|bhag|\u092d\u093e\u0917)?\s*[\dA-Za-z]+\s*\/\s*(\d+)/i);
+    return Number(fraction?.[1] || 0);
+  }
+
+  function readPlaylistCounts() {
+    try {
+      const value = JSON.parse(localStorage.getItem(playlistCountStorageKey) || "{}");
+      return value && typeof value === "object" ? value : {};
+    } catch {
+      return {};
+    }
+  }
+
+  function savePlaylistCount(playlistId, count) {
+    if (!playlistId || !Number.isFinite(count) || count <= 0) return;
+    try {
+      const counts = readPlaylistCounts();
+      counts[playlistId] = count;
+      localStorage.setItem(playlistCountStorageKey, JSON.stringify(counts));
+    } catch {
+      // Count caching is optional.
+    }
+  }
+
+  async function probePlaylistCount(playlistId) {
+    const YT = await loadYouTubeApi();
+    const host = document.createElement("div");
+    host.className = "satsang-series-probe";
+    const mount = document.createElement("div");
+    host.append(mount);
+    document.body.append(host);
+    let probe;
+    return new Promise((resolve) => {
+      let attempts = 0;
+      const finish = (count) => {
+        try { probe?.destroy?.(); } catch {}
+        host.remove();
+        resolve(count);
+      };
+      const inspect = () => {
+        attempts += 1;
+        let items = [];
+        try { items = probe?.getPlaylist?.() || []; } catch {}
+        if (items.length || attempts >= 10) finish(items.length);
+        else window.setTimeout(inspect, 500);
+      };
+      probe = new YT.Player(mount, {
+        width: "2",
+        height: "2",
+        playerVars: { playsinline: 1, rel: 0 },
+        events: {
+          onReady: (event) => {
+            event.target.cuePlaylist({ listType: "playlist", list: playlistId, index: 0 });
+            window.setTimeout(inspect, 450);
+          },
+          onError: () => finish(0),
+        },
+      });
+    });
+  }
+
+  async function hydrateVisibleSeriesCounts() {
+    if (seriesCountHydrationRunning || !categoryViewOpen || selectedCategoryKey === "Satsang Ansh") return;
+    const cards = Array.from(document.querySelectorAll("#talks a.group[href]"))
+      .filter((card) => talkInfo(card).category === selectedCategoryKey)
+      .filter((card) => {
+        const playlist = parsePlaylistInfo(card.href);
+        return playlist?.playlistId && !Number(card.dataset.episodeCount);
+      });
+    if (!cards.length) return;
+    seriesCountHydrationRunning = true;
+    const cached = readPlaylistCounts();
+    try {
+      for (const card of cards) {
+        const playlistId = parsePlaylistInfo(card.href)?.playlistId;
+        if (!playlistId) continue;
+        const count = Number(cached[playlistId]) || await probePlaylistCount(playlistId);
+        if (!count) continue;
+        card.dataset.episodeCount = String(count);
+        const node = card.querySelector(".series-card-count");
+        if (node) node.textContent = String(count);
+        savePlaylistCount(playlistId, count);
+      }
+    } catch {
+      // Missing counts can be retried the next time this category opens.
+    } finally {
+      seriesCountHydrationRunning = false;
+    }
+  }
+
+  function ensureSeriesScreen() {
+    let screen = document.querySelector("#satsang-series-screen");
+    if (screen) return screen;
+    screen = document.createElement("section");
+    screen.id = "satsang-series-screen";
+    screen.innerHTML = `
+      <header class="satsang-series-header">
+        <button type="button" class="satsang-series-back">\u2190 \u0935\u093e\u092a\u093f\u0938</button>
+        <div class="satsang-series-heading"><h3></h3><p></p></div>
+        <span class="satsang-series-total"></span>
+      </header>
+      <p class="satsang-series-loading" role="status"></p>
+      <div class="satsang-series-episodes"></div>
+      <div class="satsang-series-probe" aria-hidden="true"></div>
+    `;
+    const list = document.querySelector("#talks .space-y-3");
+    if (list) list.insertAdjacentElement("beforebegin", screen);
+    else document.querySelector("#talks")?.append(screen);
+    screen.querySelector(".satsang-series-back").addEventListener("click", () => {
+      document.querySelector("#talks")?.classList.remove("satsang-series-open");
+      document.querySelector("#satsang-category-detail-header")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+    return screen;
+  }
+
+  function episodeInfo(seriesInfo, playlistId, video, index) {
+    const videoId = video?.id || "";
+    const title = video?.title || `\u0938\u0924\u094d\u0938\u0902\u0917 ${index + 1}`;
+    const url = videoId && playlistId
+      ? `https://www.youtube.com/watch?v=${videoId}&list=${playlistId}&index=${index + 1}`
+      : videoId
+        ? `https://www.youtube.com/watch?v=${videoId}`
+        : `https://www.youtube.com/playlist?list=${playlistId}&index=${index + 1}`;
+    return {
+      id: videoId ? `video:${videoId}` : `playlist:${playlistId}:${index}`,
+      title,
+      category: seriesInfo.category,
+      url,
+      youtubeUrl: url,
+      playlistId,
+      videoId,
+      videoIndex: index,
+      image: videoId ? getYouTubeThumbnail(videoId) : seriesInfo.image,
+      description: seriesInfo.title,
+      duration: video?.duration,
+    };
+  }
+
+  function episodeProgress(playlistId, videoId, index) {
+    return readProgressList().find((item) => {
+      if (!item || item.playlistId !== playlistId) return false;
+      if (videoId && item.videoId) return item.videoId === videoId;
+      return sanitizeIndex(item.videoIndex) === index;
+    });
+  }
+
+  function renderWebsiteEpisodes(screen, seriesInfo, playlistId, videos, expectedCount) {
+    const count = videos.length || expectedCount;
+    screen.querySelector(".satsang-series-total").textContent = count ? String(count) : "";
+    screen.querySelector(".satsang-series-loading").textContent = "";
+    const episodes = screen.querySelector(".satsang-series-episodes");
+    episodes.replaceChildren();
+
+    if (!count) {
+      const empty = document.createElement("p");
+      empty.className = "satsang-series-empty";
+      empty.textContent = "\u0938\u0924\u094d\u0938\u0902\u0917 \u0938\u0942\u091a\u0940 \u0909\u092a\u0932\u092c\u094d\u0927 \u0928\u0939\u0940\u0902 \u0939\u0948\u0964";
+      episodes.append(empty);
+      return;
+    }
+
+    for (let index = 0; index < count; index += 1) {
+      const video = videos[index] || { id: "", position: index };
+      const info = episodeInfo(seriesInfo, playlistId, video, index);
+      const progress = episodeProgress(playlistId, info.videoId, index);
+      const library = readLibrary();
+      const listened = normalizedStatus(library[info.id]) === "listened";
+      const seconds = sanitizeSeconds(progress?.seconds);
+      const duration = sanitizeSeconds(progress?.duration);
+      const row = document.createElement("button");
+      row.type = "button";
+      row.className = "satsang-episode-row";
+      const thumb = document.createElement("img");
+      thumb.className = "satsang-episode-thumb";
+      thumb.src = info.image || defaultDevotionalImage;
+      thumb.alt = "";
+      thumb.loading = "lazy";
+      thumb.decoding = "async";
+      const copy = document.createElement("span");
+      copy.className = "satsang-episode-copy";
+      const title = document.createElement("strong");
+      title.textContent = info.title;
+      copy.append(title);
+      if (listened || seconds >= 5) {
+        const status = document.createElement("small");
+        status.textContent = listened ? "\u2713 \u0938\u0941\u0928\u093e \u0939\u0941\u0906" : `${formatTime(seconds)} \u0924\u0915 \u0938\u0941\u0928\u093e`;
+        copy.append(status);
+      } else if (video?.duration?.display) {
+        const duration = document.createElement("small");
+        duration.textContent = video.duration.display;
+        copy.append(duration);
+      }
+      if (!listened && duration > seconds && seconds >= 5) {
+        const track = document.createElement("span");
+        track.className = "satsang-episode-progress";
+        const fill = document.createElement("i");
+        fill.style.width = `${Math.min(98, Math.max(4, (seconds / duration) * 100))}%`;
+        track.append(fill);
+        copy.append(track);
+      }
+      const play = document.createElement("span");
+      play.className = "satsang-episode-play";
+      play.setAttribute("aria-hidden", "true");
+      play.textContent = listened ? "\u2713" : "\u25b6";
+      row.append(thumb, copy, play);
+      row.addEventListener("click", () => {
+        markOpened(info);
+        if (playlistId) {
+          openPlaylistPlayer({
+            playlistId,
+            playlistTitle: seriesInfo.title,
+            title: info.title,
+            videoIndex: index,
+            videoId: info.videoId,
+            seconds,
+            info,
+          });
+        } else {
+          openVideoPlayer({ videoId: info.videoId, title: info.title, seconds, info });
+        }
+      });
+      episodes.append(row);
+    }
+  }
+
+  async function inspectWebsitePlaylist(screen, seriesInfo, playlistId, expectedCount, requestId) {
+    if (websiteSeriesCache.has(playlistId)) {
+      renderWebsiteEpisodes(screen, seriesInfo, playlistId, websiteSeriesCache.get(playlistId), expectedCount);
+      return;
+    }
+    try {
+      const YT = await loadYouTubeApi();
+      if (requestId !== websiteSeriesRequest) return;
+      const host = screen.querySelector(".satsang-series-probe");
+      host.replaceChildren();
+      const mount = document.createElement("div");
+      host.append(mount);
+      let probe;
+      let attempts = 0;
+      const videos = await new Promise((resolve) => {
+        const finish = (ids) => {
+          try { probe?.destroy?.(); } catch {}
+          host.replaceChildren();
+          resolve((ids || []).map((id, position) => ({ id, position })));
+        };
+        const inspect = () => {
+          attempts += 1;
+          let ids = [];
+          try { ids = probe?.getPlaylist?.() || []; } catch {}
+          if (ids.length || attempts >= 12) finish(ids);
+          else window.setTimeout(inspect, 650);
+        };
+        probe = new YT.Player(mount, {
+          width: "2",
+          height: "2",
+          playerVars: { playsinline: 1, rel: 0 },
+          events: {
+            onReady: (event) => {
+              event.target.cuePlaylist({ listType: "playlist", list: playlistId, index: 0 });
+              window.setTimeout(inspect, 500);
+            },
+            onError: () => finish([]),
+          },
+        });
+      });
+      if (requestId !== websiteSeriesRequest) return;
+      if (videos.length) websiteSeriesCache.set(playlistId, videos);
+      renderWebsiteEpisodes(screen, seriesInfo, playlistId, videos, expectedCount);
+      const card = Array.from(document.querySelectorAll("#talks a.group")).find((item) =>
+        parsePlaylistInfo(item.href)?.playlistId === playlistId,
+      );
+      const count = videos.length || expectedCount;
+      if (card && count) {
+        card.dataset.episodeCount = String(count);
+        const countNode = card.querySelector(".series-card-count");
+        if (countNode) countNode.textContent = String(count);
+        savePlaylistCount(playlistId, count);
+      }
+    } catch {
+      if (requestId === websiteSeriesRequest) {
+        renderWebsiteEpisodes(screen, seriesInfo, playlistId, [], expectedCount);
+      }
+    }
+  }
+
+  function openWebsiteSeries(card) {
+    const playlist = parsePlaylistInfo(card?.href);
+    if (!playlist?.playlistId) return false;
+    const info = talkInfo(card);
+    const expectedCount = Number(card.dataset.episodeCount) || declaredEpisodeCount(info);
+    const screen = ensureSeriesScreen();
+    const categoryName = categoryPresentation[info.category]?.hi || info.category || "सत्संग संग्रह";
+    screen.querySelector(".satsang-series-back").textContent = `← वापिस ${categoryName}`;
+    screen.querySelector(".satsang-series-heading h3").textContent = info.title;
+    screen.querySelector(".satsang-series-heading p").textContent = info.description || info.category;
+    screen.querySelector(".satsang-series-total").textContent = expectedCount ? String(expectedCount) : "";
+    screen.querySelector(".satsang-series-loading").textContent = "\u0938\u0924\u094d\u0938\u0902\u0917 \u0938\u0942\u091a\u0940 \u0916\u0941\u0932 \u0930\u0939\u0940 \u0939\u0948\u2026";
+    renderWebsiteEpisodes(screen, info, playlist.playlistId, [], expectedCount);
+    if (!websiteSeriesCache.has(playlist.playlistId)) {
+      screen.querySelector(".satsang-series-loading").textContent = "\u0938\u0924\u094d\u0938\u0902\u0917 \u0938\u0942\u091a\u0940 \u0916\u0941\u0932 \u0930\u0939\u0940 \u0939\u0948\u2026";
+    }
+    document.querySelector("#talks")?.classList.add("satsang-series-open");
+    screen.scrollIntoView({ behavior: "smooth", block: "start" });
+    websiteSeriesRequest += 1;
+    inspectWebsitePlaylist(screen, info, playlist.playlistId, expectedCount, websiteSeriesRequest);
+    return true;
+  }
+
+  function openSatsangAnshGroup(card) {
+    const key = card?.dataset.satsangAnshDuration;
+    const group = satsangAnshGroups.find((item) => item.key === key);
+    if (!group) return false;
+    const videos = satsangAnshVideos.filter((video) => {
+      const seconds = Number(video?.duration?.seconds || 0);
+      if (Number.isFinite(group.min) && seconds <= group.min) return false;
+      if (Number.isFinite(group.max) && seconds > group.max) return false;
+      return seconds > 0;
+    });
+    const screen = ensureSeriesScreen();
+    const info = { title: group.title, category: "Satsang Ansh", image: defaultDevotionalImage };
+    screen.querySelector(".satsang-series-back").textContent = "← वापिस सत्संग-अंश";
+    screen.querySelector(".satsang-series-heading h3").textContent = group.title;
+    screen.querySelector(".satsang-series-heading p").textContent = "सत्संग-अंश";
+    screen.querySelector(".satsang-series-loading").textContent = "";
+    renderWebsiteEpisodes(screen, info, "", videos, videos.length);
+    document.querySelector("#talks")?.classList.add("satsang-series-open");
+    screen.scrollIntoView({ behavior: "smooth", block: "start" });
+    return true;
   }
 
   function openVideoPlayer(options) {
@@ -858,7 +1315,7 @@
     stopCardNavigation(event);
     const card = event.currentTarget.closest("a.group");
     if (!card) return;
-    if (openPlaylistFromCard(card)) return;
+    if (openWebsiteSeries(card)) return;
     if (openVideoFromCard(card)) return;
     markOpened(talkInfo(card));
     window.open(card.href, "_blank", "noopener,noreferrer");
@@ -967,6 +1424,50 @@
     notes.classList.toggle("has-note", Boolean(record.note));
     partial.setAttribute("aria-pressed", String(partialActive));
     listened.setAttribute("aria-pressed", String(listenedActive));
+
+    let state = card.querySelector(".talk-listening-state");
+    if (!state) {
+      state = document.createElement("div");
+      state.className = "talk-listening-state";
+      const copy = document.createElement("span");
+      copy.className = "talk-listening-state__copy";
+      const track = document.createElement("span");
+      track.className = "talk-listening-state__track";
+      track.innerHTML = '<span class="talk-listening-state__fill"></span>';
+      state.append(copy, track);
+      card.append(state);
+    }
+
+    const info = talkInfo(card);
+    const progress = readProgressList()
+      .filter((item) => {
+        if (!item) return false;
+        if (info.playlistId) return item.playlistId === info.playlistId;
+        return Boolean(info.videoId && item.videoId === info.videoId);
+      })
+      .sort((a, b) => Number(b.updatedAt || 0) - Number(a.updatedAt || 0))[0];
+    const copy = state.querySelector(".talk-listening-state__copy");
+    const track = state.querySelector(".talk-listening-state__track");
+    const fill = state.querySelector(".talk-listening-state__fill");
+    const heardSeconds = sanitizeSeconds(progress?.seconds);
+    const duration = sanitizeSeconds(progress?.duration);
+
+    state.hidden = true;
+    track.hidden = true;
+    state.classList.toggle("is-listened", listenedActive);
+    if (listenedActive) {
+      state.hidden = false;
+      const label = "\u2713 \u0938\u0941\u0928\u093e \u0939\u0941\u0906";
+      if (copy.textContent !== label) copy.textContent = label;
+    } else if (heardSeconds >= 5) {
+      state.hidden = false;
+      const label = `${formatTime(heardSeconds)} \u0924\u0915 \u0938\u0941\u0928\u093e`;
+      if (copy.textContent !== label) copy.textContent = label;
+      if (duration > heardSeconds) {
+        track.hidden = false;
+        fill.style.width = `${Math.min(98, Math.max(4, (heardSeconds / duration) * 100))}%`;
+      }
+    }
   }
 
   function removeOldPersonalUi() {
@@ -1006,7 +1507,17 @@
     );
 
     updateCategoryCount(ramayanaButton, 1);
-    updateCategoryCount(bhagwatamButton, 1);
+    updateCategoryCount(bhagwatamButton, customBhagwatamPlaylists.length);
+    const customCounts = customSatsangPlaylists.reduce((counts, playlist) => {
+      counts[playlist.category] = (counts[playlist.category] || 0) + 1;
+      return counts;
+    }, {});
+    Object.entries(customCounts).forEach(([category, count]) => {
+      const button = buttons.find((item) =>
+        item.textContent.includes(category),
+      );
+      updateCategoryCount(button, count);
+    });
   }
 
   function addMobileTabScrollHint(bar) {
@@ -1061,6 +1572,8 @@
     updateCustomCategoryCounts(bar);
     addMobileTabScrollHint(bar);
     updateSatsangHeading();
+    document.querySelector("#sadguru-vani-full-list")?.remove();
+    enhanceVerticalCategories(bar);
 
     let privacy = document.querySelector("#satsang-device-privacy");
     if (!privacy) {
@@ -1076,6 +1589,165 @@
     const talks = document.querySelector("#talks");
     const talksInner = talks?.querySelector(":scope > div") || talks;
     talksInner?.append(privacy);
+  }
+
+  const categoryPresentation = {
+    Ramayana: { hi: "\u0930\u093e\u092e\u093e\u092f\u0923", image: "/assets/category-covers/ramcharitmanas.jfif" },
+    "Bhagwat Geeta": { hi: "\u092d\u0917\u0935\u0926\u094d\u0917\u0940\u0924\u093e", image: "/assets/category-covers/bhagavad-geeta.webp" },
+    Bhagwatam: { hi: "\u092d\u093e\u0917\u0935\u0924\u092e\u094d", image: "/assets/category-covers/bhagwatam.webp" },
+    Upanishads: { hi: "\u0909\u092a\u0928\u093f\u0937\u0926\u094d" },
+    "Prakaran Granth": { hi: "\u092a\u094d\u0930\u0915\u0930\u0923 \u0917\u094d\u0930\u0928\u094d\u0925" },
+    Others: { hi: "\u0905\u0928\u094d\u092f" },
+    "Satsang Ansh": { hi: "\u0938\u0924\u094d\u0938\u0902\u0917-\u0905\u0902\u0936" },
+  };
+
+  function enhanceVerticalCategories(bar) {
+    const shell = bar.parentElement;
+    shell?.classList.add("satsang-category-list-shell");
+
+    let heading = document.querySelector("#satsang-collection-heading");
+    if (!heading) {
+      heading = document.createElement("h3");
+      heading.id = "satsang-collection-heading";
+      heading.textContent = "\u0938\u0924\u094d\u0938\u0902\u0917 \u0938\u0902\u0917\u094d\u0930\u0939";
+      shell?.insertAdjacentElement("beforebegin", heading);
+    }
+
+    if (!bar.querySelector('[data-satsang-category="Satsang Ansh"]')) {
+      const reference = bar.querySelector(":scope > button");
+      if (reference) {
+        const button = reference.cloneNode(false);
+        button.type = "button";
+        button.dataset.satsangCategory = "Satsang Ansh";
+        const count = document.createElement("span");
+        count.textContent = String(satsangAnshVideos.length);
+        button.append(count);
+        bar.append(button);
+      }
+    }
+
+    Array.from(bar.querySelectorAll(":scope > button")).forEach((button) => {
+      if (!button.dataset.satsangCategory) {
+        const key = Object.keys(categoryPresentation).find((name) =>
+          button.textContent.includes(name),
+        );
+        if (!key) return;
+        button.dataset.satsangCategory = key;
+      }
+
+      const key = button.dataset.satsangCategory;
+      const presentation = categoryPresentation[key];
+      if (!presentation) return;
+      if (button.querySelector(".satsang-category-row__title")) {
+        if (key === "Satsang Ansh") {
+          const count = button.querySelector(".satsang-category-row__count");
+          if (count) count.textContent = String(satsangAnshVideos.length);
+        }
+        return;
+      }
+      const countText = button.querySelector("span")?.textContent.match(/\d+/)?.[0] || "";
+      button.classList.add("satsang-category-row");
+      button.replaceChildren();
+
+      const title = document.createElement("span");
+      title.className = "satsang-category-row__title";
+      title.textContent = presentation.hi;
+      const keyText = document.createElement("span");
+      keyText.className = "satsang-category-row__key";
+      keyText.textContent = key;
+      const count = document.createElement("span");
+      count.className = "satsang-category-row__count";
+      count.textContent = countText;
+      const arrow = document.createElement("span");
+      arrow.className = "satsang-category-row__arrow";
+      arrow.setAttribute("aria-hidden", "true");
+      arrow.textContent = "\u203a";
+      if (presentation.image) {
+        const image = document.createElement("img");
+        image.className = "satsang-category-row__image";
+        image.src = presentation.image;
+        image.alt = "";
+        image.loading = "lazy";
+        button.append(image);
+      }
+      button.append(title, keyText, count, arrow);
+
+      if (!button.dataset.verticalCategoryReady) {
+        button.dataset.verticalCategoryReady = "true";
+        button.addEventListener("click", () => {
+          selectedCategoryKey = key;
+          categoryViewOpen = true;
+          document.querySelector("#talks")?.classList.add("satsang-category-open");
+          window.setTimeout(scheduleRender, 0);
+        });
+      }
+    });
+
+    let detail = document.querySelector("#satsang-category-detail-header");
+    if (!detail) {
+      detail = document.createElement("div");
+      detail.id = "satsang-category-detail-header";
+      detail.innerHTML = `
+        <button type="button" class="satsang-category-back">\u2190 \u0935\u093e\u092a\u093f\u0938</button>
+        <h3></h3>
+        <span class="satsang-category-detail-count"></span>
+      `;
+      const list = document.querySelector("#talks .space-y-3");
+      if (list) list.insertAdjacentElement("beforebegin", detail);
+      else shell?.insertAdjacentElement("afterend", detail);
+      detail.querySelector("button").addEventListener("click", () => {
+        categoryViewOpen = false;
+        document.querySelector("#talks")?.classList.remove("satsang-category-open");
+        heading?.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+    }
+
+    const categoryButtons = Array.from(bar.querySelectorAll(":scope > button"));
+    const active = categoryButtons.find(
+      (button) => button.dataset.satsangCategory === selectedCategoryKey,
+    ) || categoryButtons.find((button) =>
+      button.className.includes("bg-primary") ||
+      button.getAttribute("aria-selected") === "true",
+    );
+    const activeKey = active?.dataset.satsangCategory || selectedCategoryKey;
+    const presentation = categoryPresentation[activeKey] || categoryPresentation.Ramayana;
+    const detailTitle = detail.querySelector("h3");
+    if (detailTitle.textContent !== presentation.hi) detailTitle.textContent = presentation.hi;
+    const detailCount = detail.querySelector(".satsang-category-detail-count");
+    const countText = active?.querySelector(".satsang-category-row__count")?.textContent || "";
+    if (detailCount.textContent !== countText) detailCount.textContent = countText;
+    document.querySelector("#talks")?.classList.toggle("satsang-category-open", categoryViewOpen);
+  }
+
+  function ensureSadguruVaniLink() {
+    const talks = document.querySelector("#talks");
+    const container = talks?.querySelector(".container") || talks;
+    if (!container) return;
+
+    let link = document.querySelector("#sadguru-vani-full-list");
+    if (!link) {
+      link = document.createElement("a");
+      link.id = "sadguru-vani-full-list";
+      link.className = "sadguru-vani-full-list";
+      link.href = "/sadguru-vani/#home";
+      link.setAttribute("aria-label", "Open the complete Sadguru Vani talk list");
+      link.innerHTML = `
+        <span class="sadguru-vani-full-list__icon" aria-hidden="true">\u0950</span>
+        <span class="sadguru-vani-full-list__copy">
+          <strong>\u0938\u092d\u0940 \u0938\u0924\u094d\u0938\u0902\u0917 \u0938\u0941\u0928\u0947\u0902</strong>
+          <small>\u092c\u0921\u093c\u0947 \u0905\u0915\u094d\u0937\u0930\u094b\u0902 \u092e\u0947\u0902 \u0938\u0930\u0932 \u0938\u0942\u091a\u0940</small>
+        </span>
+        <span class="sadguru-vani-full-list__arrow" aria-hidden="true">\u2192</span>
+      `;
+    }
+
+    if (!link.isConnected) {
+      const tabs = container.querySelector(".mb-7.overflow-x-auto");
+      const header = container.querySelector(".mb-8.text-center");
+      if (tabs) tabs.insertAdjacentElement("beforebegin", link);
+      else if (header) header.insertAdjacentElement("afterend", link);
+      else container.prepend(link);
+    }
   }
 
   function updateSatsangHeading() {
@@ -1166,6 +1838,44 @@
     thumb.src = info?.thumbnail || info?.image || defaultDevotionalImage;
   }
 
+  function removeSeriesPreview(card) {
+    card.querySelector(":scope > .talk-preview")?.remove();
+    card.querySelector(":scope > div:first-child:not(.flex-1)")?.remove();
+    const row = card.querySelector(".talk-title-with-thumb");
+    if (!row) return;
+    const heading = row.querySelector("h3");
+    const copy = row.parentElement;
+    if (heading && copy) copy.insertBefore(heading, row);
+    row.remove();
+  }
+
+  function ensureSeriesThumbnail(card, info) {
+    removeSeriesPreview(card);
+    let image = card.querySelector(":scope > .series-youtube-thumb");
+    if (!image) {
+      image = document.createElement("img");
+      image.className = "series-youtube-thumb";
+      image.alt = "";
+      image.loading = "lazy";
+      image.decoding = "async";
+      card.prepend(image);
+    }
+    const direct = firstText(card.dataset.thumbnail) ||
+      (info?.videoId ? getYouTubeThumbnail(info.videoId) : "");
+    if (direct) {
+      image.src = direct;
+      image.hidden = false;
+    } else {
+      image.hidden = true;
+    }
+    resolvePlaylistThumbnail(info, (thumbnail) => {
+      if (!image.isConnected) return;
+      image.src = thumbnail;
+      image.hidden = false;
+      card.dataset.thumbnail = thumbnail;
+    });
+  }
+
   function addCustomRamayanaPlaylist() {
     const talks = document.querySelector("#talks");
     if (!talks || talks.querySelector(`[href*="${customRamayanaPlaylistId}"]`)) return;
@@ -1218,43 +1928,184 @@
 
   function addCustomBhagwatamPlaylist() {
     const talks = document.querySelector("#talks");
-    if (!talks || talks.querySelector(`[href*="${customBhagwatamPlaylistId}"]`)) return;
+    if (!talks) return;
 
     const cards = Array.from(talks.querySelectorAll("a.group[href]"));
-    const bhagwatamCards = cards.filter((item) => talkInfo(item).category === "Bhagwatam");
+    const bhagwatamCards = cards.filter(
+      (item) => talkInfo(item).category === "Bhagwatam",
+    );
     const reference = bhagwatamCards[0];
     if (!reference) return;
 
-    const card = reference.cloneNode(true);
-    resetCustomPlaylistCard(card);
-    card.href = customBhagwatamPlaylistUrl;
-    card.dataset.talkCategory = "Bhagwatam";
-    card.dataset.talkTitle = "Bhagvad 6th Skandh/Canto Sidhbari May 2010";
-    card.dataset.customBhagwatamPlaylist = "true";
-    card.removeAttribute("data-local-talk-ready");
+    let anchor = bhagwatamCards[bhagwatamCards.length - 1] || reference;
 
-    const title = card.querySelector("h3");
-    if (title) title.textContent = card.dataset.talkTitle;
+    customBhagwatamPlaylists.forEach((playlist) => {
+      const existing = talks.querySelector(`a.group[href*="${playlist.id}"]`);
+      if (existing) {
+        anchor = existing; // already added — keep inserting after it, in order
+        return;
+      }
 
-    const meta = card.querySelector("div.flex-1 > p");
-    if (meta) meta.textContent = "YouTube Playlist";
+      const card = reference.cloneNode(true);
+      resetCustomPlaylistCard(card);
+      card.href = `https://www.youtube.com/playlist?list=${playlist.id}`;
+      card.dataset.talkCategory = "Bhagwatam";
+      card.dataset.talkTitle = playlist.title;
+      card.dataset.customBhagwatamPlaylist = "true";
+      card.removeAttribute("data-local-talk-ready");
 
-    const badge = Array.from(card.querySelectorAll("span")).find((span) =>
-      span.className.includes("bg-secondary") ||
-      span.classList.contains("category-glyph-badge"),
-    );
-    if (badge) {
-      badge.classList.remove("category-glyph-badge");
-      badge.textContent = "Bhagwatam";
-      badge.removeAttribute("data-category-name");
-      badge.removeAttribute("aria-label");
-      badge.removeAttribute("title");
-    }
+      const title = card.querySelector("h3");
+      if (title) title.textContent = playlist.title;
 
-    card.querySelector(".talk-action-row")?.remove();
+      // Place + year live in the little pill below the title (not in the title).
+      const meta = card.querySelector("div.flex-1 > p");
+      if (meta) {
+        const cityYear = [playlist.place, playlist.year]
+          .filter(Boolean)
+          .join(" - ");
+        meta.textContent = cityYear || "YouTube Playlist";
+      }
 
-    const anchor = bhagwatamCards[bhagwatamCards.length - 1] || reference;
-    anchor.insertAdjacentElement("afterend", card);
+      const badge = Array.from(card.querySelectorAll("span")).find((span) =>
+        span.className.includes("bg-secondary") ||
+        span.classList.contains("category-glyph-badge"),
+      );
+      if (badge) {
+        badge.classList.remove("category-glyph-badge");
+        badge.textContent = "Bhagwatam";
+        badge.removeAttribute("data-category-name");
+        badge.removeAttribute("aria-label");
+        badge.removeAttribute("title");
+      }
+
+      card.querySelector(".talk-action-row")?.remove();
+
+      anchor.insertAdjacentElement("afterend", card);
+      anchor = card;
+    });
+  }
+
+  function addCustomSatsangPlaylists() {
+    const talks = document.querySelector("#talks");
+    if (!talks) return;
+
+    customSatsangPlaylists.forEach((playlist) => {
+      const mediaId = playlist.id || playlist.videoId;
+      if (!mediaId || talks.querySelector(`a.group[href*="${mediaId}"]`)) return;
+
+      const categoryCards = Array.from(talks.querySelectorAll("a.group[href]"))
+        .filter((card) => talkInfo(card).category === playlist.category);
+      const reference = categoryCards[0];
+      const anchor = categoryCards[categoryCards.length - 1];
+      if (!reference || !anchor) return;
+
+      const card = reference.cloneNode(true);
+      resetCustomPlaylistCard(card);
+      card.href = playlist.id
+        ? `https://www.youtube.com/playlist?list=${playlist.id}`
+        : `https://www.youtube.com/watch?v=${playlist.videoId}`;
+      card.dataset.talkCategory = playlist.category;
+      card.dataset.talkTitle = playlist.title;
+      card.dataset.customSatsangTalk = "true";
+      card.removeAttribute("data-local-talk-ready");
+
+      const title = card.querySelector("h3");
+      if (title) title.textContent = playlist.title;
+
+      const meta = card.querySelector("div.flex-1 > p");
+      if (meta) meta.textContent = playlist.meta || "YouTube Playlist";
+
+      const badge = Array.from(card.querySelectorAll("span")).find((span) =>
+        span.className.includes("bg-secondary") ||
+        span.classList.contains("category-glyph-badge"),
+      );
+      if (badge) {
+        badge.classList.remove("category-glyph-badge");
+        badge.textContent = playlist.category;
+        badge.removeAttribute("data-category-name");
+        badge.removeAttribute("aria-label");
+        badge.removeAttribute("title");
+      }
+
+      card.querySelector(".talk-action-row")?.remove();
+      if (playlist.afterId) {
+        const afterCard = talks.querySelector(`a.group[href*="${playlist.afterId}"]`);
+        (afterCard || anchor).insertAdjacentElement("afterend", card);
+      } else if (playlist.position === "top") {
+        reference.insertAdjacentElement("beforebegin", card);
+      } else {
+        anchor.insertAdjacentElement("afterend", card);
+      }
+    });
+  }
+
+  function addSatsangAnshSeries() {
+    const talks = document.querySelector("#talks");
+    const list = talks?.querySelector(".space-y-3");
+    const reference = list?.querySelector("a.group[href]");
+    if (!talks || !list || !reference) return;
+
+    satsangAnshGroups.forEach((group) => {
+      const count = satsangAnshVideos.filter((video) => {
+        const seconds = Number(video?.duration?.seconds || 0);
+        if (Number.isFinite(group.min) && seconds <= group.min) return false;
+        if (Number.isFinite(group.max) && seconds > group.max) return false;
+        return seconds > 0;
+      }).length;
+      let card = list.querySelector(`a[data-satsang-ansh-duration="${group.key}"]`);
+      if (!card) {
+        card = reference.cloneNode(true);
+        resetCustomPlaylistCard(card);
+        card.href = "#satsang-ansh";
+        card.dataset.talkCategory = "Satsang Ansh";
+        card.dataset.talkTitle = group.title;
+        card.dataset.satsangAnshDuration = group.key;
+        delete card.dataset.thumbnail;
+        delete card.dataset.talkThumbnail;
+        card.removeAttribute("data-local-talk-ready");
+        const title = card.querySelector("h3");
+        if (title) title.textContent = group.title;
+        const meta = card.querySelector("div.flex-1 > p");
+        if (meta) meta.textContent = "सत्संग-अंश";
+        card.querySelector(".talk-action-row")?.remove();
+        list.append(card);
+      }
+      card.dataset.episodeCount = String(count);
+      const firstVideo = satsangAnshVideos.find((video) => {
+        const seconds = Number(video?.duration?.seconds || 0);
+        if (Number.isFinite(group.min) && seconds <= group.min) return false;
+        if (Number.isFinite(group.max) && seconds > group.max) return false;
+        return seconds > 0;
+      });
+      if (firstVideo?.id) card.dataset.thumbnail = getYouTubeThumbnail(firstVideo.id);
+      const countNode = card.querySelector(".series-card-count");
+      if (countNode) countNode.textContent = String(count);
+    });
+
+    const customOpen = selectedCategoryKey === "Satsang Ansh";
+    Array.from(list.querySelectorAll(":scope > a.group[href]")).forEach((card) => {
+      const isAnsh = Boolean(card.dataset.satsangAnshDuration);
+      const shouldHide = customOpen ? !isAnsh : isAnsh;
+      if (card.hidden !== shouldHide) card.hidden = shouldHide;
+    });
+  }
+
+  function applyTalkTitleFixes() {
+    const talks = document.querySelector("#talks");
+    if (!talks) return;
+    talks.querySelectorAll("a.group[href]").forEach((card) => {
+      const heading = card.querySelector("h3");
+      if (!heading) return;
+      const fix = talkTitleFixes.find(
+        (item) => heading.textContent.trim() === item.from,
+      );
+      if (!fix) return;
+      heading.textContent = fix.title;
+      card.dataset.talkTitle = fix.title;
+      if (fix.href) card.href = fix.href;
+      const meta = card.querySelector("div.flex-1 > p");
+      if (meta) meta.textContent = fix.pill;
+    });
   }
 
   function enhanceCards() {
@@ -1285,7 +2136,32 @@
 
       card.classList.add("talk-card-with-actions");
       card.dataset.talkCategory = info.category;
-      ensureTalkPreview(card, info);
+      const isNavigableSeries = Boolean(info.playlistId || card.dataset.satsangAnshDuration);
+      if (isNavigableSeries) ensureSeriesThumbnail(card, info);
+      else ensureTalkPreview(card, info);
+
+      if (isNavigableSeries) {
+        let end = card.querySelector(".series-card-end");
+        if (!end) {
+          end = document.createElement("span");
+          end.className = "series-card-end";
+          const count = document.createElement("span");
+          count.className = "series-card-count";
+          const arrow = document.createElement("span");
+          arrow.className = "series-card-chevron";
+          arrow.setAttribute("aria-hidden", "true");
+          arrow.textContent = "\u203a";
+          end.append(count, arrow);
+          card.append(end);
+        }
+        const cachedCount = Number(readPlaylistCounts()[info.playlistId]);
+        const count = Number(card.dataset.episodeCount) || declaredEpisodeCount(info) || cachedCount;
+        if (count) {
+          card.dataset.episodeCount = String(count);
+          end.querySelector(".series-card-count").textContent = String(count);
+        }
+        card.querySelector(":scope > svg")?.remove();
+      }
 
       const categoryBadge = Array.from(card.querySelectorAll("span")).find(
         (span) => span.className.includes("bg-secondary"),
@@ -1302,13 +2178,21 @@
         card.dataset.localTalkReady = "true";
         card.addEventListener("click", (event) => {
           if (event.target.closest(".talk-action-row")) return;
-          if (openPlaylistFromCard(card) || openVideoFromCard(card)) {
+          if (openSatsangAnshGroup(card) || openWebsiteSeries(card) || openVideoFromCard(card)) {
             event.preventDefault();
             event.stopPropagation();
             return;
           }
           markOpened(talkInfo(card));
         });
+      }
+
+      // The series screen is navigation only. Playback belongs to the
+      // individual-talk screen opened from this card.
+      if (isNavigableSeries) {
+        card.querySelector(".talk-action-row")?.remove();
+        card.querySelector(".talk-listening-state")?.remove();
+        return;
       }
 
       let row = card.querySelector(".talk-action-row");
@@ -1351,11 +2235,14 @@
     });
 
     if (changed) writeLibrary(library);
+    window.setTimeout(hydrateVisibleSeriesCounts, 0);
   }
 
   function recentRecords() {
-    const record = latestProgress();
-    return record ? [record] : [];
+    return readProgressList()
+      .filter((item) => item && item.playlistId && sanitizeSeconds(item.seconds) >= 5)
+      .sort((a, b) => Number(b.updatedAt || 0) - Number(a.updatedAt || 0))
+      .slice(0, recentLimit);
   }
 
   function recentSection() {
@@ -1390,22 +2277,9 @@
     }
 
     section.hidden = false;
-    section.innerHTML = `
-      <button type="button" class="continue-listening-card" id="recently-listened-title">
-        <span class="continue-listening-main">▶ Resume last talk</span>
-        <span class="continue-listening-detail"></span>
-      </button>
-      <p class="satsang-progress-note satsang-progress-note--compact">Saved on this device only.</p>
-    `;
+    section.replaceChildren();
 
-    const record = records[0];
-    const detailText =
-      record.videoTitle ||
-      `प्रवचन ${record.videoNumber || sanitizeIndex(record.videoIndex) + 1}`;
-    const button = section.querySelector(".continue-listening-card");
-    button.querySelector(".continue-listening-detail").textContent =
-      `${detailText} — from ${formatTime(record.seconds)}`;
-    button.addEventListener("click", () => {
+    const openRecord = (record) => {
       openPlaylistPlayer({
         playlistId: record.playlistId,
         playlistTitle: record.playlistTitle,
@@ -1413,18 +2287,97 @@
         videoId: record.videoId,
         seconds: record.seconds,
       });
-    });
+    };
+    const talkLabel = (record) =>
+      record.videoTitle ||
+      `प्रवचन ${record.videoNumber || sanitizeIndex(record.videoIndex) + 1}`;
+
+    const primary = document.createElement("button");
+    primary.type = "button";
+    primary.className = "continue-listening-card";
+    primary.id = "recently-listened-title";
+
+    const primaryMain = document.createElement("span");
+    primaryMain.className = "continue-listening-main";
+    primaryMain.textContent = "▶ Resume last talk";
+
+    const primaryDetail = document.createElement("span");
+    primaryDetail.className = "continue-listening-detail";
+    primaryDetail.textContent =
+      `${talkLabel(records[0])} — from ${formatTime(records[0].seconds)}`;
+
+    primary.append(primaryMain, primaryDetail);
+    primary.addEventListener("click", () => openRecord(records[0]));
+    section.append(primary);
+
+    if (records.length > 1) {
+      const historyHeader = document.createElement("div");
+      historyHeader.className = "satsang-history-header";
+
+      const heading = document.createElement("h3");
+      heading.className = "satsang-history-title";
+      heading.textContent = "Recently listened";
+
+      const clear = document.createElement("button");
+      clear.type = "button";
+      clear.className = "satsang-history-clear";
+      clear.textContent = "Clear history";
+      clear.addEventListener("click", () => {
+        try {
+          localStorage.removeItem(progressStorageKey);
+        } catch {
+          // Listening history is optional; the player remains unaffected.
+        }
+        section.dataset.signature = "";
+        renderRecent();
+      });
+
+      historyHeader.append(heading, clear);
+      section.append(historyHeader);
+
+      const list = document.createElement("div");
+      list.className = "satsang-history-list";
+      records.slice(1).forEach((record) => {
+        const item = document.createElement("button");
+        item.type = "button";
+        item.className = "satsang-history-item";
+
+        const title = document.createElement("span");
+        title.className = "satsang-history-item-title";
+        title.textContent = talkLabel(record);
+
+        const detail = document.createElement("span");
+        detail.className = "satsang-history-item-detail";
+        const playlist = record.playlistTitle
+          ? `${record.playlistTitle} · `
+          : "";
+        detail.textContent = `${playlist}from ${formatTime(record.seconds)}`;
+
+        item.append(title, detail);
+        item.addEventListener("click", () => openRecord(record));
+        list.append(item);
+      });
+      section.append(list);
+    }
+
+    const note = document.createElement("p");
+    note.className = "satsang-progress-note satsang-progress-note--compact";
+    note.textContent = "Listening history is saved on this device only.";
+    section.append(note);
   }
 
   function render() {
     removeOldPersonalUi();
     installSatsangMenuScrollFix();
+    addSatsangAnshSeries();
     enhanceTopArea();
     updateBhajanHeading();
     enhanceBhajanCards();
     addCustomRamayanaPlaylist();
     addCustomBhagwatamPlaylist();
+    addCustomSatsangPlaylists();
     enhanceCards();
+    applyTalkTitleFixes();
     renderRecent();
   }
 
@@ -1435,6 +2388,20 @@
       renderScheduled = false;
       render();
     });
+  }
+
+  async function loadSatsangAnshData() {
+    try {
+      const response = await fetch("/data/excerpts-playlist-fallback.json");
+      if (!response.ok) return;
+      const data = await response.json();
+      satsangAnshVideos = (data.videos || []).filter(
+        (video) => video?.id && video?.title && Number(video?.duration?.seconds || 0) > 0,
+      );
+      scheduleRender();
+    } catch {
+      // The rest of the Satsang catalogue remains available offline.
+    }
   }
 
   document.addEventListener("keydown", (event) => {
@@ -1449,5 +2416,6 @@
     const observer = new MutationObserver(scheduleRender);
     observer.observe(document.body, { childList: true, subtree: true });
     scheduleRender();
+    loadSatsangAnshData();
   });
 })();

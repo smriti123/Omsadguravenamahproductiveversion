@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Refreshing website…</title>
+    <style>
+      body {
+        display: grid;
+        min-height: 100vh;
+        margin: 0;
+        place-items: center;
+        background: #fff8e8;
+        color: #653717;
+        font-family: Georgia, serif;
+        text-align: center;
+      }
+      main { padding: 2rem; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Refreshing the website…</h1>
+      <p>Please wait. The latest version will open automatically.</p>
+    </main>
+    <script>
+      (async () => {
+        try {
+          if ("serviceWorker" in navigator) {
+            const registrations =
+              await navigator.serviceWorker.getRegistrations();
+            await Promise.all(
+              registrations.map((registration) => registration.unregister()),
+            );
+          }
+
+          if ("caches" in window) {
+            const keys = await caches.keys();
+            await Promise.all(
+              keys
+                .filter(
+                  (key) =>
+                    key.startsWith("omsadguravenamah") ||
+                    key.includes("workbox-precache"),
+                )
+                .map((key) => caches.delete(key)),
+            );
+          }
+        } finally {
+          location.replace("/home?refreshed=247#photo-gallery2");
+        }
+      })();
+    </script>
+  </body>
+</html>

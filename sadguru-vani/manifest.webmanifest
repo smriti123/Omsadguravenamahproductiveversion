@@ -1,0 +1,19 @@
+{
+  "name": "Sadguru Vani · सद्गुरु वाणी",
+  "short_name": "Sadguru Vani",
+  "description": "परम पूज्य स्वामीजी के सत्संगों का विषयवार संग्रह",
+  "id": "/sadguru-vani-public",
+  "start_url": "/sadguru-vani/#home",
+  "scope": "/sadguru-vani/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#fff9ef",
+  "theme_color": "#fff9ef",
+  "lang": "hi",
+  "categories": ["education", "lifestyle"],
+  "icons": [
+    { "src": "/sadguru-vani/icons/version2-icon-192.png?v=3", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/sadguru-vani/icons/version2-icon-512.png?v=3", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/sadguru-vani/icons/version2-icon-maskable-512.png?v=3", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

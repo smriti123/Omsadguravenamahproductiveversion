@@ -6,7 +6,7 @@
   // Searching matches title + place + year + category, so talks with a missing
   // city are still found. Typing shows a results panel; clearing restores the
   // normal category view.
-  const DATA_URL = "/data/satsang-talks.json";
+  const DATA_URL = "/data/satsang-talks.json?v=9";
   const PLACEHOLDER = "सत्संग खोजें — नाम, स्थान या वर्ष…";
 
   let talks = [];
@@ -99,7 +99,7 @@
             // Search text = original title (Devanagari or Roman) + a Roman
             // transliteration of the title + place/year/category.
             const text = norm(
-              [t.title, devToLatin(t.title), t.location, t.year, t.category]
+              [t.title, devToLatin(t.title), t.keywords, t.location, t.year, t.category]
                 .filter(Boolean)
                 .join(" "),
             );

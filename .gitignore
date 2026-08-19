@@ -15,6 +15,20 @@ node_modules/
 .server-err.txt
 tmp-excerpts-combined.json
 
+# Generated browser-test profiles and diagnostics
+.*-browser*/
+.*-browser-test*/
+.*-review*/
+.*-audit*/
+.vani-preview/
+.vani-final-check/
+.vani-home-final/
+.vani-check/
+.vani-brief-check/
+.vani-player-check/
+.*-dom.txt
+.*-error.txt
+
 # ─── OS junk ───
 Thumbs.db
 .DS_Store

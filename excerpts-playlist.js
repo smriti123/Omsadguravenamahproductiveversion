@@ -77,6 +77,14 @@
   let metadataResolveTimer = null;
   const metadataKey = `excerpts-video-metadata-v1:${playlistId}`;
   const recentKey = "excerpts-recent-v1";
+  // Playback position is saved the same way Satsang does it: every 10s while
+  // playing, plus on pause/end/unload. Local to this browser, never sent anywhere.
+  const progressSaveIntervalMs = 10000;
+  // Resuming this close to the end just replays the tail, so start over instead.
+  const resumeEndGraceSeconds = 15;
+  // Below this, resuming isn't worth it — matches Satsang's 5s threshold.
+  const resumeMinSeconds = 5;
+  let activeSaveTimer = null;
 
   function readJson(key, fallback) {
     try {
@@ -191,11 +199,11 @@
     section.innerHTML = `
       <div class="excerpts-inner">
         <div class="excerpts-heading">
-          <p>सत्संग अंश</p>
-          <h2>Excerpts</h2>
-          <span>Short selections from spiritual talks</span>
+          <h2>सत्संग-अंश</h2>
+          <span>Short selections from Pujya Swamiji's satsangs</span>
         </div>
         <div class="excerpts-player-wrap" hidden>
+          <button type="button" class="excerpts-player-close" aria-label="Close Satsang-Ansh player">×</button>
           <div class="excerpts-player" id="excerpts-player-anchor">
             <div id="excerpts-youtube-player"></div>
           </div>
@@ -212,6 +220,20 @@
         <div class="excerpts-list"></div>
       </div>
     `;
+
+    section
+      .querySelector(".excerpts-player-close")
+      ?.addEventListener("click", () => {
+        saveExcerptProgress();
+        excerptsPlayer?.stopVideo?.();
+        const wrap = section?.querySelector(".excerpts-player-wrap");
+        if (wrap) wrap.hidden = true;
+        if (selectedVideoId) {
+          section
+            ?.querySelector(`.excerpt-card[data-video-id="${selectedVideoId}"]`)
+            ?.focus();
+        }
+      });
 
     positionSection();
     if (!section.isConnected) {
@@ -336,7 +358,10 @@
       if (title) title.textContent = "सत्संग-अंश";
 
       const description = link.querySelector("small");
-      if (description) description.textContent = "Short selections from spiritual talks";
+      if (description) {
+        description.textContent =
+          "Short selections from Pujya Swamiji's satsangs";
+      }
 
       const action = link.querySelector("em");
       if (action) action.textContent = "सुनें →";
@@ -481,8 +506,11 @@
             if (!autoplay) window.setTimeout(() => event.target.pauseVideo?.(), 400);
             window.setTimeout(updateFallbackPlaylistList, 900);
           },
-          onStateChange: () => {
+          onStateChange: (event) => {
             window.setTimeout(updateFallbackPlaylistList, 350);
+            // The fallback player can become the shared instance that a later
+            // selectVideo() reuses, so it must drive progress saving too.
+            syncProgressTimer(event.data);
           },
         },
       });
@@ -492,18 +520,89 @@
   }
 
   function sourcePlaylistIdFor(video) {
+    if (video?.standalone) return "";
     return video?.sourcePlaylistId || playlistId;
   }
 
-  function ensureVideoPlayer(videoId) {
+  function youtubeHrefFor(video) {
+    const base = `https://www.youtube.com/watch?v=${encodeURIComponent(video?.id || "")}`;
+    const sourcePlaylistId = sourcePlaylistIdFor(video);
+    return sourcePlaylistId
+      ? `${base}&list=${encodeURIComponent(sourcePlaylistId)}`
+      : base;
+  }
+
+  function sanitizeSeconds(value) {
+    const seconds = Math.floor(Number(value) || 0);
+    return seconds > 0 ? seconds : 0;
+  }
+
+  // Where to pick a saved excerpt back up — 0 if it was finished (or near enough).
+  function resumeSecondsFor(video, seconds) {
+    const start = sanitizeSeconds(seconds);
+    if (start < resumeMinSeconds) return 0;
+    const total = durationSeconds(video);
+    if (total > 0 && start >= total - resumeEndGraceSeconds) return 0;
+    return start;
+  }
+
+  function saveExcerptProgress() {
+    if (!excerptsPlayer || !selectedVideoId) return;
+
+    const video = videos.find((item) => item.id === selectedVideoId);
+    if (!video) return;
+
+    let seconds = 0;
+    let total = 0;
+    try {
+      seconds = excerptsPlayer.getCurrentTime?.() || 0;
+      total = excerptsPlayer.getDuration?.() || 0;
+    } catch {
+      return;
+    }
+
+    // The player knows the true length even when our metadata doesn't; without
+    // this, finishing an excerpt would save a near-end position and "resume"
+    // would drop the listener at the very end.
+    if (total > 0 && seconds >= total - resumeEndGraceSeconds) seconds = 0;
+
+    writeJson(recentKey, {
+      id: video.id,
+      title: video.title,
+      seconds: sanitizeSeconds(seconds),
+      updatedAt: Date.now(),
+    });
+  }
+
+  function syncProgressTimer(state) {
+    if (state === window.YT?.PlayerState?.PLAYING) {
+      window.clearInterval(activeSaveTimer);
+      activeSaveTimer = window.setInterval(saveExcerptProgress, progressSaveIntervalMs);
+      saveExcerptProgress();
+      return;
+    }
+
+    if (
+      state === window.YT?.PlayerState?.PAUSED ||
+      state === window.YT?.PlayerState?.ENDED
+    ) {
+      saveExcerptProgress();
+      window.clearInterval(activeSaveTimer);
+      activeSaveTimer = null;
+    }
+  }
+
+  function ensureVideoPlayer(videoId, startSeconds = 0) {
     if (!section || !videoId) return Promise.resolve(null);
 
     const wrap = section.querySelector(".excerpts-player-wrap");
     wrap.hidden = false;
 
+    const start = sanitizeSeconds(startSeconds);
+
     return loadYouTubeApi().then((YT) => {
       if (excerptsPlayer) {
-        excerptsPlayer.loadVideoById?.(videoId);
+        excerptsPlayer.loadVideoById?.({ videoId, startSeconds: start });
         return excerptsPlayer;
       }
 
@@ -515,9 +614,14 @@
           rel: 0,
           modestbranding: 1,
           playsinline: 1,
+          start,
         },
         events: {
-          onReady: (event) => event.target.playVideo?.(),
+          onReady: (event) => {
+            if (start > 0) event.target.seekTo?.(start, true);
+            event.target.playVideo?.();
+          },
+          onStateChange: (event) => syncProgressTimer(event.data),
         },
       });
 
@@ -525,9 +629,13 @@
     });
   }
 
-  function selectVideo(videoId, shouldScroll = true) {
+  function selectVideo(videoId, shouldScroll = true, startSeconds = 0) {
     const video = videos.find((item) => item.id === videoId);
     if (!video || !section) return;
+
+    // Bank the outgoing excerpt's position before selectedVideoId moves on,
+    // otherwise it would be filed under the excerpt we're switching to.
+    if (selectedVideoId && selectedVideoId !== videoId) saveExcerptProgress();
 
     // Player selection logic: one shared iframe is reused and pointed at the selected video ID.
     selectedVideoId = videoId;
@@ -536,16 +644,21 @@
     const youtubeLink = section.querySelector(".excerpts-youtube-open");
     wrap.hidden = false;
     nowPlaying.textContent = `Now playing: ${video.title}`;
-    youtubeLink.href =
-      `https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}&list=${encodeURIComponent(sourcePlaylistIdFor(video))}`;
-    ensureVideoPlayer(videoId);
+    youtubeLink.href = youtubeHrefFor(video);
+    const start = resumeSecondsFor(video, startSeconds);
+    ensureVideoPlayer(videoId, start);
 
     section.querySelectorAll(".excerpt-card").forEach((card) => {
       card.classList.toggle("is-playing", card.dataset.videoId === videoId);
     });
 
-    // Remember the last excerpt opened (on this device only) so it can be resumed.
-    writeJson(recentKey, { id: video.id, title: video.title });
+    // Remember the last excerpt opened + where it is (on this device only).
+    writeJson(recentKey, {
+      id: video.id,
+      title: video.title,
+      seconds: start,
+      updatedAt: Date.now(),
+    });
     renderRecent();
 
     if (shouldScroll) {
@@ -556,9 +669,8 @@
     }
   }
 
-  // A lightweight "recently listened" card: reopens the last excerpt you tapped.
-  // (The excerpts player doesn't save a playback position, so this resumes the
-  // excerpt, not an exact timestamp — and it lives only in this browser.)
+  // A lightweight "recently listened" card: reopens the last excerpt you tapped
+  // and picks up at the saved timestamp. Lives only in this browser.
   function renderRecent() {
     if (!section) return;
     const box = section.querySelector(".excerpts-recent");
@@ -582,11 +694,20 @@
         </button>
         <p class="excerpts-recent-note">Saved on this device only.</p>
       `;
-      box.querySelector(".excerpts-recent-detail").textContent = video.title;
-      box
-        .querySelector(".excerpts-recent-card")
-        .addEventListener("click", () => selectVideo(video.id));
+      // Read the position at click time — the interval keeps moving it on.
+      box.querySelector(".excerpts-recent-card").addEventListener("click", () => {
+        const latest = readJson(recentKey, null);
+        const seconds = latest && latest.id === video.id ? latest.seconds : 0;
+        selectVideo(video.id, true, seconds);
+      });
     }
+
+    // Refreshed on every render, not just on rebuild, so the timestamp stays current.
+    // "— from 3:24" matches Satsang's Resume button wording exactly.
+    const resumeAt = resumeSecondsFor(video, saved.seconds);
+    box.querySelector(".excerpts-recent-detail").textContent = resumeAt
+      ? `${video.title} — from ${formatDuration(resumeAt)}`
+      : video.title;
   }
 
   function playPlaylistFallback(shouldScroll = true) {
@@ -711,7 +832,7 @@
         ${durationDisplay ? `<span class="excerpt-duration">${escapeHtml(durationDisplay)}</span>` : ""}
       </button>
       <div class="excerpt-actions">
-        <a class="excerpt-youtube-link" href="https://www.youtube.com/watch?v=${encodeURIComponent(video.id)}&list=${encodeURIComponent(sourcePlaylistIdFor(video))}" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a class="excerpt-youtube-link" href="${youtubeHrefFor(video)}" target="_blank" rel="noopener noreferrer">YouTube</a>
       </div>
     `;
 
@@ -1015,6 +1136,14 @@
   // the mobile menu is rendered on demand (inside a Sheet), so the सत्संग-अंश
   // nav link must be re-injected every time that menu opens.
   function stopObserverIfReady() {}
+
+  // Catch the position when the tab closes or the app is backgrounded on a phone
+  // (pagehide/visibilitychange fire on iOS where beforeunload often doesn't).
+  window.addEventListener("beforeunload", saveExcerptProgress);
+  window.addEventListener("pagehide", saveExcerptProgress);
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") saveExcerptProgress();
+  });
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => {

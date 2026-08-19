@@ -7,7 +7,7 @@
         "category":  "Ramayana"
     },
     {
-        "title":  "Ram Charitra at Sidhbari Oct 2017",
+        "title":  "Ram Charitra",
         "location":  "Sidhbari",
         "year":  "2017",
         "youtubeUrl":  "https://www.youtube.com/playlist?list=PLgy41qSqQO42BEErA7w8q-BBHGgkK_gAO",
@@ -105,8 +105,9 @@
         "category":  "Ramayana"
     },
     {
-        "title":  "राम कथा - १ | RAAM-KATHA - 1",
-        "location":  null,
+        "title":  "राम कथा - १ | RAAM-KATHA - 1 · Jaipur",
+        "titleEn":  "Raam Katha 1 · Jaipur",
+        "location":  "Jaipur",
         "year":  null,
         "youtubeUrl":  "https://www.youtube.com/watch?v=wSRjl4IXYwg\u0026list=PLgy41qSqQO43KX_lElPJcMQtmCDcK-oG5",
         "category":  "Ramayana"
@@ -124,6 +125,15 @@
         "year":  "2005",
         "youtubeUrl":  "https://www.youtube.com/watch?v=FY8WMmqKYXE\u0026list=PLgy41qSqQO42ZzUnw21XBCbCLIDT6LETH",
         "category":  "Ramayana"
+    },
+    {
+        "title":  "Bhagavad Geeta Introduction",
+        "titleEn":  "Bhagavad Geeta Introduction",
+        "location":  "Sidhbari",
+        "year":  "2005-2008",
+        "youtubeUrl":  "https://www.youtube.com/playlist?list=PLgy41qSqQO427tw1qiaKhtx4Jy6jK_LkE",
+        "category":  "Bhagwat Geeta",
+        "keywords":  "intro introduction परिचय भूमिका"
     },
     {
         "title":  "Bhagvad Geeta Ch 1 (9 videos)",
@@ -245,6 +255,25 @@
         "category":  "Bhagwat Geeta"
     },
     {
+        "title":  "Bhagvad Geeta Ch 18 (35 talks)",
+        "titleEn":  "Bhagvad Geeta Ch 18 (35 talks)",
+        "location":  "Sidhbari",
+        "year":  "2005-2008",
+        "episodeCount":  35,
+        "youtubeUrl":  "https://www.youtube.com/playlist?list=PLZfEqZUPNXrs",
+        "category":  "Bhagwat Geeta",
+        "keywords":  "Bhagvad Bhagavad Geeta Gita Ch Chapter 18 Sidhbari Siddhbari 2005 2006 2007 2008 अध्याय 18"
+    },
+    {
+        "title":  "Bhagvad Geeta Ch 15 · Indore",
+        "titleEn":  "Bhagvad Geeta Ch 15 · Indore",
+        "location":  "Indore",
+        "year":  "2019",
+        "youtubeUrl":  "https://www.youtube.com/playlist?list=PLgy41qSqQO43UDjac01cjCbEtzUPiPn7r",
+        "category":  "Bhagwat Geeta",
+        "keywords":  "Bhagvad Geeta Ch 15 Indore 23 29 December Dec 2019 इंदौर अध्याय 15"
+    },
+    {
         "title":  "Bhagvad Geeta Ch 18 Gyan Yagya",
         "location":  "Patiala",
         "year":  "March 2018",
@@ -266,11 +295,14 @@
         "category":  "Bhagwat Geeta"
     },
     {
-        "title":  "Bhagvat Katha Day 1",
+        "title":  "Bhagvad Katha · Jaipur",
+        "titleEn":  "Bhagvad Katha · Jaipur",
         "location":  "Jaipur",
         "year":  "2018",
-        "youtubeUrl":  "https://www.youtube.com/watch?v=4VgesOYmm54\u0026t=8263s",
-        "category":  "Bhagwatam"
+        "episodeCount":  7,
+        "youtubeUrl":  "https://www.youtube.com/playlist?list=PLgy41qSqQO43W-9jVknI-WfVMhcZoGgY0",
+        "category":  "Bhagwatam",
+        "keywords":  "Bhagvat Bhagwad Katha Jaipur August 2018 7 talks जयपुर भागवत कथा"
     },
     {
         "title":  "Srimad Bhagvad Katha 1/27",
@@ -427,9 +459,9 @@
         "category":  "Prakaran Granth"
     },
     {
-        "title":  "Brahmasutra 1989-1991",
+        "title":  "Brahmasutra",
         "location":  null,
-        "year":  null,
+        "year":  "1989-1991",
         "youtubeUrl":  "https://www.youtube.com/playlist?list=PLgy41qSqQO41lHHO9296nYQMlPCla_px0",
         "category":  "Prakaran Granth"
     },
@@ -448,11 +480,48 @@
         "category":  "Prakaran Granth"
     },
     {
-        "title":  "Vedanta Saar",
+        "title":  "Vedanta Saar · 2021",
+        "titleEn":  "Vedanta Saar · 2021",
         "location":  null,
-        "year":  null,
+        "year":  "2021",
         "youtubeUrl":  "https://www.youtube.com/playlist?list=PLgy41qSqQO43NQ_GQ-OUOCrqlrz9flReV",
         "category":  "Prakaran Granth"
+    },
+    {
+        "title":  "Vedanta Saar · 2002-2004",
+        "titleEn":  "Vedanta Saar · 2002-2004",
+        "location":  null,
+        "year":  "2002-2004",
+        "youtubeUrl":  "https://www.youtube.com/playlist?list=PLgy41qSqQO40SPrHWliuXfiBLXwHMhjLA",
+        "category":  "Prakaran Granth",
+        "keywords":  "Vedaant Vedant Saar batch 2002 2003 2004 वेदान्त सार"
+    },
+    {
+        "title":  "Drig Drishya Vivek · July 2017",
+        "titleEn":  "Drig Drishya Vivek · July 2017",
+        "location":  null,
+        "year":  "July 2017",
+        "youtubeUrl":  "https://www.youtube.com/playlist?list=PLgy41qSqQO42A-m00YaX7toLoe3R4h05C",
+        "category":  "Prakaran Granth",
+        "keywords":  "Drig Drishya Viveka दृग दृश्य विवेक July 2017"
+    },
+    {
+        "title":  "Taitreya Upanishad Shiksha Valli",
+        "titleEn":  "Taitreya Upanishad Shiksha Valli",
+        "location":  null,
+        "year":  null,
+        "youtubeUrl":  "https://www.youtube.com/playlist?list=PLdh1eVwY_OVQ",
+        "category":  "Prakaran Granth",
+        "keywords":  "Taittiriya Taitreya Upanishad Shiksha Valli तैत्तिरीय उपनिषद् शिक्षा वल्ली"
+    },
+    {
+        "title":  "Taitreya Brahmanand Valli",
+        "titleEn":  "Taitreya Brahmanand Valli",
+        "location":  null,
+        "year":  null,
+        "youtubeUrl":  "https://www.youtube.com/playlist?list=PLOf4SJ61UrIc",
+        "category":  "Prakaran Granth",
+        "keywords":  "Taittiriya Taitreya Brahmananda Brahmanand Valli तैत्तिरीय ब्रह्मानन्द वल्ली"
     },
     {
         "title":  "Bhartiya Darshan",
@@ -469,15 +538,15 @@
         "category":  "Prakaran Granth"
     },
     {
-        "title":  "Sadhna Panchkam Dehradun",
-        "location":  null,
+        "title":  "Sadhna Panchkam",
+        "location":  "Dehradun",
         "year":  null,
         "youtubeUrl":  "https://www.youtube.com/playlist?list=PLgy41qSqQO40FcBVEC2E0IBLb8hmMNRbm",
         "category":  "Prakaran Granth"
     },
     {
-        "title":  "Sadhna Panchkam at Bhavnagar",
-        "location":  null,
+        "title":  "Sadhna Panchkam",
+        "location":  "Bhavnagar",
         "year":  null,
         "youtubeUrl":  "https://www.youtube.com/playlist?list=PLgy41qSqQO426yvvDRyn57gyh9Do_czCv",
         "category":  "Prakaran Granth"
@@ -525,10 +594,59 @@
         "category":  "Ramayana"
     },
     {
-        "title":  "Bhagvad 6th Skandh/Canto Sidhbari May 2010",
+        "title":  "Bhagvad 6th Skandh/Canto",
         "location":  "Sidhbari",
-        "year":  "May 2010",
+        "year":  "2010",
         "youtubeUrl":  "https://www.youtube.com/watch?v=Fxkh34i9KVU\u0026list=PLgy41qSqQO43D930r7EMtCfqS60nzT1FB",
         "category":  "Bhagwatam"
+    },
+    {
+        "title":  "Bhagvat 1st Skandh",
+        "location":  "Ghaziabad",
+        "year":  "2018",
+        "youtubeUrl":  "https://www.youtube.com/playlist?list=PLNpiOil-BP1Q",
+        "category":  "Bhagwatam"
+    },
+    {
+        "title":  "Bhagvad katha 1st Canto",
+        "location":  "Jabalpur",
+        "year":  "2019",
+        "youtubeUrl":  "https://www.youtube.com/playlist?list=PLgy41qSqQO41-g4laNSNDesP8dTzsA_7E",
+        "category":  "Bhagwatam"
+    },
+    {
+        "title":  "Bhagvad katha 1st Canto",
+        "location":  "Prayagraj",
+        "year":  "2020",
+        "youtubeUrl":  "https://www.youtube.com/playlist?list=PLgy41qSqQO41KafYdIVVPxzUSeCJSuPUT",
+        "category":  "Bhagwatam"
+    },
+    {
+        "title":  "Prashnopanishad",
+        "location":  null,
+        "year":  null,
+        "youtubeUrl":  "https://www.youtube.com/playlist?list=PLQegAJFfEGb0",
+        "category":  "Upanishads"
+    },
+    {
+        "title":  "Bhagvad Geeta Chapter 12",
+        "location":  null,
+        "year":  "September 2017",
+        "youtubeUrl":  "https://www.youtube.com/playlist?list=PLS96Dj8suYdE",
+        "category":  "Bhagwat Geeta"
+    },
+    {
+        "title":  "Question & Answer",
+        "location":  null,
+        "year":  "28 October 2018",
+        "youtubeUrl":  "https://www.youtube.com/watch?v=8dM5ELs3AUU",
+        "category":  "Others"
+    },
+    {
+        "title":  "Bhagvad Geeta in Practical Life",
+        "location":  null,
+        "year":  null,
+        "youtubeUrl":  "https://www.youtube.com/playlist?list=PLgy41qSqQO40bzVIjUr9yukQc1m6PJjjQ",
+        "category":  "Bhagwat Geeta"
     }
 ]

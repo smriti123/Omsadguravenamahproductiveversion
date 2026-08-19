@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sadguru Vani — Colour Theme Comparison</title>
+  <link rel="stylesheet" href="./theme-preview.css?v=7" />
+</head>
+<body>
+  <header class="preview-header">
+    <p>Sadguru Vani · सद्गुरु वाणी</p>
+    <h1>Theme C preview</h1>
+    <p>The refined Chandan + Muted Kesari + Deep Walnut palette across five screens. This page does not change the working app.</p>
+  </header>
+  <main id="themes"></main>
+  <script>
+    const themes = [
+      { id: "d", name: "Theme C — Chandan + Muted Kesari + Deep Walnut (Refined)", note: "Warm creamy ivory · chandan secondary surfaces · restrained kesari · deep walnut" },
+    ];
+
+    const categoryRows = [
+      ["रामायण", "19 संग्रह"], ["भागवतम्", "16 संग्रह"], ["भगवद्गीता", "22 संग्रह"],
+      ["उपनिषद्", "10 संग्रह"], ["प्रकरण ग्रन्थ", "10 संग्रह"], ["सत्संग-अंश", "55 अंश"],
+    ];
+    const row = ([title, meta]) => `<div class="row"><span><strong>${title}</strong><small>${meta}</small></span><b>›</b></div>`;
+    const nav = (active) => `<nav>${[["⌂","होम"],["✓","सुना हुआ"],["♡","मनन"]].map(([icon,label], index) => `<span class="${index === active ? "active" : ""}"><b>${icon}</b><small>${label}</small></span>`).join("")}</nav>`;
+    const shell = (title, content, active = 0) => `<article class="screen"><div class="appbar"><span class="om">ॐ</span><span><strong>Sadguru Vani</strong><small>परम पूज्य स्वामीजी के प्रवचन</small></span><button>हिं / EN</button></div><div class="screen-label">${title}</div><div class="content">${content}</div>${nav(active)}</article>`;
+
+    const screens = () => [
+      shell("Home", `<div class="intro"><img src="../assets/swamiji-new-portrait-PXN53uw1.jpg" alt="Pujya Swamiji"><strong>परम पूज्य स्वामीजी के प्रवचनों का संग्रह</strong></div><div class="search">⌕ <span>नाम, स्थान, वर्ष या विषय खोजें…</span></div><h2>प्रवचन संग्रह</h2>${categoryRows.slice(0,4).map(row).join("")}`),
+      shell("Category", `<div class="heading"><button>←</button><span><h2>भगवद्गीता</h2><small>22 संग्रह उपलब्ध</small></span></div>${[["Bhagavad Geeta Ch 1","Sidhbari · 2005–2008 · 9 प्रवचन"],["Bhagavad Geeta Ch 2","Sidhbari · 2005–2008 · 53 प्रवचन"],["Bhagavad Geeta Ch 3","Sidhbari · 2005–2008 · 26 प्रवचन"]].map(row).join("")}`),
+      shell("Pravachan List", `<div class="heading"><button>←</button><span><h2>Bhagavad Geeta Ch 1</h2><small>Sidhbari · 2005–2008<br>9 प्रवचन</small></span></div>${[["प्रवचन 1","1:08:33"],["प्रवचन 2","✓ सुना हुआ"],["प्रवचन 3","जारी रखें · 24:18"],["प्रवचन 4","1:04:12"]].map(([t,m]) => `<div class="row talk"><span><strong>${t}</strong><small>${m}</small></span><b>▶</b></div>`).join("")}`),
+      shell("Player", `<div class="heading"><button>←</button><span><h2>प्रवचन 3</h2><small>Bhagavad Geeta Ch 1</small></span></div><div class="video">YouTube Player</div><div class="prev-next"><button>◀ पिछला</button><button>अगला ▶</button></div><div class="actions"><button>♡ मनन</button><button>✓ सुना हुआ</button><button>YouTube पर देखें ↗</button></div>`),
+      shell("Manan", `<div class="heading"><span><h2>मनन</h2><small>आपका व्यक्तिगत मनन-संग्रह</small></span></div><section class="note"><small>भगवद्गीता · प्रवचन 14</small><b>24:18</b><p>कर्तव्य के विषय में गुरुजी की यह बात पुनः सुननी है।</p><button>▶ 24:18 से सुनें</button></section><section class="note"><small>रामायण · प्रवचन 6</small><b>18:42</b><p>इस प्रसंग पर फिर से मनन करना है।</p><button>▶ 18:42 से सुनें</button></section>`, 2),
+    ];
+
+    document.querySelector("#themes").innerHTML = themes.map((theme) => `<section class="theme theme-${theme.id}"><header><h2>${theme.name}</h2><p>${theme.note}</p></header><div class="screens">${screens().join("")}</div></section>`).join("");
+  </script>
+</body>
+</html>
